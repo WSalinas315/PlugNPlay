@@ -1,0 +1,32 @@
+.formPanel {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formItem {
+    margin: 10px;
+} 
+
+.login-btn {
+    width: 150px;
+    background-color: #67E065 !important;
+
+    color: black !important;
+}
+
+.login-btn:hover {
+    background-color: #49a647 !important;
+}
+
+.register-btn {
+    width: 150px;
+    background-color: #65B4E0 !important;
+    color: black !important;
+}
+
+.register-btn:hover {
+    background-color: #4c86a6 !important;
+}
