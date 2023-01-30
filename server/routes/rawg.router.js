@@ -1,19 +1,39 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const axios = require('axios');
+require('dotenv').config();
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-  // GET route code here
+const { rejectUnauthenticated } = require('../modules/authentication-middleware')
+
+const key = process.env.RAWG_API_KEY;
+const keyUrl = ("key=" + key);
+
+/*
+  GET:
+  main recommendations
+  game by ID
+  games by genre
+  games by tag
+  games by name
+*/
+
+router.get('/byID/:id', async (req, res) => {
+
+  const { id } = req.params;
+
+  try {
+    const game = await axios.get(`https://api.rawg.io/api/games/${id}?${keyUrl}`)
+    res.send(game.data)
+  } catch (err) {
+    console.log(err)
+    res.sendStatus(500)
+  }
+
 });
 
-/**
- * POST route template
- */
 router.post('/', (req, res) => {
-  // POST route code here
+
 });
 
 module.exports = router;
