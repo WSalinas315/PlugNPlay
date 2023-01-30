@@ -153,7 +153,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
 });
 
 /* 
-  GLOSSARY LIST ROUTE
+  GLOSSARY LIST ROUTES
 */
 
 // Glossary - GET by ID
