@@ -1,5 +1,11 @@
+import SurveyIntro from "../SurveyIntro/SurveyIntro";
+import SurveyPage from "../SurveyPage/SurveyPage";
 
-export default function () {
+export default function Survey() {
 
-  return (<></>)
+  return (
+  <>
+  <SurveyIntro />
+  <SurveyPage />
+  </>)
 }

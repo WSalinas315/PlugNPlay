@@ -1,5 +1,11 @@
+import SurveyQuestion from "../SurveyQuestion/SurveyQuestion";
+import SurveyOptions from "../SurveyOptions/SurveyOptions";
 
-export default function () {
+export default function SurveyPage(){
 
-  return (<></>)
+  return (
+  <>
+  <SurveyQuestion />
+  <SurveyOptions />
+  </>)
 }
