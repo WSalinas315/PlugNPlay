@@ -54,17 +54,17 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   IGNORE LIST ROUTES 
 */
 
-// Wishlist - GET
-// router.get('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Wishlist - GET');
-//   try {
-//     const userID = req.params.id;
-//     const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
-//     res.send(wishlistResult);
-//   } catch (err) {
-//     console.log('Game Router Wishlist GET error:', err);
-//     res.sendStatus(500);
-//   }
-// });
+// Ignore List - GET
+router.get('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Ignore List - GET');
+  try {
+    const userID = req.params.id;
+    const ignoreResult = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
+    res.send(ignoreResult);
+  } catch (err) {
+    console.log('Game Router Ignore List GET error:', err);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;

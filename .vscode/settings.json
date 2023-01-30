@@ -1,3 +1,8 @@
 {
-	"cSpell.words": ["rawg"]
+	"cSpell.words": [
+		"rawg"
+	],
+	"cSpell.ignoreWords": [
+		"ignorelist"
+	]
 }
