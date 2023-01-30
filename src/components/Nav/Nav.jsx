@@ -25,7 +25,7 @@ function Nav() {
 					<BottomNavigationAction
 						label='Home'
 						value='Home'
-						icon={<HomeIcon />}
+			    	icon={<HomeIcon />}
 						component={Link}
 						to='/login'
 					/>
