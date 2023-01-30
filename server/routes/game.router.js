@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { restart } = require('nodemon');
 const router = express.Router();
 
 /* 
@@ -139,5 +140,17 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+// Played List - DELETE
+router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Played List - DELETE');
+  try {
+    const gameID = req.params.id;
+    await pool.query(`DELETE FROM "played" WHERE "id" = $1;`, [gameID]);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log('Game router Played List DELETE error:', err);
+    res.sendStatus(500);
+  }
+});
 
 module.exports = router;
