@@ -1,7 +1,6 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
-const { restart } = require('nodemon');
 const router = express.Router();
 
 /* 
@@ -154,7 +153,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
 });
 
 /* 
-  GLOSSARY LIST ROUTE
+  GLOSSARY LIST ROUTES
 */
 
 // Glossary - GET by ID
