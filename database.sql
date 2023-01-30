@@ -40,7 +40,7 @@ CREATE TABLE "played" (
 	"id" 				serial NOT NULL,
 	"user_id" 	int NOT NULL,
 	"game_id" 	int NOT NULL,
-	"liked" 		int NOT NULL,
+	"liked" 		int,
 	CONSTRAINT "played_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
