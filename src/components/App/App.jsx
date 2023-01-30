@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   HashRouter as Router,
   Redirect,
@@ -15,7 +15,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import AboutPage from "../AboutPage/AboutPage";
 import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 
@@ -43,10 +42,6 @@ function App() {
 
           <ProtectedRoute exact path="/user">
             <UserPage />
-          </ProtectedRoute>
-
-          <ProtectedRoute exact path="/info">
-            <InfoPage />
           </ProtectedRoute>
 
           <Route exact path="/login">
