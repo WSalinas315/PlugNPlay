@@ -161,8 +161,8 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Glossary - GET by ID');
   try {
-    const termID = req.params.id;
-    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "id" = $1;`, [termID]);
+    const tagID = req.params.id;
+    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "tag_id" = $1;`, [tagID]);
     res.send(glossaryResult);
   } catch (err) {
     console.log('Game Router Glossary GET by ID error:', err);
