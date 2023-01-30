@@ -40,6 +40,20 @@ const theme = createTheme({
 				},
 			},
 		},
+MuiSvgIcon: {
+styleOverrides: {
+root: {
+color: '#ffffff'
+		},
+	},
+},
+MuiBottomNavigationAction:{
+styleOverrides:{
+label:{
+color: '#ffffff'
+}
+}
+}
 	},
 });
 
