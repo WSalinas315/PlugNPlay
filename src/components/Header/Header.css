@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'Sniglet';
+    src: url(../../fonts/Sniglet-Regular.ttf);
+}
+
+.plugnplaypath {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 300;
+    animation: dash 5s linear forwards infinite;
+    transform: scale(1.02);
+    
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+#plugnplay {
+
+    height: 60px;
+    width: 100%;
+    background-color: #C02222;
+    font-family: 'Sniglet';
+}
+
+.plugnplaypath:hover {
+    animation-play-state: paused; 
+}
