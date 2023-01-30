@@ -18,6 +18,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Header from '../Header/Header';
 
 import './App.css';
 
@@ -32,6 +33,7 @@ function App() {
 
 	return (
 		<Router>
+			<Header />
 			<div>
 				<Nav />
 				<Switch>
