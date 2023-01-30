@@ -5,9 +5,49 @@ import store from './redux/store';
 
 import App from './components/App/App';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+	palette: {
+		type: 'light',
+		primary: {
+			main: '#C02222',
+		},
+		secondary: {
+			main: '#f44336',
+		},
+	},
+	typography: {
+		h1: {
+			fontweight: '200',
+			fontSize: '12spt',
+		},
+	},
+	components: {
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					fontSize: '16pt',
+					fontWeight: '600',
+				},
+			},
+		},
+		MuiBottomNavigation: {
+			styleOverrides: {
+				root: {
+					background: '#c02222',
+					fontWeight: '800',
+				},
+			},
+		},
+	},
+});
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('react-root'),
+	<Provider store={store}>
+		<ThemeProvider theme={theme}>
+			<App />
+		</ThemeProvider>
+	</Provider>,
+	document.getElementById('react-root')
 );
