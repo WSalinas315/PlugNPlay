@@ -73,8 +73,8 @@ CREATE TABLE "ignorelist" (
 CREATE TABLE "glossary" (
 	"id" 					serial NOT NULL,
 	"term" 				varchar(255) NOT NULL UNIQUE,
-	"description" varchar(1023) NOT NULL,
-	"img_path" 		varchar(255) NOT NULL,
+	"description" varchar(1023),
+	"img_path" 		varchar(255),
 	"tag_id" 			int NOT NULL,
 	CONSTRAINT "glossary_pk" PRIMARY KEY ("id")
 ) WITH (
