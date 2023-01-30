@@ -24,11 +24,11 @@ router.get('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
 router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - POST');
   try {
-    const wishlistItem = req.body;
+    const wishlistGame = req.body;
     await pool.query(`INSERT INTO "wishlist" ("user_id", "game_id") 
-                      VALUES ($1, $2);`, [wishlistItem.user_id, wishlistItem.game_id]);
+                      VALUES ($1, $2);`, [wishlistGame.user_id, wishlistGame.game_id]);
     res.sendStatus(201);
-    // pool.query(`INSERT INTO "wishlist" ("user_id","game_id") VALUES ($1, $2);`, [wishlistItem.user_id, wishlistItem.game_id]).then((result) => {
+    // pool.query(`INSERT INTO "wishlist" ("user_id","game_id") VALUES ($1, $2);`, [wishlistGame.user_id, wishlistGame.game_id]).then((result) => {
     //  res.sendStatus(201);
     // });
   } catch (err) {
@@ -71,9 +71,9 @@ router.get('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
 router.post('/ignorelist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - POST');
   try {
-    const ignorelistItem = req.body;
+    const ignorelistGame = req.body;
     await pool.query(`INSERT INTO "ignorelist" ("user_id", "game_id") 
-                      VALUES ($1, $2);`, [ignorelistItem.user_id, ignorelistItem.game_id]);
+                      VALUES ($1, $2);`, [ignorelistGame.user_id, ignorelistGame.game_id]);
     res.sendStatus(201);
   } catch (err) {
     console.log('Game Router Ignore List POST error:', err);
@@ -93,5 +93,51 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+/* 
+  PLAYED GAMES ROUTES
+*/
+
+// Played List - GET
+router.get('/played/:id', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Played List - GET');
+  try {
+    const userID = req.params.id;
+    const playedResult = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
+    res.send(playedResult);
+  } catch (err) {
+    console.log('Game Router Played List GET error:', err);
+    res.sendStatus(500);
+  }
+});
+
+// Played List - POST
+router.post('/played', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Played List - POST');
+  try {
+    const playedGame = req.body;
+    await pool.query(`INSERT INTO "played" ("user_id", "game_id") 
+                      VALUES ($1, $2);`, [playedGame.user_id, playedGame.game_id]);
+    res.sendStatus(201);
+  } catch (err) {
+    console.log('Game Router Played List POST error:', err);
+    res.sendStatus(500);
+  }
+});
+
+// Played List - PUT
+router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Played List - PUT');
+  try {
+    const gameID = req.params.id;
+    const gameRating = req.body.liked;
+    await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "id" = $2`, [gameRating, gameID]);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log('Game Router Played List PUT error:', err);
+    res.sendStatus(500);
+  }
+});
+
 
 module.exports = router;
