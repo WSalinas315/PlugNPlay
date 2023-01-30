@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import './LoginForm.css';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const login = (event) => {
     event.preventDefault();
@@ -32,33 +35,26 @@ function LoginForm() {
           {errors.loginMessage}
         </h3>
       )}
-      <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            required
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
+      <div className='formItem'>
+          <TextField id="outlined-basic" label="Username" value={username} onChange={(event) => setUsername(event.target.value)} variant="outlined" />
       </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
+      <div className='formItem'>
+        <TextField type="password" id="outlined-basic" label="Password" value={password} onChange={(event) => setPassword(event.target.value)} variant="outlined" />
       </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+      <div className='formItem'>
+        <input className="btn login-btn" type="submit" name="submit" value="Log In" />
       </div>
+      <div className='formItem'>
+      <button
+          type="button"
+          className="btn register-btn"
+          onClick={() => {
+            history.push('/registration');
+          }}
+        >
+          Register
+        </button>
+        </div>
     </form>
   );
 }
