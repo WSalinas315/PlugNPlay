@@ -10,13 +10,13 @@ const router = express.Router();
 
 // Wishlist - GET by ID
 router.get('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Wishlist - GET');
+  // console.log('In game router: Wishlist - GET by ID');
   try {
     const userID = req.params.id;
     const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
     res.send(wishlistResult);
   } catch (err) {
-    console.log('Game Router Wishlist GET error:', err);
+    console.log('Game Router Wishlist GET by ID error:', err);
     res.sendStatus(500);
   }
 });
@@ -40,13 +40,13 @@ router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
 
 // Wishlist - DELETE by ID
 router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Wishlist - DELETE');
+  // console.log('In game router: Wishlist - DELETE by ID');
   try {
     const wishlistID = req.params.id;
     await pool.query(`DELETE FROM "wishlist" WHERE "id" = $1;`, [wishlistID]);
     res.sendStatus(200);
   } catch (err) {
-    console.log('Game Router Wishlist DELETE error:', err);
+    console.log('Game Router Wishlist DELETE by ID error:', err);
     res.sendStatus(500);
   }
 });
@@ -57,13 +57,13 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
 
 // Ignore List - GET by ID
 router.get('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Ignore List - GET');
+  // console.log('In game router: Ignore List - GET by ID');
   try {
     const userID = req.params.id;
     const ignorelistResult = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
     res.send(ignorelistResult);
   } catch (err) {
-    console.log('Game Router Ignore List GET error:', err);
+    console.log('Game Router Ignore List GET by ID error:', err);
     res.sendStatus(500);
   }
 });
@@ -84,13 +84,13 @@ router.post('/ignorelist', rejectUnauthenticated, async (req, res) => {
 
 // Ignore List - DELETE by ID
 router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Ignore List - DELETE');
+  // console.log('In game router: Ignore List - DELETE by ID');
   try {
     const ignorelistID = req.params.id;
     await pool.query(`DELETE FROM "ignorelist" WHERE "id" = $1;`, [ignorelistID]);
     res.sendStatus(200);
   } catch (err) {
-    console.log('Game Router Ignore List DELETE error:', err);
+    console.log('Game Router Ignore List DELETE by ID error:', err);
     res.sendStatus(500);
   }
 });
@@ -101,13 +101,13 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
 
 // Played List - GET by ID
 router.get('/played/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Played List - GET');
+  // console.log('In game router: Played List - GET by ID');
   try {
     const userID = req.params.id;
     const playedResult = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
     res.send(playedResult);
   } catch (err) {
-    console.log('Game Router Played List GET error:', err);
+    console.log('Game Router Played List GET by ID error:', err);
     res.sendStatus(500);
   }
 });
@@ -128,27 +128,27 @@ router.post('/played', rejectUnauthenticated, async (req, res) => {
 
 // Played List - PUT by ID
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Played List - PUT');
+  // console.log('In game router: Played List - PUT by ID');
   try {
     const gameID = req.params.id;
     const gameRating = req.body.liked;
     await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "id" = $2`, [gameRating, gameID]);
     res.sendStatus(200);
   } catch (err) {
-    console.log('Game Router Played List PUT error:', err);
+    console.log('Game Router Played List PUT by ID error:', err);
     res.sendStatus(500);
   }
 });
 
 // Played List - DELETE by ID
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Played List - DELETE');
+  // console.log('In game router: Played List - DELETE by ID');
   try {
     const gameID = req.params.id;
     await pool.query(`DELETE FROM "played" WHERE "id" = $1;`, [gameID]);
     res.sendStatus(200);
   } catch (err) {
-    console.log('Game router Played List DELETE error:', err);
+    console.log('Game router Played List DELETE by ID error:', err);
     res.sendStatus(500);
   }
 });
