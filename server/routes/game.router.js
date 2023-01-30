@@ -8,7 +8,7 @@ const router = express.Router();
   WISHLIST ROUTES 
 */
 
-// Wishlist - GET
+// Wishlist - GET by ID
 router.get('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - GET');
   try {
@@ -38,7 +38,7 @@ router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Wishlist - DELETE
+// Wishlist - DELETE by ID
 router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - DELETE');
   try {
@@ -55,7 +55,7 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   IGNORE LIST ROUTES 
 */
 
-// Ignore List - GET
+// Ignore List - GET by ID
 router.get('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - GET');
   try {
@@ -82,7 +82,7 @@ router.post('/ignorelist', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Ignore List - DELETE
+// Ignore List - DELETE by ID
 router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - DELETE');
   try {
@@ -99,7 +99,7 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
   PLAYED GAMES ROUTES
 */
 
-// Played List - GET
+// Played List - GET by ID
 router.get('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - GET');
   try {
@@ -126,7 +126,7 @@ router.post('/played', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Played List - PUT
+// Played List - PUT by ID
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - PUT');
   try {
@@ -140,7 +140,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Played List - DELETE
+// Played List - DELETE by ID
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - DELETE');
   try {
@@ -149,6 +149,23 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(200);
   } catch (err) {
     console.log('Game router Played List DELETE error:', err);
+    res.sendStatus(500);
+  }
+});
+
+/* 
+  GLOSSARY LIST ROUTE
+*/
+
+// Glossary - GET by ID
+router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Glossary - GET');
+  try {
+    const termID = req.params.id;
+    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "id" = $1;`, [termID]);
+    res.send(glossaryResult);
+  } catch (err) {
+    console.log('Game Router Glossary GET error:', err);
     res.sendStatus(500);
   }
 });
