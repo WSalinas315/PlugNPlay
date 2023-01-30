@@ -9,6 +9,10 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
+const gameRouter = require('./routes/game.router');
+const rawgRouter = require('./routes/rawg.router');
+const tagsRouter = require('./routes/tags.router');
+const adminRouter = require('./routes/admin.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -23,6 +27,10 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/games', gameRouter);
+app.use('/api/rawg', rawgRouter);
+app.use('/api/tags', tagsRouter);
+app.use('/api/admin', adminRouter);
 
 // Serve static files
 app.use(express.static('build'));
@@ -32,5 +40,5 @@ const PORT = process.env.PORT || 5000;
 
 /** Listen * */
 app.listen(PORT, () => {
-  console.log(`Listening on port: ${PORT}`);
+	console.log(`Listening on port: ${PORT}`);
 });
