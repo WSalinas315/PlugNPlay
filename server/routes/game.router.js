@@ -81,4 +81,17 @@ router.post('/ignorelist', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+// Ignore List - DELETE
+router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Ignore List - DELETE');
+  try {
+    const ignorelistID = req.params.id;
+    await pool.query(`DELETE FROM "ignorelist" WHERE "id" = $1;`, [ignorelistID]);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log('Game Router Ignore List DELETE error:', err);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;
