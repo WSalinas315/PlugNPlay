@@ -7,7 +7,7 @@ export default function ViewRecommendation() {
   return (
     <>
       
-      <h1>RECOMMENDATION VIEW</h1>
+      <h1>🎮 RECOMMENDATION 🕹 VIEW</h1>
 
     </>
   )
