@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+const handleErrors = (msg, err) => {
+  console.log(msg, err);
+  alert('Error fetching data:' + msg)
+}
+
 // worker Saga: will be fired on "FETCH_USER" actions
 function* fetchUser() {
   try {
@@ -20,12 +25,51 @@ function* fetchUser() {
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
   } catch (error) {
-    console.log('User get request failed', error);
+    handleErrors('User get request failed', error);
+  }
+}
+
+function* fetchWishlist() {
+  try {
+    const { data: wishlist } = yield axios.get('/api/wishlist')
+    yield put({
+      type: 'USER/SET_WISHLIST',
+      payload: wishlist
+    })
+  } catch (err) {
+    handleErrors('Fetch wishlist failed', err)
+  }
+}
+
+function* fetchIgnorelist() {
+  try {
+    const { data: ignorelist } = yield axios.get('/api/ignorelist')
+    yield put({
+      type: 'USER/SET_IGNORELIST',
+      payload: ignorelist
+    })
+  } catch (err) {
+    handleErrors('Fetch ignorelist failed', err)
+  }
+}
+
+function* fetchPlayedList() {
+  try {
+    const { data: playedList } = yield axios.get('/api/played')
+    yield put({
+      type: 'USER/SET_PLAYED',
+      payload: playedList
+    })
+  } catch (err) {
+    handleErrors('Fetch played list failed', err)
   }
 }
 
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('USER/FETCH_WISHLIST', fetchWishlist);
+  yield takeLatest('USER/FETCH_IGNORELIST', fetchIgnorelist);
+  yield takeLatest('USER/FETCH_PLAYED_LIST', fetchPlayedList);
 }
 
 export default userSaga;
