@@ -8,10 +8,10 @@ const router = express.Router();
 */
 
 // Wishlist - GET by ID
-router.get('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Wishlist - GET by ID');
+router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Wishlist - GET by user ID');
   try {
-    const userID = req.params.id;
+    const userID = req.user.id
     const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
     res.send(wishlistResult);
   } catch (err) {
@@ -52,10 +52,10 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
 */
 
 // Ignore List - GET by ID
-router.get('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Ignore List - GET by ID');
+router.get('/ignorelist/', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Ignore List - GET by user ID');
   try {
-    const userID = req.params.id;
+    const userID = req.user.id;
     const ignorelistResult = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
     res.send(ignorelistResult);
   } catch (err) {
@@ -95,11 +95,11 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
   PLAYED GAMES ROUTES
 */
 
-// Played List - GET by ID
-router.get('/played/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Played List - GET by ID');
+// Played List - GET by user ID
+router.get('/played/', rejectUnauthenticated, async (req, res) => {
+  // console.log('In game router: Played List - GET by user ID');
   try {
-    const userID = req.params.id;
+    const userID = req.user.id;
     const playedResult = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
     res.send(playedResult);
   } catch (err) {
