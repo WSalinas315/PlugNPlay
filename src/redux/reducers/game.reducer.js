@@ -21,32 +21,8 @@ const recommendations = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
-const userWishlist = (state = [], { type, payload }) => {
-  return {
-    'GAME/SET_WISHLIST': payload,
-    'GAME/CLEAR_WISHLIST': []
-  }[type] || state;
-}
-
-const userIgnorelist = (state = [], { type, payload }) => {
-  return {
-    'GAME/SET_IGNORELIST': payload,
-    'GAME/CLEAR_IGNORELIST': []
-  }[type] || state;
-}
-
-const userPlayedList = (state = [], { type, payload }) => {
-  return {
-    'GAME/SET_PLAYED': payload,
-    'GAME/CLEAR_PLAYED': []
-  }[type] || state;
-}
-
 export default combineReducers({
   currentlyViewedGame,
   searchResults,
   recommendations,
-  userWishlist,
-  userIgnorelist,
-  userPlayedList,
 })
