@@ -10,21 +10,24 @@ const userReducer = (state = {}, { type, payload }) => {
 const userWishlist = (state = [], { type, payload }) => {
   return {
     'USER/SET_WISHLIST': payload,
-    'USER/CLEAR_WISHLIST': []
+    'USER/CLEAR_WISHLIST': [],
+    'UNSET_USER': []
   }[type] || state;
 }
 
 const userIgnorelist = (state = [], { type, payload }) => {
   return {
     'USER/SET_IGNORELIST': payload,
-    'USER/CLEAR_IGNORELIST': []
+    'USER/CLEAR_IGNORELIST': [],
+    'UNSET_USER': []
   }[type] || state;
 }
 
 const userPlayedList = (state = [], { type, payload }) => {
   return {
     'USER/SET_PLAYED': payload,
-    'USER/CLEAR_PLAYED': []
+    'USER/CLEAR_PLAYED': [],
+    'UNSET_USER': []
   }[type] || state;
 }
 
