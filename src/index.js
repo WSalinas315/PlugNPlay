@@ -51,9 +51,16 @@ MuiBottomNavigationAction:{
 styleOverrides:{
 label:{
 color: '#ffffff'
-}
-}
-}
+		},
+	},
+},
+MuiTab: {
+styleOverrides: {
+root: {
+color: '#ffffff'
+			}
+		}
+	}
 	},
 });
 

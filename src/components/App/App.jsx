@@ -18,7 +18,7 @@ import UserPage from '../UserPage/UserPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
-
+import CollectionPage from '../ViewCollection/ViewCollection';
 import './App.css';
 
 function App() {
@@ -45,6 +45,11 @@ function App() {
 					<ProtectedRoute exact path='/user'>
 						<UserPage />
 					</ProtectedRoute>
+
+					<ProtectedRoute exact path='/collection'>
+						<CollectionPage />
+					</ProtectedRoute>
+
 
 					<Route exact path='/login'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
