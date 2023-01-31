@@ -18,6 +18,9 @@ const keyUrl = ("key=" + key);
   games by name
 */
 
+// ==========================================================================================
+// GET BY ID
+
 router.get('/byID/:id', async (req, res) => {
 
   const { id } = req.params;
@@ -32,6 +35,9 @@ router.get('/byID/:id', async (req, res) => {
 
 });
 
+// ==========================================================================================
+// GET BY GENRE
+
 router.get('/byGenre/:genre', async (req, res) => {
 
   const { genre } = req.params;
@@ -45,6 +51,9 @@ router.get('/byGenre/:genre', async (req, res) => {
     res.sendStatus(500)
   }
 })
+
+// ==========================================================================================
+// GET BY RELEVANT TAGS
 
 router.get('/byTags', async (req, res) => {
 
@@ -85,7 +94,7 @@ router.get('/byTags', async (req, res) => {
 
     for (let tag of userTags) {
       searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40`,
-        { validateStatus: (status) => status < 500 } ))
+        { validateStatus: (status) => status < 500 } )) // prevents request from throwing error if it returns a 404
       searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=2`,
         { validateStatus: (status) => status < 500 } ))
       searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=3`,
@@ -96,7 +105,7 @@ router.get('/byTags', async (req, res) => {
 
     const taggedGames =
       taggedGameObjects
-        .filter(obj => obj.status < 300)
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
         .map(obj => obj.data.results) // isolates the actual API results
         .flat() // flattens the results into a single one-dimensional array
         .filter(dupeFilter)
