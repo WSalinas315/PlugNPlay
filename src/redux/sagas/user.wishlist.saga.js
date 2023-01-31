@@ -1,6 +1,6 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
-import { handleErrors } from "./user.saga";
+import { handleErrors } from "./user._saga";
 
 function* addToWishlist({ payload }) {
   try {

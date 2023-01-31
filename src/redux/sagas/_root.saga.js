@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
-import userSaga from './user.saga';
+import userSaga from './user._saga';
 import rawgSaga from './rawg.saga'
 import wishlistSaga from './user.wishlist.saga';
 import ignorelistSaga from './user.ignorelist.saga';
