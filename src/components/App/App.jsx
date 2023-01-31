@@ -18,6 +18,7 @@ import UserPage from '../UserPage/UserPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
+import ViewRecommendation from '../ViewRecommended/ViewRecommended';
 
 import './App.css';
 
@@ -43,7 +44,8 @@ function App() {
 					</Route>
 
 					<ProtectedRoute exact path='/user'>
-						<UserPage />
+						{/* <UserPage /> */}
+						<ViewRecommendation />
 					</ProtectedRoute>
 
 					<Route exact path='/login'>

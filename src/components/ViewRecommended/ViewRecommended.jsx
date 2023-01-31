@@ -4,5 +4,11 @@ import { useHistory } from 'react-router-dom';
 
 export default function ViewRecommendation() {
 
-  return (<></>)
+  return (
+    <>
+      
+      <h1>RECOMMENDATION VIEW</h1>
+
+    </>
+  )
 }
