@@ -16,20 +16,20 @@ export default function Collection() {
 
 	return (
 		<Box sx={{ m: -1 }}>
-			<TabContext>
+			<TabContext value={value}>
 				<Box>
 					<TabList
 						centered
-						sx={{ background: '#C02222' }}
+						sx={{ background: '#C02222', indicatorColor: '#000000' }}
 						onChange={handleChange}>
 						<Tab label='Wishlist' value='wishlist' />
 						<Tab label='History' value='history' />
 						<Tab label='Glossary' value='glossary' />
 					</TabList>
 				</Box>
-				<TabPanel value='wishlist'>Item One</TabPanel>
-				<TabPanel value='history'>Item Two</TabPanel>
-				<TabPanel value='glossary'>Item Three</TabPanel>
+				<TabPanel value='wishlist'>Wishlist section</TabPanel>
+				<TabPanel value='history'>History section</TabPanel>
+				<TabPanel value='glossary'>Glossary section</TabPanel>
 			</TabContext>
 		</Box>
 	);

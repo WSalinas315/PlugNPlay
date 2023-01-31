@@ -9,22 +9,33 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const key = process.env.RAWG_API_KEY;
 const keyUrl = ("key=" + key);
 
-/*
-  GET:
-  main recommendations
-  game by ID √
-  games by genre √
-  games by tag √
-  games by name
-*/
+// ==========================================================================================
+// GET BY NAME
+
+router.get('/byName/:name', async (req, res) => {
+
+  const { name } = req.params;
+
+  try {
+    const { data: games } = await axios.get(`https://api.rawg.io/api/games?${keyUrl}&search=${name}&page_size=40`)
+    res.send(games)
+  } catch (err) {
+    console.log(err)
+    res.sendStatus(500)
+  }
+
+})
+
+// ==========================================================================================
+// GET BY ID
 
 router.get('/byID/:id', async (req, res) => {
 
   const { id } = req.params;
 
   try {
-    const game = await axios.get(`https://api.rawg.io/api/games/${id}?${keyUrl}`)
-    res.send(game.data)
+    const { data: game } = await axios.get(`https://api.rawg.io/api/games/${id}?${keyUrl}&page_size=40`)
+    res.send(game)
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
@@ -32,19 +43,25 @@ router.get('/byID/:id', async (req, res) => {
 
 });
 
+// ==========================================================================================
+// GET BY GENRE
+
 router.get('/byGenre/:genre', async (req, res) => {
 
   const { genre } = req.params;
 
   console.log('searching for genre', genre, '...');
   try {
-    const games = await axios.get(`https://api.rawg.io/api/games?genres=${genre}&${keyUrl}`)
-    res.send(games.data)
+    const { data: games } = await axios.get(`https://api.rawg.io/api/games?genres=${genre}&${keyUrl}&page_size=40`)
+    res.send(games)
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
   }
 })
+
+// ==========================================================================================
+// GET BY RELEVANT TAGS
 
 router.get('/byTags', async (req, res) => {
 
@@ -83,24 +100,28 @@ router.get('/byTags', async (req, res) => {
   // QUERY
   try {
 
-    //TODO: fix query throwing 404 if not all pages populate
     for (let tag of userTags) {
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40`))
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=2`))
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=3`))
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40`,
+        { validateStatus: (status) => status < 500 } )) // prevents request from throwing error if it returns a 404
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=2`,
+        { validateStatus: (status) => status < 500 } ))
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=3`,
+        { validateStatus: (status) => status < 500 } ))
     }
 
     const taggedGameObjects = await Promise.all(searchQueries)
 
     const taggedGames =
       taggedGameObjects
-        .map(obj => obj.data.results) //* isolates the actual API results
-        .flat() //* flattens the results into a single one-dimensional array
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
+        .map(obj => obj.data.results) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
         .filter(dupeFilter)
         .map(tagFilter)
-        .sort(sortByTagRelevance)
+        .sort(sortByTagRelevance);
     
     res.send(taggedGames)
+
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
