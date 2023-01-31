@@ -60,6 +60,7 @@ const theme = createTheme({
 					color: '#ffffff',
 					'&.Mui-selected': {
 						color: '#000000',
+						transform: 'scale(1.5)',
 					},
 				},
 			},
