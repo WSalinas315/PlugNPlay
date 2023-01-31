@@ -65,9 +65,6 @@ function* fetchPlayedList() {
   }
 }
 
-
-
-
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('USER/FETCH_WISHLIST', fetchWishlist);
