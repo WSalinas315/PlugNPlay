@@ -16,35 +16,37 @@ export default function Wishlist() {
 		{
 			name: 'Game',
 			year: 2023,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			url: 'http://d205bpvrqc9yn1.cloudfront.net/0009.gif',
 		},
 		{
 			name: 'Game',
 			year: 2022,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			url: 'http://d205bpvrqc9yn1.cloudfront.net/0001.gif',
 		},
 		{
 			name: 'Game',
 			year: 2020,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			url: 'http://d205bpvrqc9yn1.cloudfront.net/0069.gif',
 		},
 	];
 
 	return (
-		<ImageList sx={{ width: 400, height: 800 }}>
-			<h5> 🚧🚧🚧 UNDER DEVELOPMENT 🚧🚧🚧</h5>
+		<ImageList>
+			{/* <h5> 🚧🚧🚧 UNDER DEVELOPMENT 🚧🚧🚧</h5>
 			<p>
 				This is rendering the Wishlist component to appear in the tab section 🥹
-			</p>
+			</p> */}
 			{dummyData.map((item, index) => {
-				<ImageListItem key={item.url}>
-					<img src={item.url} srcSet={item.url} loading='lazy' />
-					<ImageListItemBar
-						title={item.name}
-						subtitle={item.year}
-						position='top'
-					/>
-				</ImageListItem>;
+				return (
+					<ImageListItem key={index} cols={1.5}>
+						<img src={item.url} srcSet={item.url} loading='lazy' />
+						<ImageListItemBar
+							title={item.name}
+							subtitle={item.year}
+							position='top'
+						/>
+					</ImageListItem>
+				);
 			})}
 		</ImageList>
 	);

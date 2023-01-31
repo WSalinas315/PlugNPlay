@@ -19,7 +19,7 @@ export default function Collection() {
 	};
 
 	return (
-		<Box sx={{ m: -1 }}>
+		<Box sx={{ m: -6 }} position='static'>
 			<TabContext value={value}>
 				<Box>
 					<TabList
