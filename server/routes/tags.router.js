@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { data: tagResults } = await pool.query(`SELECT * FROM tag`)
+    const { rows: tagResults } = await pool.query(`SELECT * FROM tag`)
     res.send(tagResults);
   } catch (err) {
     console.log(err)
@@ -18,12 +18,12 @@ router.get('/', async (req, res) => {
 // ==========================================================================================
 // GET TAG BY ID
 
-router.get('/byID/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
   const { id } = req.params
 
   try {
-    const { data: tag } = await pool.query(`SELECT * FROM tag WHERE id = $1`, [ id ])
+    const { rows: tag } = await pool.query(`SELECT * FROM tag WHERE id = $1`, [ id ])
     res.send(tag)
   } catch (err) {
     console.log(err)
