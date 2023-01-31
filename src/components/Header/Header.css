@@ -23,6 +23,9 @@
     width: 100%;
     background-color: #C02222;
     font-family: 'Sniglet';
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 
 .plugnplaypath:hover {

@@ -1,0 +1,12 @@
+#survey-intro {
+    background-color: rgb(255, 188, 188);
+    color: black;
+    margin: 20px;
+    padding: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#survey-intro-welcome {
+    text-align: center;
+    font-size: 30px;
+}
