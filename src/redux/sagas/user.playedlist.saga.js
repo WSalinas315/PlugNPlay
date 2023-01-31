@@ -4,7 +4,7 @@ import { handleErrors } from "./user._saga";
 
 function* addToPlayedList({ payload }) {
   try {
-    yield axios.post('/api/played', payload)
+    yield axios.post('/api/games/played', payload)
     yield put({ type: 'USER/FETCH_PLAYED_LIST' })
   } catch (err) {
     handleErrors('Adding to played list failed', err)
@@ -13,7 +13,7 @@ function* addToPlayedList({ payload }) {
 
 function* deleteFromPlayedList({ payload }) {
   try {
-    yield axios.delete('/api/played/' + payload)
+    yield axios.delete('/api/games/played/' + payload)
     yield put({ type: 'USER/FETCH_PLAYED_LIST' })
   } catch (err) {
     handleErrors('Deleting from played list failed', err)

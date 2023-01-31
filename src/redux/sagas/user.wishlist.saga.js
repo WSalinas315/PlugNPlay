@@ -4,7 +4,7 @@ import { handleErrors } from "./user._saga";
 
 function* addToWishlist({ payload }) {
   try {
-    yield axios.post('/api/wishlist', payload);
+    yield axios.post('/api/games/wishlist', payload);
     yield put({ type: 'USER/FETCH_WISHLIST' })
   } catch (err) {
     handleErrors('Adding game to wishlist failed', err)
@@ -13,7 +13,7 @@ function* addToWishlist({ payload }) {
 
 function* deleteFromWishlist({ payload }) {
   try {
-    yield axios.delete('/api/wishlist/' + payload);
+    yield axios.delete('/api/games/wishlist/' + payload);
     yield put({ type: 'USER/FETCH_WISHLIST' })
   } catch (err) {
     handleErrors('Deleting from wishlist failed', err)
