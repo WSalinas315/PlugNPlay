@@ -25,8 +25,8 @@ const userIgnorelist = (state = [], { type, payload }) => {
 
 const userPlayedList = (state = [], { type, payload }) => {
   return {
-    'USER/SET_PLAYED': payload,
-    'USER/CLEAR_PLAYED': [],
+    'USER/SET_PLAYED_LIST': payload,
+    'USER/CLEAR_PLAYED_LIST': [],
     'UNSET_USER': []
   }[type] || state;
 }
