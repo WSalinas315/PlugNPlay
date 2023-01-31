@@ -18,7 +18,11 @@ import UserPage from '../UserPage/UserPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
+
 import CollectionPage from '../ViewCollection/ViewCollection';
+
+import Survey from '../Survey/Survey';
+
 import './App.css';
 
 function App() {
@@ -61,6 +65,10 @@ function App() {
 
 					<Route exact path='/home'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
+					</Route>
+
+          <Route exact path='/survey'>
+						{user.id ? <Survey /> : <LoginPage />}
 					</Route>
 
 					<Route>
