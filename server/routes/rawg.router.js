@@ -9,14 +9,22 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const key = process.env.RAWG_API_KEY;
 const keyUrl = ("key=" + key);
 
-/*
-  GET:
-  main recommendations
-  game by ID √
-  games by genre √
-  games by tag √
-  games by name
-*/
+// ==========================================================================================
+// GET BY NAME
+
+router.get('/byName/:name', async (req, res) => {
+
+  const { name } = req.params;
+
+  try {
+    const { data: games } = await axios.get(`https://api.rawg.io/api/games?${keyUrl}&search=${name}&page_size=40`)
+    res.send(games)
+  } catch (err) {
+    console.log(err)
+    res.sendStatus(500)
+  }
+
+})
 
 // ==========================================================================================
 // GET BY ID
@@ -26,8 +34,8 @@ router.get('/byID/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const game = await axios.get(`https://api.rawg.io/api/games/${id}?${keyUrl}`)
-    res.send(game.data)
+    const { data: game } = await axios.get(`https://api.rawg.io/api/games/${id}?${keyUrl}&page_size=40`)
+    res.send(game)
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
@@ -44,8 +52,8 @@ router.get('/byGenre/:genre', async (req, res) => {
 
   console.log('searching for genre', genre, '...');
   try {
-    const games = await axios.get(`https://api.rawg.io/api/games?genres=${genre}&${keyUrl}`)
-    res.send(games.data)
+    const { data: games } = await axios.get(`https://api.rawg.io/api/games?genres=${genre}&${keyUrl}&page_size=40`)
+    res.send(games)
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
