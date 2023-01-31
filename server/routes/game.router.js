@@ -28,9 +28,6 @@ router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
     await pool.query(`INSERT INTO "wishlist" ("user_id", "game_id") 
                       VALUES ($1, $2);`, [wishlistGame.user_id, wishlistGame.game_id]);
     res.sendStatus(201);
-    // pool.query(`INSERT INTO "wishlist" ("user_id","game_id") VALUES ($1, $2);`, [wishlistGame.user_id, wishlistGame.game_id]).then((result) => {
-    //  res.sendStatus(201);
-    // });
   } catch (err) {
     console.log('Game Router Wishlist POST error:', err);
     res.sendStatus(500);
