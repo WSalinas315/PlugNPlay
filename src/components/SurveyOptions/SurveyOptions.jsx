@@ -4,9 +4,12 @@ import SliderUnstyled, { sliderUnstyledClasses } from '@mui/base/SliderUnstyled'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel';
+import PropTypes from 'prop-types';
 import './SurveyOptions.css';
+import { useState } from 'react'
 
 export default function SurveyOptions(props) {
+  const [sliderValue, setSliderValue] = useState(5);
   const blue = {
     100: '#DAECFF',
     200: '#99CCF3',
@@ -82,13 +85,36 @@ export default function SurveyOptions(props) {
       outline: 0;
       border: 3px solid currentColor;
       background-color: #fff;
-  
-      :hover,
+      :active,
       &.${sliderUnstyledClasses.focusVisible} {
         box-shadow: 0 0 0 0.25rem ${alpha(
           theme.palette.mode === 'light' ? blue[400] : blue[300],
           0.15,
         )};
+      }
+      & .label {
+          background: unset;
+          background-color: ${theme.palette.mode === 'light' ? blue[500] : blue[300]};
+          width: 32px;
+          height: 32px;
+          padding: 0px;
+          visibility: hidden;
+          color: #fff;
+          border-radius: 50% 50% 50% 0;
+          position: absolute;
+          transform: translate(-35%, -140%) rotate(-45deg) scale(0);
+          transition: transform 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      :active .label {
+          visibility: visible;
+          transform: translate(-35%, -140%) rotate(-45deg) scale(1);
+      }
+      :active .value {
+          transform: rotate(45deg);
+          text-align: center;
       }
   
       &.${sliderUnstyledClasses.active} {
@@ -249,6 +275,17 @@ export default function SurveyOptions(props) {
       label: rightLabel(props.page),
     },
   ]
+  function SliderValueLabel({ children }) {
+    return (
+      <span className="label">
+        <div className="value">{children}</div>
+      </span>
+    );
+  }
+  
+  SliderValueLabel.propTypes = {
+    children: PropTypes.element.isRequired,
+  };
 
   return (
     // pages 1-17 are slider questions
@@ -256,16 +293,20 @@ export default function SurveyOptions(props) {
     <>
       <h3>{leftLabel(props.page)}</h3>
       <h3>{rightLabel(props.page)}</h3>
+      <h3>Value: {sliderValue}</h3>
       <section id="survey-select">
         {props.page < 18 ? (
-          <Box sx={{ width: 300 }}>
+          <Box sx={{ width: 'calc(100% - 100px)' }}>
             <StyledSlider
               aria-label="Survey Question"
-              defaultValue={5}
+              defaultValue={sliderValue}
               step={null}
               marks={marks}
               min={1}
               max={10}
+              /*onChange={(_, value) => setSliderValue(value)}*/
+              onChangeCommitted={(_, value) => setSliderValue(value)}
+              slots={{ valueLabel: SliderValueLabel }}
             />
           </Box>
         ) : (

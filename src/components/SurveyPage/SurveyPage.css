@@ -1,0 +1,9 @@
+.survey-btn {
+    width: fit-content;
+}
+
+.survey-previous-next {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}

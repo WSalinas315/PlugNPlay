@@ -45,7 +45,7 @@ function Nav() {
 						value='collections'
 						icon={<CollectionsIcon />}
 						component={Link}
-						to='/collections'
+						to='/collection'
 					/>
 					<BottomNavigationAction
 						label='Search'
@@ -63,9 +63,9 @@ function Nav() {
 					/>
 					//! Need to figure out this onChange with Material Mui.
 					{/* <BottomNavigationAction
-label='Logout'
+							label='Logout'
 							onChange={() => dispatch({ type: 'LOGOUT' })}>
-/> */}
+					/> */}
 				</BottomNavigation>
 			)}
 		</Paper>

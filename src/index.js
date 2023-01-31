@@ -19,8 +19,8 @@ const theme = createTheme({
 	},
 	typography: {
 		h1: {
-			fontweight: '200',
-			fontSize: '12spt',
+			fontWeight: '200',
+			fontSize: '12pt',
 		},
 	},
 	components: {
@@ -40,20 +40,31 @@ const theme = createTheme({
 				},
 			},
 		},
-MuiSvgIcon: {
-styleOverrides: {
-root: {
-color: '#ffffff'
+		MuiSvgIcon: {
+			styleOverrides: {
+				root: {
+					color: '#ffffff',
+				},
+			},
 		},
-	},
-},
-MuiBottomNavigationAction:{
-styleOverrides:{
-label:{
-color: '#ffffff'
-}
-}
-}
+		MuiBottomNavigationAction: {
+			styleOverrides: {
+				label: {
+					color: '#ffffff',
+				},
+			},
+		},
+		MuiTab: {
+			styleOverrides: {
+				root: {
+					color: '#ffffff',
+					'&.Mui-selected': {
+						color: '#000000',
+						transform: 'scale(1.5)',
+					},
+				},
+			},
+		},
 	},
 });
 
