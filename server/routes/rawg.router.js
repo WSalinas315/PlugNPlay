@@ -83,24 +83,28 @@ router.get('/byTags', async (req, res) => {
   // QUERY
   try {
 
-    //TODO: fix query throwing 404 if not all pages populate
     for (let tag of userTags) {
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40`))
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=2`))
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=3`))
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40`,
+        { validateStatus: (status) => status < 500 } ))
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=2`,
+        { validateStatus: (status) => status < 500 } ))
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?${keyUrl}&tags=${tag.toLowerCase()}&page_size=40&page=3`,
+        { validateStatus: (status) => status < 500 } ))
     }
 
     const taggedGameObjects = await Promise.all(searchQueries)
 
     const taggedGames =
       taggedGameObjects
-        .map(obj => obj.data.results) //* isolates the actual API results
-        .flat() //* flattens the results into a single one-dimensional array
+        .filter(obj => obj.status < 300)
+        .map(obj => obj.data.results) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
         .filter(dupeFilter)
         .map(tagFilter)
-        .sort(sortByTagRelevance)
+        .sort(sortByTagRelevance);
     
     res.send(taggedGames)
+
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
