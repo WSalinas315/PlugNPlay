@@ -6,6 +6,7 @@ import rawgSaga from './rawg.saga'
 import wishlistSaga from './user.wishlist.saga';
 import ignorelistSaga from './user.ignorelist.saga';
 import playedListSaga from './user.playedlist.saga';
+import glossarySaga from './glossary.saga';
 
 export default function* rootSaga() {
   yield all([
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     rawgSaga(),
+    glossarySaga(),
     wishlistSaga(),
     ignorelistSaga(),
     playedListSaga(),
