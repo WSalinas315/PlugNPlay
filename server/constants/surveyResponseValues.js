@@ -268,7 +268,7 @@ const surveyBooleanQuestions = [
     id: 21,
     question: 'Would you prefer to avoid games with gory or very violent content?',
     caption: '',
-    tagsIfTrue: {
+    tags: { // applies these tag changes if user answers YES
       increase: ['family-friendly'],
       decrease: ['blood', 'gore', 'violent', 'horror']
     },

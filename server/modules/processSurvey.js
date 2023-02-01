@@ -1,12 +1,10 @@
 const { gameGenres, gameTags } = require("../constants/gameTags");
 const survey = require("../constants/surveyResponseValues");
 
-const { surveyScaleQuestions } = survey
+const { surveyScaleQuestions, surveyBooleanQuestions } = survey
 
 const limitValue = (value) => {
-  return value > 1 ? 1
-    : value < -1 ? 1
-      : value;
+  return Math.min(Math.max(value, -1), 1);
 }
 
 const roundToThreeDecimals = (float) => {
@@ -43,14 +41,14 @@ function processSurveyResults(surveyResObj) {
       for (let genre of questionObj.genres.left) {
         userGenreScores = {
           ...userGenreScores,
-          [genre]: (userGenreScores[genre] ?? 0) + limitValue(leftAdjustment)
+          [genre]: limitValue((userGenreScores[genre] ?? 0) + leftAdjustment)
         }
       }
 
       for (let genre of questionObj.genres.right) {
         userGenreScores = {
           ...userGenreScores,
-          [genre]: (userGenreScores[genre] ?? 0) + limitValue(rightAdjustment)
+          [genre]: limitValue((userGenreScores[genre] ?? 0) + rightAdjustment)
         }
       }
 
@@ -58,7 +56,7 @@ function processSurveyResults(surveyResObj) {
         userTagScores =
         {
           ...userTagScores,
-          [tag]: (userTagScores[tag] ?? 0) + limitValue(leftAdjustment)
+          [tag]: limitValue((userTagScores[tag] ?? 0) + leftAdjustment)
         }
       }
 
@@ -66,18 +64,33 @@ function processSurveyResults(surveyResObj) {
         userTagScores =
         {
           ...userTagScores,
-          [tag]: (userTagScores[tag] ?? 0) + limitValue(rightAdjustment)
+          [tag]: limitValue((userTagScores[tag] ?? 0) + rightAdjustment)
         }
       }
 
+    } else if (typeof answerScore === 'string') {
+
+      const [questionObj] = surveyBooleanQuestions.filter(q => q.id === i)
+
+      if (answerScore === 'yes') {
+        for (let tag of questionObj.tags.increase) {
+
+          userTagScores = {
+            ...userTagScores,
+            [tag]: limitValue(roundToThreeDecimals((userTagScores[tag] ?? 0) + 0.5))
+          }
+        }
+
+        for (let tag of questionObj.tags.decrease) {
+          userTagScores.tag = -1
+        }
+
+      }
+
+    } else {
+      // error
+      return null;
     }
-
-    // } else if (typeof question[i] === 'boolean') {
-
-    // } else {
-    //   // error
-    //   return null;
-    // }
 
   }
   return [userGenreScores, userTagScores]
@@ -86,9 +99,72 @@ function processSurveyResults(surveyResObj) {
 
 const answer = processSurveyResults(
   {
-    1: 0.75,
-    2: 0.5,
-    3: -0.25
+    1
+      :
+      -0.25,
+    2
+      :
+      -0.5,
+    3
+      :
+      -1,
+    4
+      :
+      0,
+    5
+      :
+      -0.25,
+    6
+      :
+      0,
+    7
+      :
+      -0.25,
+    8
+      :
+      -0.25,
+    9
+      :
+      -0.75,
+    10
+      :
+      0,
+    11
+      :
+      0,
+    12
+      :
+      -0.25,
+    13
+      :
+      0.5,
+    14
+      :
+      -0.25,
+    15
+      :
+      -0.25,
+    16
+      :
+      0.5,
+    17
+      :
+      0.25,
+    18
+      :
+      0,
+    19
+      :
+      0,
+    20
+      :
+      0,
+    21
+      :
+      "no",
+    22
+      :
+      "no",
   }
 )
 
