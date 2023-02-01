@@ -1,4 +1,4 @@
-export const gameGenres = [
+const gameGenres = [
   "action",
   "indie",
   "adventure",
@@ -20,7 +20,7 @@ export const gameGenres = [
   "card"
 ]
 
-export const gameTags = [
+const gameTags = [
   "2D",
   "2D Platformer",
   "3D",
@@ -220,3 +220,5 @@ export const gameTags = [
   "Walking Simulator",
   "Zombies"
 ]
+
+module.exports = { gameGenres, gameTags }

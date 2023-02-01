@@ -1,6 +1,6 @@
 // store an object of questions, question captions, and tags
 
-export const surveyScaleQuestions = [
+const surveyScaleQuestions = [
   {
     id: 1,
     question: "Would you rather control a single character/group of characters, or control a simulation?",
@@ -31,7 +31,10 @@ export const surveyScaleQuestions = [
     id: 3,
     question: "If and when playing with friends, would you like to cooperate toward a goal, or compete against each other?",
     caption: "",
-    genres: {},
+    genres: {
+      left: [],
+      right: []
+    },
     tags: {
       left: ['co-op', 'co-op-campaign', 'pve', 'local-co-op', 'mmo', 'mmorpg', 'online-co-op', 'online-multiplayer', ],
       right: ['pvp', 'competitive', 'battle-royale', 'local-pvp', 'moba', 'online-pvp', ],
@@ -67,7 +70,10 @@ export const surveyScaleQuestions = [
     id: 6,
     question: 'Would you be more interested in a 2D game, or a 3D game?',
     caption: '',
-    genres: {},
+    genres: {
+      left: [],
+      right: []
+    },
     tags: {
       left: ['2D', '2D-platformer', 'side-scroller', 'side-scrolling'],
       right: ['3D'],
@@ -77,7 +83,10 @@ export const surveyScaleQuestions = [
     id: 7,
     question: "Which visual style is more appealing to you: a stylized, cartoony look, or a photorealistic graphical style?",
     caption: '',
-    genres: {},
+    genres: {
+      left: [],
+      right: []
+    },
     tags: {
       left: ['anime', 'manga', 'cartoon', 'stylized', 'comic-book', 'colorful', 'hand-drawn',],
       right: ['realistic', 'photorealistic', 'cinematic',],
@@ -87,7 +96,10 @@ export const surveyScaleQuestions = [
     id: 8,
     question: "How do you feel about games featuring low-poly, 8-bit, or old school graphics?",
     caption: '',
-    genres: {},
+    genres: {
+      left: [],
+      right: []
+    },
     tags: {
       left: ['8-bit', 'pixel-graphics', 'retro', 'demake', 'low-poly', 'old-school'],
       right: [],
@@ -110,7 +122,10 @@ export const surveyScaleQuestions = [
     id: 10,
     question: "Would you like to feel fully immersed and involved in the game world, or would you rather observe characters/events from a distance?",
     caption: '',
-    genres: {},
+    genres: {
+      left: [],
+      right: []
+    },
     tags: {
       left: ['open-world', 'first-person', 'fps', 'atmospheric', 'sandbox', 'silent-protagonist',],
       right: ['god-game', 'third-person', 'third-person-shooter', 'rts', 'real-time-tactics', 'moba', 'base-building', 'city-builder', 'isometric', 'top-down'],
@@ -237,7 +252,10 @@ export const surveyScaleQuestions = [
     id: 20,
     question: "Would you like to play a game with an intense, dark, or otherwise serious tone?",
     caption: '',
-    genres: {},
+    genres: {
+      left: [],
+      right: []
+    },
     tags: {
       left: ['emotional', 'dark', 'dark-comedy', 'crime', 'villain-protagonist', 'drama', 'dystopian', 'noir'],
       right: [],
@@ -265,3 +283,5 @@ const surveyBooleanQuestions = [
     },
   },
 ]
+
+module.exports = { surveyScaleQuestions, surveyBooleanQuestions }
