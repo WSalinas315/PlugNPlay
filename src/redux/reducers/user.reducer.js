@@ -1,14 +1,38 @@
-const userReducer = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_USER':
-      return action.payload;
-    case 'UNSET_USER':
-      return {};
-    default:
-      return state;
-  }
+import { combineReducers } from "redux";
+
+export const user = (state = {}, { type, payload }) => {
+  return {
+    'SET_USER': payload,
+    'UNSET_USER': {}
+  }[type] || state
 };
 
-// user will be on the redux state at:
-// state.user
-export default userReducer;
+const userWishlist = (state = [], { type, payload }) => {
+  return {
+    'USER/SET_WISHLIST': payload,
+    'USER/CLEAR_WISHLIST': [],
+    'UNSET_USER': []
+  }[type] || state;
+}
+
+const userIgnorelist = (state = [], { type, payload }) => {
+  return {
+    'USER/SET_IGNORELIST': payload,
+    'USER/CLEAR_IGNORELIST': [],
+    'UNSET_USER': []
+  }[type] || state;
+}
+
+const userPlayedList = (state = [], { type, payload }) => {
+  return {
+    'USER/SET_PLAYED_LIST': payload,
+    'USER/CLEAR_PLAYED_LIST': [],
+    'UNSET_USER': []
+  }[type] || state;
+}
+
+export const userLists = combineReducers({
+  userWishlist,
+  userIgnorelist,
+  userPlayedList,
+});
