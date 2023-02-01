@@ -4,8 +4,9 @@ function ViewProfile () {
   return (
     <div className="container">
     <h2> Profile</h2>
+    <p> Full Name</p>
+    <p> Username</p>
     
-    <button> edit</button>
   </div>
   )
 }
