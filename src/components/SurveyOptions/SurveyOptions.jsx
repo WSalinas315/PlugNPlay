@@ -7,9 +7,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import PropTypes from 'prop-types';
 import './SurveyOptions.css';
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function SurveyOptions(props) {
   const [sliderValue, setSliderValue] = useState(5);
+  const survey = useSelector((store) => store.survey);
+
+  const dispatch = useDispatch ();
+
   const blue = {
     100: '#DAECFF',
     200: '#99CCF3',
@@ -287,6 +292,14 @@ export default function SurveyOptions(props) {
     children: PropTypes.element.isRequired,
   };
 
+  const handleChange = (value) => {
+    let questionNum = 'q' + props.page;
+    let question = {};
+    question[questionNum] = value;
+    setSliderValue(value);
+    dispatch({type: SET_SURVEY_ANSWERS, payload: question});
+  }
+
   return (
     // pages 1-17 are slider questions
     // if page 18-20, show checkbox instead
@@ -305,7 +318,7 @@ export default function SurveyOptions(props) {
               min={1}
               max={10}
               /*onChange={(_, value) => setSliderValue(value)}*/
-              onChangeCommitted={(_, value) => setSliderValue(value)}
+              onChangeCommitted={(_, value) => handleChange(value)}
               slots={{ valueLabel: SliderValueLabel }}
             />
           </Box>
