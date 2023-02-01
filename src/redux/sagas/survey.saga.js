@@ -1,6 +1,18 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
+import { handleErrors } from './user._saga';
 
 // axios for survey/algorithm
 
-export default surveySaga;
+function* postSurveyData({payload}) {
+  try {
+    yield axios.post('/user/survey', payload)
+  } catch (err) {
+    handleErrors('Failed to post survey data', err);
+  }
+}
+
+
+export default function* surveySaga() {
+  yield takeLatest('SURVEY/POST_DATA', postSurveyData)
+};

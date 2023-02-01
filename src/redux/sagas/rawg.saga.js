@@ -44,7 +44,7 @@ function* searchByTags({ payload }) {
   }
 }
 
-export default function* gamesSaga() {
+export default function* rawgSaga() {
   yield takeLatest('RAWG/FETCH_CURRENT_GAME', fetchByID)
   yield takeLatest('RAWG/SEARCH_BY_NAME', searchByName)
   yield takeLatest('RAWG/SEARCH_BY_TAGS', searchByTags)
