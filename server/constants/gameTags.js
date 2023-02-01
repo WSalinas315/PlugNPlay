@@ -1,4 +1,26 @@
-export const userTags = [
+export const gameGenres = [
+  "action",
+  "indie",
+  "adventure",
+  "rpg",
+  "Strategy",
+  "shooter",
+  "casual",
+  "simulation",
+  "puzzle",
+  "arcade",
+  "platformer",
+  "racing",
+  "massively multiplayer",
+  "sports",
+  "fighting",
+  "family",
+  "board games",
+  "educational",
+  "card"
+]
+
+export const gameTags = [
   "2D",
   "2D Platformer",
   "3D",
