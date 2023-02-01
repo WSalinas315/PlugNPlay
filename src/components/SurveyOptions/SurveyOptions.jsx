@@ -285,13 +285,13 @@ export default function SurveyOptions(props) {
   }
 
   const handleChange = (value) => {
-    let questionNum = 'q' + props.page;
+    let questionNum = props.page;
     setSliderValue(value);
     dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
   }
 
   const handleChangeRadio = (value) => {
-    let questionNum = 'q' + props.page;
+    let questionNum = props.page;
     dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
   }
 

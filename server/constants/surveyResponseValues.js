@@ -1,6 +1,6 @@
 // store an object of questions, question captions, and tags
 
-export const survey = [
+export const surveyScaleQuestions = [
   {
     id: 1,
     question: "Would you rather control a single character/group of characters, or control a simulation?",
