@@ -22,6 +22,7 @@ import Header from '../Header/Header';
 import CollectionPage from '../ViewCollection/ViewCollection';
 
 import Survey from '../Survey/Survey';
+import ViewRecommendation from '../ViewRecommended/ViewRecommended';
 
 import './App.css';
 
@@ -45,7 +46,8 @@ function App() {
 						<AboutPage />
 					</Route>
 					<ProtectedRoute exact path='/user'>
-						<UserPage />
+						{/* <UserPage /> */}
+						<ViewRecommendation />
 					</ProtectedRoute>
 					
 					<ProtectedRoute exact path='/collection'>
