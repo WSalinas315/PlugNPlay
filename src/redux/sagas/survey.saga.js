@@ -6,7 +6,7 @@ import { handleErrors } from './user._saga';
 
 function* postSurveyData({payload}) {
   try {
-    yield axios.post('/user/survey', payload)
+    yield axios.post('/api/games/survey', payload)
   } catch (err) {
     handleErrors('Failed to post survey data', err);
   }

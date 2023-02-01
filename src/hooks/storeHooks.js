@@ -9,6 +9,10 @@ const useReduxStore = () => {
   return useSelector((store) => store);
 };
 
+const useSurveyData = () => {
+  return useSelector(store => store.survey.surveyResults)
+}
+
 /*
 EXAMPLE FOR A SELECTOR THAT GETS SOMETHING SPECIFIC
 
@@ -17,4 +21,4 @@ const useUser = () => {
 }
 */
 
-export default useReduxStore;
+export default { useReduxStore, useSurveyData };
