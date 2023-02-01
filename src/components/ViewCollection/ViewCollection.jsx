@@ -52,9 +52,21 @@ export default function Collection() {
 						<Wishlist />
 					</Box>
 				</TabPanel>
-				<TabPanel value='played'>
+
+				<TabPanel
+					value='played'
+					sx={{
+						width: 300,
+						height: 600,
+						position: 'fixed',
+						left: 20,
+						right: 20,
+						top: 100,
+						overflowY: 'scroll',
+					}}>
 					<Played />
 				</TabPanel>
+
 				<TabPanel value='glossary'>
 					<Glossary />
 				</TabPanel>
