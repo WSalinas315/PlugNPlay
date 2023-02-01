@@ -41,7 +41,7 @@ export default function Collection() {
 					value='wishlist'
 					sx={{
 						width: 300,
-						height: 600,
+						height: 640,
 						position: 'fixed',
 						left: 20,
 						right: 20,
