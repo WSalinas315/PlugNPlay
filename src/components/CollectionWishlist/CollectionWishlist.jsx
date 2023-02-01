@@ -31,14 +31,14 @@ export default function Wishlist() {
 	];
 
 	return (
-		<ImageList>
+		<ImageList cols={1} rowHeight={275}>
 			{/* <h5> 🚧🚧🚧 UNDER DEVELOPMENT 🚧🚧🚧</h5>
 			<p>
 				This is rendering the Wishlist component to appear in the tab section 🥹
 			</p> */}
 			{dummyData.map((item, index) => {
 				return (
-					<ImageListItem key={index} cols={1.5}>
+					<ImageListItem key={index}>
 						<img src={item.url} srcSet={item.url} loading='lazy' />
 						<ImageListItemBar
 							title={item.name}
