@@ -64,9 +64,7 @@ export default function Collection() {
 						top: 100,
 						overflowY: 'scroll',
 					}}>
-					<Box>
-						<Played />
-					</Box>
+					<Played />
 				</TabPanel>
 
 				<TabPanel value='glossary'>
