@@ -40,7 +40,7 @@ export default function Collection() {
 				<TabPanel
 					value='wishlist'
 					sx={{
-						width: 300,
+						width: 'calc(100% - 100px)',
 						height: 640,
 						position: 'fixed',
 						left: 20,
