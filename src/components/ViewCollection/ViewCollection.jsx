@@ -41,13 +41,14 @@ export default function Collection() {
 					value='wishlist'
 					sx={{
 						width: 300,
-						height: 300,
-						position: 'absolute',
+						height: 600,
+						position: 'fixed',
 						left: 20,
 						right: 20,
 						top: 100,
+						overflowY: 'scroll',
 					}}>
-					<Box position='scrollable'>
+					<Box>
 						<Wishlist />
 					</Box>
 				</TabPanel>
