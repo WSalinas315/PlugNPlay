@@ -10,6 +10,8 @@ function ViewProfile () {
     <p> Avatar</p>
     <div id="picture" className= "container">
   </div>
+  <button> edit</button>
+
   </div>
   )
 }
