@@ -287,10 +287,6 @@ export default function SurveyOptions(props) {
       </span>
     );
   }
-  
-  SliderValueLabel.propTypes = {
-    children: PropTypes.element.isRequired,
-  };
 
   const handleChange = (value) => {
     let questionNum = 'q' + props.page;

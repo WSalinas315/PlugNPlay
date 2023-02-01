@@ -42,37 +42,29 @@ function App() {
 				<Nav />
 				<Switch>
 					<Redirect exact from='/' to='/home' />
-
 					<Route exact path='/about'>
 						<AboutPage />
 					</Route>
-
 					<ProtectedRoute exact path='/user'>
 						{/* <UserPage /> */}
 						<ViewRecommendation />
 					</ProtectedRoute>
-
+					
 					<ProtectedRoute exact path='/collection'>
 						<CollectionPage />
 					</ProtectedRoute>
-
-
 					<Route exact path='/login'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
 					</Route>
-
 					<Route exact path='/registration'>
 						{user.id ? <Redirect to='/user' /> : <RegisterPage />}
 					</Route>
-
 					<Route exact path='/home'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
 					</Route>
-
-          <Route exact path='/survey'>
+					<Route exact path='/survey'>
 						{user.id ? <Survey /> : <LoginPage />}
 					</Route>
-
 					<Route>
 						<h1>404</h1>
 					</Route>
