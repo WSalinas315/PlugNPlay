@@ -24,15 +24,32 @@ export default function Collection() {
 				<Box>
 					<TabList
 						centered
-						sx={{ background: '#C02222', indicatorColor: '#000000' }}
+						sx={{
+							background: '#C02222',
+							indicatorColor: '#000000',
+							position: 'fixed',
+							left: 0,
+							right: 0,
+						}}
 						onChange={handleChange}>
 						<Tab label='Wishlist' value='wishlist' />
 						<Tab label='Played' value='played' />
 						<Tab label='Glossary' value='glossary' />
 					</TabList>
 				</Box>
-				<TabPanel value='wishlist'>
-					<Wishlist />
+				<TabPanel
+					value='wishlist'
+					sx={{
+						width: 300,
+						height: 300,
+						position: 'fixed',
+						left: 20,
+						right: 20,
+						top: 100,
+					}}>
+					<Box position='scrollable'>
+						<Wishlist />
+					</Box>
 				</TabPanel>
 				<TabPanel value='played'>
 					<Played />
