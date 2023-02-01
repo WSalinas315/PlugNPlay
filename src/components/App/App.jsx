@@ -47,10 +47,10 @@ function App() {
 					<ProtectedRoute exact path='/user'>
 						<UserPage />
 					</ProtectedRoute>
-					//! This needs to revert back to a ProtectedRoute.
-					<Route exact path='/collection'>
+					
+					<ProtectedRoute exact path='/collection'>
 						<CollectionPage />
-					</Route>
+					</ProtectedRoute>
 					<Route exact path='/login'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
 					</Route>
