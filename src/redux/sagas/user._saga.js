@@ -25,7 +25,9 @@ function* fetchUser() {
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
   } catch (error) {
-    handleErrors('User get request failed', error);
+    if (error.response.status !== 403) {
+      handleErrors('User get request failed', error);
+    }
   }
 }
 
