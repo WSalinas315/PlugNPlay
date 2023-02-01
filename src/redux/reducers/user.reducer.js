@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-const userReducer = (state = {}, { type, payload }) => {
+export const user = (state = {}, { type, payload }) => {
   return {
     'SET_USER': payload,
     'UNSET_USER': {}
@@ -31,8 +31,7 @@ const userPlayedList = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
-export default combineReducers({
-  userReducer,
+export const userLists = combineReducers({
   userWishlist,
   userIgnorelist,
   userPlayedList,
