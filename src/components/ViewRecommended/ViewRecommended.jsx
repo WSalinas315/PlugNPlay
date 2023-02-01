@@ -8,7 +8,7 @@ export default function ViewRecommendation() {
     <>
       
       <h1>🎮 RECOMMENDATION 🕹 VIEW</h1>
-
+      
     </>
   )
 }
