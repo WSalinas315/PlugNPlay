@@ -178,4 +178,17 @@ router.get('/glossary', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+/*
+  SURVEY ROUTES
+*/
+
+router.post('/survey', rejectUnauthenticated, async (req, res) => {
+  
+  try {
+
+  } catch (err) {
+
+  }
+})
+
 module.exports = router;
