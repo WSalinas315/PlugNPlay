@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 
 
 //Custom Hook -- uses other hooks
-const useReduxStore = () => {
+export const useReduxStore = () => {
   //accesses the useSelector hook and gives back entire store
   return useSelector((store) => store);
 };
 
-const useSurveyData = () => {
+export const useSurveyData = () => {
   return useSelector(store => store.survey.surveyResults)
 }
 
@@ -20,5 +20,3 @@ const useUser = () => {
   return useSelector(store => store.user)
 }
 */
-
-export default { useReduxStore, useSurveyData };

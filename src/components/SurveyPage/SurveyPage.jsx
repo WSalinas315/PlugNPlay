@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import useSurveyData from '../../hooks/storeHooks'
+import { useSurveyData } from '../../hooks/storeHooks'
 
 import SurveyQuestion from '../SurveyQuestion/SurveyQuestion'
 import SurveyOptions from '../SurveyOptions/SurveyOptions'
@@ -11,13 +11,14 @@ import './SurveyPage.css'
 export default function SurveyPage() {
   const [page, setPage] = useState(1)
   const dispatch = useDispatch();
+  const surveyData = useSurveyData();
 
   const nextPage = () => {
     console.log('in nextpage')
     if (page < 20) {
       setPage(page + 1)
     } else {
-      dispatch({ type: 'SURVEY/POST_DATA', payload: useSurveyData() })
+      dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
     }
   }
 
