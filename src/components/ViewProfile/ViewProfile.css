@@ -4,4 +4,7 @@
     width:
     }
 
-    
+#picture{
+    background-image: url("/Users/abdirahman/Documents/PlugNPlay/src/components/ViewProfile/basic.jpeg");
+    height:1000px
+}

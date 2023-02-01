@@ -11,6 +11,7 @@ function ViewProfile () {
     <div id="picture" className= "container">
   </div>
   <button> edit</button>
+  
 
   </div>
   )
