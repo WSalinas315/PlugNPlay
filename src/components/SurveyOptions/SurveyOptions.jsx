@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function SurveyOptions(props) {
   const [sliderValue, setSliderValue] = useState(5);
-  const survey = useSelector((store) => store.survey);
-
+  const survey = useSelector((store) => store.survey.surveyResults);
+  const currentQuestion = 'q' + props.page;
   const dispatch = useDispatch ();
 
   const blue = {
@@ -295,22 +295,25 @@ export default function SurveyOptions(props) {
   const handleChange = (value) => {
     let questionNum = 'q' + props.page;
     setSliderValue(value);
-    dispatch({type: SET_SURVEY_ANSWERS, payload: {[questionNum]: value}});
+    dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
+  }
+
+  const handleChangeRadio = (value) => {
+    let questionNum = 'q' + props.page;
+    dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
   }
 
   return (
     // pages 1-17 are slider questions
     // if page 18-20, show checkbox instead
     <>
-      <h3>{leftLabel(props.page)}</h3>
-      <h3>{rightLabel(props.page)}</h3>
-      <h3>Value: {sliderValue}</h3>
+      <h3>Value: {survey[currentQuestion]}</h3>
       <section id="survey-select">
         {props.page < 18 ? (
           <Box sx={{ width: 'calc(100% - 100px)' }}>
             <StyledSlider
               aria-label="Survey Question"
-              defaultValue={sliderValue}
+              defaultValue={survey[currentQuestion]}
               step={null}
               marks={marks}
               min={1}
@@ -324,6 +327,8 @@ export default function SurveyOptions(props) {
           <RadioGroup
             aria-labelledby="radio-buttons-group-label"
             name="radio-buttons-group"
+            defaultValue="no"
+            onChange={(_, value) => handleChangeRadio(value)}
           >
             <FormControlLabel value="yes" control={<Radio />} label="Yes" />
             <FormControlLabel value="no" control={<Radio />} label="No" />
