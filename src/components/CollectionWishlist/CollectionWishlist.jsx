@@ -10,24 +10,34 @@ export default function Wishlist() {
 	//? Will contain data that can be used to render the information to the cards to appear on the tab section of the collections View.
 	const dummyData = [
 		{
-			name: 'Game',
-			year: 1234,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			name: 'Final Fantasy X',
+			year: 2001,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-159-1556729295-Bba7-column-width-inline.jpg',
 		},
 		{
-			name: 'Game',
-			year: 2023,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0009.gif',
+			name: 'GTA: Vice City',
+			year: 2002,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-160-1556729296-IDis-column-width-inline.jpg',
 		},
 		{
-			name: 'Game',
-			year: 2022,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0001.gif',
+			name: 'Street Fighter IV',
+			year: 2009,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-167-1556729300-1edW-column-width-inline.jpg',
 		},
 		{
-			name: 'Game',
-			year: 2020,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0069.gif',
+			name: 'Halo 4',
+			year: 2012,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-186-1556729312-ZIaP-column-width-inline.jpg',
+		},
+		{
+			name: 'Diablo',
+			year: 2012,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-188-1556729313-h0mJ-column-width-inline.jpg',
+		},
+		{
+			name: 'Skyrim',
+			year: 2011,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-192-1556729315-57Jg-column-width-inline.jpg',
 		},
 	];
 
