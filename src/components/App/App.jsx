@@ -20,6 +20,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
 
 import CollectionPage from '../ViewCollection/ViewCollection';
+import ViewProfile from '../ViewProfile/ViewProfile';
 
 import Survey from '../Survey/Survey';
 
@@ -52,6 +53,10 @@ function App() {
 
 					<ProtectedRoute exact path='/collection'>
 						<CollectionPage />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path= '/profile'>
+						<ViewProfile />
 					</ProtectedRoute>
 
 
