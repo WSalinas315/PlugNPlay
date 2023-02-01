@@ -7,7 +7,6 @@ import SurveyOptions from '../SurveyOptions/SurveyOptions'
 import SurveyNextButton from '../SurveyNextButton/SurveyNextButton'
 import SurveyPrevButton from '../SurveyPrevButton/SurveyPrevButton'
 import './SurveyPage.css'
-import { useDispatch, useSelector } from 'react-redux'
 
 export default function SurveyPage() {
   const [page, setPage] = useState(1)
