@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export default function SurveyOptions(props) {
   const [sliderValue, setSliderValue] = useState(5);
   const survey = useSelector((store) => store.survey.surveyResults);
-  const currentQuestion = 'q' + props.page;
+  const currentQuestion = props.page;
   const dispatch = useDispatch ();
 
   const blue = {
