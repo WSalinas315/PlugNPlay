@@ -42,7 +42,7 @@ export default function Collection() {
 					sx={{
 						width: 300,
 						height: 300,
-						position: 'fixed',
+						position: 'absolute',
 						left: 20,
 						right: 20,
 						top: 100,

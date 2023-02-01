@@ -6,6 +6,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export default function Wishlist() {
+	//TODO : Will need the store to populate the games from the wishlist onto the tab panel
+	//! Need to fix the styling when displaying the image list on to the TabPanel
 	//? Will contain data that can be used to render the information to the cards to appear on the tab section of the collections View.
 	const dummyData = [
 		{
@@ -32,10 +34,6 @@ export default function Wishlist() {
 
 	return (
 		<ImageList cols={1} rowHeight={275}>
-			{/* <h5> 🚧🚧🚧 UNDER DEVELOPMENT 🚧🚧🚧</h5>
-			<p>
-				This is rendering the Wishlist component to appear in the tab section 🥹
-			</p> */}
 			{dummyData.map((item, index) => {
 				return (
 					<ImageListItem key={index}>
