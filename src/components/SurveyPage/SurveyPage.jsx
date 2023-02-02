@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSurveyData } from '../../hooks/storeHooks'
+import { Button } from '@mui/material'
 
 import SurveyQuestion from '../SurveyQuestion/SurveyQuestion'
 import SurveyOptions from '../SurveyOptions/SurveyOptions'
@@ -63,9 +64,12 @@ export default function SurveyPage() {
 
   return (
     <section id="survey-body">
-      <button
+      <Button
         onClick={autofill}
-      >Click me to autofill & test</button>
+        size="small"
+        sx={{ fontSize: "16px" }}
+        variant="outlined"
+      >Click me to autofill survey & test DATABASE post</Button>
       <SurveyQuestion page={page} />
       <SurveyOptions page={page} />
       <div className="survey-previous-next">

@@ -184,11 +184,11 @@ router.get('/glossary', rejectUnauthenticated, async (req, res) => {
 */
 
 //! PROTECT THIS ROUTE
-router.post('/survey', async (req, res) => {
+router.post('/survey', rejectUnauthenticated, async (req, res) => {
 
   console.log(req.body);
   const surveyResults = req.body;
-  const user_id = 2; //! TEST VALUE
+  const user_id = req.user.id;
 
   const connection = await pool.connect();
 

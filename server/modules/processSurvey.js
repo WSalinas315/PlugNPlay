@@ -95,7 +95,7 @@ function processSurveyResults(surveyResObj) {
 
 }
 
-const answer = processSurveyResults(
+const sampleAnswer = processSurveyResults(
   {
     1: -0.25,
     2: -0.5,
