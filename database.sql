@@ -1,10 +1,5 @@
 
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
 CREATE database "plug-n-play";
-
 
 
 CREATE TABLE "user" (
@@ -36,7 +31,7 @@ CREATE TABLE "user_tags" (
   OIDS=FALSE
 );
 
-CREATE TABLE user_genres (
+CREATE TABLE "user_genres" (
 	"id"    				serial NOT NULL,
 	"user_id" 	  	int REFERENCES "user" (id) NOT NULL,
 	"genre_name"		varchar(80) NOT NULL,
@@ -56,8 +51,6 @@ CREATE TABLE "played" (
   OIDS=FALSE
 );
 
-
-
 CREATE TABLE "wishlist" (
 	"id"			serial NOT NULL,
 	"user_id" int NOT NULL,
@@ -67,8 +60,6 @@ CREATE TABLE "wishlist" (
   OIDS=FALSE
 );
 
-
-
 CREATE TABLE "ignorelist" (
 	"id" 			serial NOT NULL,
 	"user_id" int NOT NULL,
@@ -77,8 +68,6 @@ CREATE TABLE "ignorelist" (
 ) WITH (
   OIDS=FALSE
 );
-
-
 
 CREATE TABLE "glossary" (
 	"id" 					serial NOT NULL,
