@@ -5,6 +5,6 @@
     }
 
 #picture{
-    background-image: url("/Users/abdirahman/Documents/PlugNPlay/src/components/ViewProfile/basic.jpeg");
+    background-image: url("src/components/ViewProfile/basic.jpeg");
     height:1000px
 }
