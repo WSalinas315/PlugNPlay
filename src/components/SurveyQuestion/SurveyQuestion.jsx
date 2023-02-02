@@ -44,11 +44,11 @@ export default function SurveyQuestion(props) {
       case 17:
         return `Would you rather play a game that makes you feel relaxed and at ease, or a game that makes you feel excited and on-edge?`
       case 18:
-        return `Would you prefer to avoid games with gory or very violent content?`
+        return `Would you like to play a game with an intense, dark, or otherwise serious tone?`
       case 19:
         return `Would you prefer to avoid games with sexual or erotic content?`
       case 20:
-        return `Would you like to play a game with an intense, dark, or otherwise serious tone?`
+        return `Would you prefer to avoid games with gory or very violent content?`
       default:
         return ''
     }
