@@ -27,8 +27,6 @@ function processSurveyResults(surveyResObj) {
   for (let i = 1; i <= Object.keys(userSurveyResponse).length; i++) {
     const answerScore = userSurveyResponse[i.toString()];
 
-    console.log('answerScore:', answerScore)
-
     if (typeof answerScore === 'number') {
 
       const [questionObj] = surveyScaleQuestions.filter(q => q.id === i)
@@ -99,73 +97,29 @@ function processSurveyResults(surveyResObj) {
 
 const answer = processSurveyResults(
   {
-    1
-      :
-      -0.25,
-    2
-      :
-      -0.5,
-    3
-      :
-      -1,
-    4
-      :
-      0,
-    5
-      :
-      -0.25,
-    6
-      :
-      0,
-    7
-      :
-      -0.25,
-    8
-      :
-      -0.25,
-    9
-      :
-      -0.75,
-    10
-      :
-      0,
-    11
-      :
-      0,
-    12
-      :
-      -0.25,
-    13
-      :
-      0.5,
-    14
-      :
-      -0.25,
-    15
-      :
-      -0.25,
-    16
-      :
-      0.5,
-    17
-      :
-      0.25,
-    18
-      :
-      0,
-    19
-      :
-      0,
-    20
-      :
-      0,
-    21
-      :
-      "no",
-    22
-      :
-      "no",
+    1: -0.25,
+    2: -0.5,
+    3: -1,
+    4: 0,
+    5: -0.25,
+    6: 0,
+    7: -0.25,
+    8: -0.25,
+    9: -0.75,
+    10: 0,
+    11: 0,
+    12: -0.25,
+    13: 0.5,
+    14: -0.25,
+    15: -0.25,
+    16: 0.5,
+    17: 0.25,
+    18: 0,
+    19: 0,
+    20: 0,
+    21: "no",
+    22: "no",
   }
 )
 
-console.log(answer);
+module.exports = processSurveyResults;
