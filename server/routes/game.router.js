@@ -202,7 +202,7 @@ router.post('/survey', async (req, res) => {
 
     for (let i = 0; i < Object.keys(genreScores).length; i++) {
       await connection.query(`
-        INSERT INTO user_genre
+        INSERT INTO user_genres
           ("user_id", "genre_name", "genre_score")
           VALUES ($1, $2, $3);
         `,
