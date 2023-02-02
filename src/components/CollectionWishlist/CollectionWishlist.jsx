@@ -6,7 +6,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export default function Wishlist() {
-	//TODO : Will need the store to populate the games from the wishlist onto the tab panel
+	//TODO : Will need the [store => store.userWishlist] to populate the games from the wishlist onto the tab panel
 	//? Will contain data that can be used to render the information to the cards to appear on the tab section of the collections View.
 	const dummyData = [
 		{

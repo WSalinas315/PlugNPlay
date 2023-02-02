@@ -28,20 +28,21 @@ export default function Collection() {
 							background: '#C02222',
 							indicatorColor: '#000000',
 							position: 'fixed',
+							display: 'flex',
 							left: 0,
 							right: 0,
 						}}
 						onChange={handleChange}>
-						<Tab label='Wishlist' value='wishlist' />
-						<Tab label='Played' value='played' />
-						<Tab label='Glossary' value='glossary' />
+						<Tab sx={{padding: '0px 50px 0px'}} label='Wishlist' value='wishlist' />
+						<Tab sx={{padding: '0px 50px 0px'}} label='Played' value='played' />
+						<Tab sx={{padding: '0px 50px 0px'}} label='Glossary' value='glossary' />
 					</TabList>
 				</Box>
 				<TabPanel
 					value='wishlist'
 					sx={{
-						width: 300,
-						height: 600,
+						width: 'calc(100% - 100px)',
+						height: 640,
 						position: 'fixed',
 						left: 20,
 						right: 20,
@@ -52,9 +53,21 @@ export default function Collection() {
 						<Wishlist />
 					</Box>
 				</TabPanel>
-				<TabPanel value='played'>
+
+				<TabPanel
+					value='played'
+					sx={{
+						width: 'calc(100% - 100px)',
+						height: 600,
+						position: 'fixed',
+						left: 20,
+						right: 20,
+						top: 100,
+						overflowY: 'scroll',
+					}}>
 					<Played />
 				</TabPanel>
+
 				<TabPanel value='glossary'>
 					<Glossary />
 				</TabPanel>

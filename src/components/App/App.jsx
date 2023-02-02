@@ -20,6 +20,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
 
 import CollectionPage from '../ViewCollection/ViewCollection';
+import ViewProfile from '../ViewProfile/ViewProfile';
 
 import Survey from '../Survey/Survey';
 import ViewRecommendation from '../ViewRecommended/ViewRecommended';
@@ -53,6 +54,11 @@ function App() {
 					<ProtectedRoute exact path='/collection'>
 						<CollectionPage />
 					</ProtectedRoute>
+
+					<ProtectedRoute exact path= '/profile'>
+						<ViewProfile />
+					</ProtectedRoute>
+
 					<Route exact path='/login'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
 					</Route>

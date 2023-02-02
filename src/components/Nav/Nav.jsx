@@ -19,7 +19,7 @@ function Nav() {
 	const dispatch = useDispatch();
 
 	return (
-		<Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
+		<Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1, width: '100vw' }}>
 			{!user.id && (
 				<BottomNavigation showLabels>
 					<BottomNavigationAction
