@@ -183,17 +183,52 @@ router.get('/glossary', rejectUnauthenticated, async (req, res) => {
   SURVEY ROUTES
 */
 
+//! PROTECT THIS ROUTE
 router.post('/survey', async (req, res) => {
-  
-  const { surveyResults } = req.body;
 
+  console.log(req.body);
+  const { surveyResults } = req.body;
+  const user_id = 2; //! TEST VALUE
+
+  const connection = await pool.connect();
+  
   try {
+
     const [genreScores, tagScores] = processSurveyResults(surveyResults)
     //TODO: SQL POST query
+    console.log(genreScores);
 
+    await connection.query('BEGIN;')
+
+    for (let i = 0; i < Object.keys(genreScores).length; i++) {
+      await connection.query(`
+        INSERT INTO user_genre
+          ("user_id", "genre_name", "genre_score")
+          VALUES ($1, $2, $3);
+        `,
+        [ user_id, Object.keys(genreScores)[i], Object.values(genreScores)[i] ]
+      )
+    }
+
+    for (let i = 0; i < Object.keys(tagScores).length; i++) {
+      await connection.query(`
+        INSERT INTO user_tags
+          ("user_id", "tag_name", "score")
+          VALUES ($1, $2, $3);
+      `,
+      [ user_id, Object.keys(tagScores)[i], Object.values(tagScores)[i] ]
+      )
+    }
+
+    await connection.query('COMMIT;')
+
+    res.sendStatus(200)
   } catch (err) {
+    await connection.query('ROLLBACK;')
     console.log(err);
     res.sendStatus(500)
+  } finally {
+    connection.release();
   }
 
 })
