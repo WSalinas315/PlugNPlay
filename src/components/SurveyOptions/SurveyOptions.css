@@ -1,7 +1,23 @@
 #survey-select {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-    left: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.MuiSlider-thumb {
+  color: black;
+}
+.MuiSlider-rail {
+  color: rgb(223, 124, 124);
+}
+.MuiSlider-track {
+  color: black;
+}
+
+.MuiSlider-markLabel {
+  font-size: 15px !important;
+  color: black !important;
+  width: 100px;
+  text-align: center;
 }

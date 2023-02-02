@@ -30,7 +30,7 @@ export default function SurveyPage() {
   }
 
   return (
-    <>
+    <section id="survey-body">
       <SurveyQuestion page={page} />
       <SurveyOptions page={page} />
       <div className="survey-previous-next">
@@ -44,6 +44,6 @@ export default function SurveyPage() {
           <SurveyNextButton text={nextBtnText()} />
         </div>
       </div>
-    </>
+    </section>
   )
 }

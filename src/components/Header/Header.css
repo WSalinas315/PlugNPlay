@@ -20,7 +20,7 @@
 #plugnplay {
 
     height: 60px;
-    width: 100%;
+    width: 100vw;
     background-color: #C02222;
     font-family: 'Sniglet';
     position: fixed;
