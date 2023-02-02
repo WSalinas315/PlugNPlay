@@ -21,8 +21,8 @@ export default function SwipeBox() {
     
     // onSwipeMove logs the positional changes from the starting point and sets the X/Y position variables
     onSwipeMove(position, event) {
-      console.log(`Moved ${position.x} pixels horizontally`, event);
-      console.log(`Moved ${position.y} pixels vertically`, event);
+      // console.log(`Moved ${position.x} pixels horizontally`, event);
+      // console.log(`Moved ${position.y} pixels vertically`, event);
       xPos = position.x;
       yPos = position.y;
     }
