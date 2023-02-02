@@ -80,7 +80,7 @@ export default function Played() {
 			{dummyData.map((game, index) => {
 				return (
 					<Card key={index}>
-						<CardMedia height='600' width='400'>
+						<CardMedia height='600' width='calc(100% - 100px)'>
 							<img src={game.url} srcSet={game.url} loading='lazy' />
 						</CardMedia>
 						<CardContent
