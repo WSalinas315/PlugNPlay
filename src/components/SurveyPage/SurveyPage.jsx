@@ -4,9 +4,12 @@ import { useState } from 'react'
 import SurveyNextButton from '../SurveyNextButton/SurveyNextButton'
 import SurveyPrevButton from '../SurveyPrevButton/SurveyPrevButton'
 import './SurveyPage.css'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function SurveyPage() {
   const [page, setPage] = useState(1)
+  const survey = useSelector((store) => store.survey.surveyResults);
+  const dispatch = useDispatch();
 
   const nextPage = () => {
     console.log('in nextpage')
@@ -14,6 +17,7 @@ export default function SurveyPage() {
       setPage(page + 1)
     } else {
       //handle submitting
+      dispatch({type: 'SUBMIT_SURVEY', payload: survey})
     }
   }
 
@@ -26,7 +30,7 @@ export default function SurveyPage() {
   }
 
   return (
-    <>
+    <section id="survey-body">
       <SurveyQuestion page={page} />
       <SurveyOptions page={page} />
       <div className="survey-previous-next">
@@ -40,6 +44,6 @@ export default function SurveyPage() {
           <SurveyNextButton text={nextBtnText()} />
         </div>
       </div>
-    </>
+    </section>
   )
 }

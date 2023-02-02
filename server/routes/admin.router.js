@@ -45,7 +45,6 @@ router.put('/glossary/:id', rejectUnauthenticated, async (req, res) => {
     console.log('Admin Router Glossary PUT by ID error:', err);
     res.sendStatus(500);
   }
-
 });
 
 module.exports = router;

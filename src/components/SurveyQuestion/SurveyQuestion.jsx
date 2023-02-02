@@ -53,5 +53,5 @@ export default function SurveyQuestion(props) {
         return ''
     }
   }
-  return <>{question(props.page)}</>
+  return <section id="survey-question">{question(props.page)}</section>
 }

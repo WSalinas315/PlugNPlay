@@ -6,45 +6,54 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export default function Wishlist() {
+	//TODO : Will need the [store => store.userWishlist] to populate the games from the wishlist onto the tab panel
 	//? Will contain data that can be used to render the information to the cards to appear on the tab section of the collections View.
 	const dummyData = [
 		{
-			name: 'Game',
-			year: 1234,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			name: 'Final Fantasy X',
+			year: 2001,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-159-1556729295-Bba7-column-width-inline.jpg',
 		},
 		{
-			name: 'Game',
-			year: 2023,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			name: 'GTA: Vice City',
+			year: 2002,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-160-1556729296-IDis-column-width-inline.jpg',
 		},
 		{
-			name: 'Game',
-			year: 2022,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			name: 'Street Fighter IV',
+			year: 2009,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-167-1556729300-1edW-column-width-inline.jpg',
 		},
 		{
-			name: 'Game',
-			year: 2020,
-			url: 'http://d205bpvrqc9yn1.cloudfront.net/0049.gif',
+			name: 'Halo 4',
+			year: 2012,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-186-1556729312-ZIaP-column-width-inline.jpg',
+		},
+		{
+			name: 'Diablo',
+			year: 2012,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-188-1556729313-h0mJ-column-width-inline.jpg',
+		},
+		{
+			name: 'Skyrim',
+			year: 2011,
+			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-192-1556729315-57Jg-column-width-inline.jpg',
 		},
 	];
 
 	return (
-		<ImageList sx={{ width: 400, height: 800 }}>
-			<h5> 🚧🚧🚧 UNDER DEVELOPMENT 🚧🚧🚧</h5>
-			<p>
-				This is rendering the Wishlist component to appear in the tab section 🥹
-			</p>
+		<ImageList cols={1} rowHeight={275}>
 			{dummyData.map((item, index) => {
-				<ImageListItem key={item.url}>
-					<img src={item.url} srcSet={item.url} loading='lazy' />
-					<ImageListItemBar
-						title={item.name}
-						subtitle={item.year}
-						position='top'
-					/>
-				</ImageListItem>;
+				return (
+					<ImageListItem key={index}>
+						<img src={item.url} srcSet={item.url} loading='lazy' />
+						<ImageListItemBar
+							title={item.name}
+							subtitle={item.year}
+							position='top'
+						/>
+					</ImageListItem>
+				);
 			})}
 		</ImageList>
 	);

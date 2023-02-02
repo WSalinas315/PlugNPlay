@@ -240,43 +240,39 @@ export default function SurveyOptions(props) {
 
   const marks = [
     {
-      value: 1,
+      value: -1,
       label: leftLabel(props.page),
     },
     {
-      value: 2,
+      value: -0.75,
       label: '',
     },
     {
-      value: 3,
+      value: -0.5,
       label: '',
     },
     {
-      value: 4,
+      value: -0.25,
       label: '',
     },
     {
-      value: 5,
+      value: 0,
       label: '',
     },
     {
-      value: 6,
+      value: 0.25,
       label: '',
     },
     {
-      value: 7,
+      value: 0.5,
       label: '',
     },
     {
-      value: 8,
+      value: 0.75,
       label: '',
     },
     {
-      value: 9,
-      label: '',
-    },
-    {
-      value: 10,
+      value: 1,
       label: rightLabel(props.page),
     },
   ]
@@ -287,10 +283,6 @@ export default function SurveyOptions(props) {
       </span>
     );
   }
-  
-  SliderValueLabel.propTypes = {
-    children: PropTypes.element.isRequired,
-  };
 
   const handleChange = (value) => {
     let questionNum = 'q' + props.page;
@@ -310,14 +302,14 @@ export default function SurveyOptions(props) {
       <h3>Value: {survey[currentQuestion]}</h3>
       <section id="survey-select">
         {props.page < 18 ? (
-          <Box sx={{ width: 'calc(100% - 100px)' }}>
+          <Box sx={{ width: 'calc(100% - 150px)' }}>
             <StyledSlider
               aria-label="Survey Question"
               defaultValue={survey[currentQuestion]}
               step={null}
               marks={marks}
-              min={1}
-              max={10}
+              min={-1}
+              max={1}
               /*onChange={(_, value) => setSliderValue(value)}*/
               onChangeCommitted={(_, value) => handleChange(value)}
               slots={{ valueLabel: SliderValueLabel }}
@@ -327,11 +319,27 @@ export default function SurveyOptions(props) {
           <RadioGroup
             aria-labelledby="radio-buttons-group-label"
             name="radio-buttons-group"
-            defaultValue="no"
+            defaultValue='no'
             onChange={(_, value) => handleChangeRadio(value)}
           >
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel value="yes" control={<Radio sx={{
+        '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
+            {
+                color: 'black',
+            },
+        '& .MuiSvgIcon-root + .MuiSvgIcon-root': {
+            color: 'red',
+        },
+    }} />} label="Yes" />
+            <FormControlLabel value="no" control={<Radio sx={{
+        '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
+            {
+                color: 'black',
+            },
+        '& .MuiSvgIcon-root + .MuiSvgIcon-root': {
+            color: 'red',
+        },
+    }} />} label="No" />
           </RadioGroup>
         )}
       </section>
