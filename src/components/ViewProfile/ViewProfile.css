@@ -1,0 +1,10 @@
+#picture{
+    image-rendering:
+    height:
+    width:
+    }
+
+#picture{
+    background-image: url("src/components/ViewProfile/basic.jpeg");
+    height:1000px
+}

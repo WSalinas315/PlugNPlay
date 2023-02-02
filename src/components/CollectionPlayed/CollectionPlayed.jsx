@@ -13,7 +13,9 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
-import { CardActions } from '@mui/material';
+import { ButtonGroup, CardActions } from '@mui/material';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 export default function Played() {
 	const dummyData = [
@@ -78,7 +80,7 @@ export default function Played() {
 			{dummyData.map((game, index) => {
 				return (
 					<Card key={index}>
-						<CardMedia height='600' width='400'>
+						<CardMedia height='600' width='calc(100% - 100px)'>
 							<img src={game.url} srcSet={game.url} loading='lazy' />
 						</CardMedia>
 						<CardContent
@@ -92,9 +94,13 @@ export default function Played() {
 							{/* <Typography>detail: {game.detail}</Typography> */}
 							<Typography>Platform: {game.platform}</Typography>
 							<CardActions>
-								<Button>
+								<ButtonGroup sx={{ gap: 18 }}>
 									<InfoIcon />
-								</Button>
+									<ButtonGroup sx={{ gap: 5 }}>
+										<ThumbUpIcon />
+										<ThumbDownIcon />
+									</ButtonGroup>
+								</ButtonGroup>
 							</CardActions>
 						</CardContent>
 					</Card>
