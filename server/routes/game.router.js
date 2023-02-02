@@ -187,16 +187,18 @@ router.get('/glossary', rejectUnauthenticated, async (req, res) => {
 router.post('/survey', async (req, res) => {
 
   console.log(req.body);
-  const { surveyResults } = req.body;
+  const surveyResults = req.body;
   const user_id = 2; //! TEST VALUE
 
   const connection = await pool.connect();
-  
+
+  console.log(surveyResults);
   try {
 
     const [genreScores, tagScores] = processSurveyResults(surveyResults)
     //TODO: SQL POST query
-    console.log(genreScores);
+    // console.log('Genre scores', genreScores);
+    // console.log('Tag scores', tagScores);
 
     await connection.query('BEGIN;')
 
