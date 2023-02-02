@@ -19,7 +19,7 @@ export default function Collection() {
 	};
 
 	return (
-		<Box sx={{ m: -6 }} position='static'>
+		<Box sx={{ m: -6}} position='static'>
 			<TabContext value={value}>
 				<Box>
 					<TabList
@@ -28,20 +28,20 @@ export default function Collection() {
 							background: '#C02222',
 							indicatorColor: '#000000',
 							position: 'fixed',
-							display: 'flex',
 							left: 0,
 							right: 0,
+							width:'calc(100vw- 50px)',
+							justifyContent: 'space-around'
 						}}
 						onChange={handleChange}>
-						<Tab sx={{padding: '0px 50px 0px'}} label='Wishlist' value='wishlist' />
-						<Tab sx={{padding: '0px 50px 0px'}} label='Played' value='played' />
-						<Tab sx={{padding: '0px 50px 0px'}} label='Glossary' value='glossary' />
+						<Tab sx={{padding: '0px 20px 0px'}} label='Wishlist' value='wishlist' />
+						<Tab sx={{padding: '0px 20px 0px'}} label='Played' value='played' />
+						<Tab sx={{padding: '0px 20px 0px'}} label='Glossary' value='glossary' />
 					</TabList>
 				</Box>
 				<TabPanel
 					value='wishlist'
 					sx={{
-						width: 'calc(100% - 100px)',
 						height: 640,
 						position: 'fixed',
 						left: 20,
@@ -57,7 +57,6 @@ export default function Collection() {
 				<TabPanel
 					value='played'
 					sx={{
-						width: 'calc(100% - 100px)',
 						height: 600,
 						position: 'fixed',
 						left: 20,
@@ -68,7 +67,14 @@ export default function Collection() {
 					<Played />
 				</TabPanel>
 
-				<TabPanel value='glossary'>
+				<TabPanel value='glossary' sx={{
+						height: 600,
+						position: 'fixed',
+						left: 20,
+						right: 20,
+						top: 100,
+						overflowY: 'scroll',
+					}}>
 					<Glossary />
 				</TabPanel>
 			</TabContext>
