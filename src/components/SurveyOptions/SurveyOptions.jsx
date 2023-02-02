@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function SurveyOptions(props) {
-  const [sliderValue, setSliderValue] = useState(5);
+  const [sliderValue, setSliderValue] = useState(0);
   const survey = useSelector((store) => store.survey.surveyResults);
   const currentQuestion = 'q' + props.page;
   const dispatch = useDispatch ();
@@ -192,6 +192,8 @@ export default function SurveyOptions(props) {
         return 'Top Player'
       case 17:
         return 'Relaxed'
+      case 18:
+        return 'Yes, I like dark themes'
       default:
         return ''
     }
@@ -233,6 +235,8 @@ export default function SurveyOptions(props) {
         return '100% Completion'
       case 17:
         return 'Excited'
+      case 18:
+        return 'No dark themes'
       default:
         return ''
     }
@@ -301,7 +305,7 @@ export default function SurveyOptions(props) {
     <>
       <h3>Value: {survey[currentQuestion]}</h3>
       <section id="survey-select">
-        {props.page < 18 ? (
+        {props.page < 19 ? (
           <Box sx={{ width: 'calc(100% - 150px)' }}>
             <StyledSlider
               aria-label="Survey Question"
