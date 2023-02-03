@@ -19,13 +19,21 @@ function Nav() {
 	const dispatch = useDispatch();
 
 	return (
-		<Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1, width: '100vw' }}>
+		<Paper
+			sx={{
+				position: 'fixed',
+				bottom: 0,
+				left: 0,
+				right: 0,
+				zIndex: 1,
+				width: '100vw',
+			}}>
 			{!user.id && (
 				<BottomNavigation showLabels>
 					<BottomNavigationAction
 						label='Home'
 						value='Home'
-			    	icon={<HomeIcon />}
+						icon={<HomeIcon />}
 						component={Link}
 						to='/login'
 					/>
@@ -36,28 +44,28 @@ function Nav() {
 					<BottomNavigationAction
 						label='Home'
 						value='home'
-						icon={<HomeIcon />}
+						icon={<HomeIcon sx={{ color: '#ffffff' }} />}
 						component={Link}
 						to='/home'
 					/>
 					<BottomNavigationAction
 						label='Collections'
 						value='collections'
-						icon={<CollectionsIcon />}
+						icon={<CollectionsIcon sx={{ color: '#ffffff' }} />}
 						component={Link}
 						to='/collection'
 					/>
 					<BottomNavigationAction
 						label='Search'
 						value='search'
-						icon={<SearchIcon />}
+						icon={<SearchIcon sx={{ color: '#ffffff' }} />}
 						component={Link}
 						to='/search'
 					/>
 					<BottomNavigationAction
 						label='Profile'
 						value='profile'
-						icon={<PersonIcon />}
+						icon={<PersonIcon sx={{ color: '#ffffff' }} />}
 						component={Link}
 						to='/profile'
 					/>
