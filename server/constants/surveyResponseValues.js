@@ -68,45 +68,19 @@ const surveyScaleQuestions = [
   },
   {
     id: 6,
-    question: 'Would you be more interested in a 2D game, or a 3D game?',
+    question: "Would you like to play a game with a stylized, cartoony, or animated graphical style?",
     caption: '',
     genres: {
       left: [],
       right: []
     },
     tags: {
-      left: ['2D', '2D-platformer', 'side-scroller', 'side-scrolling'],
-      right: ['3D'],
-    },
-  },
-  {
-    id: 7,
-    question: "Which visual style is more appealing to you: a stylized, cartoony look, or a photorealistic graphical style?",
-    caption: '',
-    genres: {
-      left: [],
-      right: []
-    },
-    tags: {
-      left: ['anime', 'manga', 'cartoon', 'stylized', 'comic-book', 'colorful', 'hand-drawn',],
-      right: ['realistic', 'photorealistic', 'cinematic',],
-    },
-  },
-  {
-    id: 8,
-    question: "How do you feel about games featuring low-poly, 8-bit, or old school graphics?",
-    caption: '',
-    genres: {
-      left: [],
-      right: []
-    },
-    tags: {
-      left: ['8-bit', 'pixel-graphics', 'retro', 'demake', 'low-poly', 'old-school'],
+      left: ['anime', 'manga', 'cartoon', 'stylized', 'comic-book', 'colorful', 'hand-drawn', '8-bit', 'pixel-graphics', 'retro', 'demake', 'low-poly', 'old-school'],
       right: [],
     },
   },
   {
-    id: 9,
+    id: 7,
     question: "Which sounds more appealing to you: a fantasy/sci-fi setting, where advanced technology or mythical creatures could play a role; or a setting in a grounded, realistic world much like our own?",
     caption: '',
     genres: {
@@ -115,11 +89,11 @@ const surveyScaleQuestions = [
     },
     tags: {
       left: ['zombies', 'western', 'vampire', 'supernatural', 'steampunk', 'space', 'space-sim', 'sci-fi', 'fantasy', 'futuristic', 'monsters',],
-      right: ['modern', 'realistic', 'photorealistic'],
+      right: [],
     },
   },
   {
-    id: 10,
+    id: 8,
     question: "Would you like to feel fully immersed and involved in the game world, or would you rather observe characters/events from a distance?",
     caption: '',
     genres: {
@@ -132,34 +106,21 @@ const surveyScaleQuestions = [
     },
   },
   {
-    id: 11,
-    question: "Would you feel more accomplished defeating a tough enemy, or solving a difficult puzzle?",
+    id: 9,
+    question: "Would you prefer an exciting, fast-paced game that rewards movement and reaction time, or a slower, more thoughtful game that rewards planning, tactics and strategy?",
     caption: '',
     genres: {
-      left: [ 'action', 'rpg', 'shooter', 'strategy', 'arcade', ],
-      right: [ 'puzzle', 'simulation', ],
-    },
-    tags: {
-      left: [ 'loot', 'dungeon-crawler', ],
-      right: [ 'logic', 'puzzle-platformer', ],
-    },
-  },
-  {
-    id: 12,
-    question: "Would you prefer a fast-paced game that rewards movement and reaction time, or a slower game that rewards planning, tactics and strategy?",
-    caption: '',
-    genres: {
-      left: ['action', 'platformer', 'fighting', 'racing', 'shooter', 'arcade',],
+      left: ['action', 'platformer', 'fighting', 'racing', 'shooter', 'arcade', 'sports',],
       right: ['strategy','puzzle','simulation','card','board-games'],
     },
     tags: {
-      left: ['action-rpg', 'bullet-hell', 'fast-paced', 'fps', 'precision-platformer', 'quick-time-events', 'music', 'rhythm', 'shoot-em-up', 'beat-em-up', 'twin-stick-shooter',],
+      left: ['action-rpg', 'bullet-hell', 'fast-paced', 'fps', 'precision-platformer', 'quick-time-events', 'music', 'rhythm', 'shoot-em-up', 'beat-em-up', 'twin-stick-shooter','horror', 'survival', 'action-adventure'],
       right: ['crpg', 'action-rts', 'rts', 'resource-management', 'turn-based',],
     },
   },
   {
-    id: 13,
-    question: "Which sounds more appealing: a game where you repeat activities to gain a better score or gear, or to sharpen your abilities; or a game with a structure and a definitive ending?",
+    id: 10,
+    question: "Which sounds more appealing: a game where you repeat activities to gain a better score/sharpen your abilities; or a game with a structure and a definitive ending?",
     caption: '',
     genres: {
       left: ['arcade', 'massively-multiplayer', 'simulation', 'card', 'board-games'],
@@ -171,7 +132,7 @@ const surveyScaleQuestions = [
     },
   },
   {
-    id: 14,
+    id: 11,
     question: "Would you rather play a game where you feel powerful and have many abilities, or a game where you are weak and disempowered, and you have to beat the odds?",
     caption: '',
     genres: {
@@ -184,46 +145,21 @@ const surveyScaleQuestions = [
     },
   },
   {
-    id: 15,
+    id: 12,
     question: "Would you feel more accomplished from demonstrating your practical skills (craftsmanship, puzzle solving, etc), or your heroic skills (magic, combat abilities, etc)?",
     caption: '',
     genres: {
-      left: ['action', 'adventure', 'shooter',],
-      right: ['simulation', 'educational', 'puzzle',],
+      left: ['simulation', 'educational', 'puzzle',],
+      right: ['action', 'adventure', 'rpg', 'shooter', 'strategy', 'arcade'],
     },
     tags: {
-      left: ['rpg', 'magic', 'fantasy', 'dungeon-crawling',],
-      right: ['argiculture', 'farming', 'gambling', 'management', 'resource-management', 'fishing', 'flight', 'driving', 'gardening', 'hunting', 'crafting'],
+      left: ['argiculture', 'farming', 'gambling', 'management', 'resource-management', 'fishing', 'flight', 'driving', 'gardening', 'hunting', 'crafting', 'logic', 'puzzle-platformer'],
+      right: ['rpg', 'magic', 'fantasy', 'loot', 'dungeon-crawler'],
     },
   },
+
   {
-    id: 16,
-    question: "Would you feel more accomplished being the top player on a leaderboard, or finishing 100% of a game's content?",
-    caption: '',
-    genres: {
-      left: ['action', 'arcade', 'shooter'],
-      right: ['indie', 'adventure', 'rpg'],
-    },
-    tags: {
-      left: [ 'competitive', 'pvp' ],
-      right: ['mmo', 'loot', 'open-world' ],
-    },
-  },
-  {
-    id: 17,
-    question: "Would you rather play a game that makes you feel relaxed and at ease, or a game that makes you feel excited and on-edge?",
-    caption: '',
-    genres: {
-      left: ['casual', 'simulation', 'board-games', 'card'],
-      right: ['action', 'shooter', 'racing', 'sports', 'fighting'],
-    },
-    tags: {
-      left: [],
-      right: ['horror', 'fps', 'action-adventure', 'fast-paced', 'bullet-hell', 'twin-stick-shooter'],
-    },
-  },
-  {
-    id: 18,
+    id: 13,
     question: "Do you find the most enjoyment in feeling unrestricted and free to explore, or in having a sense of direction?",
     caption: '',
     genres: {
@@ -235,21 +171,22 @@ const surveyScaleQuestions = [
       right: ['linear'],
     },
   },
+
   {
-    id: 19,
+    id: 14,
     question: "Would you like to play a game with a strong focus on story, character, and narrative?",
     caption: '',
     genres: {
-      left: ['action', 'adventure', 'rpg'],
+      left: ['adventure', 'rpg'],
       right: []
     },
     tags: {
-      left: ['emotional', 'epic', 'story', 'story-rich', 'meaningful-choices', 'choices-matter', 'choose-your-own-adventure', 'dating-sim', 'walking-simulator', 'lore-rich', 'multiple-endings', 'mystery', 'narration', 'narrative', 'point-click', 'story', 'story-rich', 'visual-novel'],
+      left: ['emotional', 'epic', 'story', 'story-rich', 'meaningful-choices', 'choices-matter', 'choose-your-own-adventure', 'dating-sim', 'walking-simulator', 'lore-rich', 'multiple-endings', 'mystery', 'narration', 'narrative', 'point-click', 'story', 'story-rich', ],
       right: [],
     },
   },
   {
-    id: 20,
+    id: 15,
     question: "Would you like to play a game with an intense, dark, or otherwise serious tone?",
     caption: '',
     genres: {
@@ -265,7 +202,7 @@ const surveyScaleQuestions = [
 
 const surveyBooleanQuestions = [
   {
-    id: 21,
+    id: 16,
     question: 'Would you prefer to avoid games with gory or very violent content?',
     caption: '',
     tags: { // applies these tag changes if user answers YES
@@ -274,7 +211,7 @@ const surveyBooleanQuestions = [
     },
   },
   {
-    id: 22,
+    id: 17,
     question: 'Would you prefer to avoid games with sexual or erotic content?',
     caption: '',
     tags: {

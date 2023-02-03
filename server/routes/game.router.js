@@ -183,7 +183,6 @@ router.get('/glossary', rejectUnauthenticated, async (req, res) => {
   SURVEY ROUTES
 */
 
-//! PROTECT THIS ROUTE
 router.post('/survey', rejectUnauthenticated, async (req, res) => {
 
   console.log(req.body);
@@ -196,12 +195,11 @@ router.post('/survey', rejectUnauthenticated, async (req, res) => {
   try {
 
     const [genreScores, tagScores] = processSurveyResults(surveyResults)
-    //TODO: SQL POST query
-    // console.log('Genre scores', genreScores);
-    // console.log('Tag scores', tagScores);
 
+    // SQL transaction
     await connection.query('BEGIN;')
 
+    // insert each genre score
     for (let i = 0; i < Object.keys(genreScores).length; i++) {
       await connection.query(`
         INSERT INTO user_genres
@@ -212,6 +210,7 @@ router.post('/survey', rejectUnauthenticated, async (req, res) => {
       )
     }
 
+    // insert each tag score
     for (let i = 0; i < Object.keys(tagScores).length; i++) {
       await connection.query(`
         INSERT INTO user_tags
@@ -222,10 +221,12 @@ router.post('/survey', rejectUnauthenticated, async (req, res) => {
       )
     }
 
+    // commit changes
     await connection.query('COMMIT;')
 
     res.sendStatus(200)
   } catch (err) {
+    // if anything goes wrong, discard all changes
     await connection.query('ROLLBACK;')
     console.log(err);
     res.sendStatus(500)

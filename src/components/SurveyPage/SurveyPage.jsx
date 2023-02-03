@@ -50,13 +50,8 @@ export default function SurveyPage() {
         "13": 0.5,
         "14": -0.25,
         "15": -0.25,
-        "16": 0.5,
-        "17": 0.25,
-        "18": 0,
-        "19": 0,
-        "20": 0,
-        "21": "no",
-        "22": "no"
+        "16": "no",
+        "17": "no"
     }
   })
     dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
