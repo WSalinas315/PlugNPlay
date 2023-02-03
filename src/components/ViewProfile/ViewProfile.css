@@ -1,10 +1,8 @@
-#picture{
-    image-rendering:
-    height:
-    width:
-    }
-
-#picture{
-    background-image: url("src/components/ViewProfile/basic.jpeg");
-    height:1000px
+.profile_img{
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
+  max-width: 250px;
+  max-height: 250px;
 }
