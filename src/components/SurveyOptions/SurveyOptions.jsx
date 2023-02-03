@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export default function SurveyOptions(props) {
   const [sliderValue, setSliderValue] = useState(0);
   const survey = useSelector((store) => store.survey.surveyResults);
-  const currentQuestion = 'q' + props.page;
+  const currentQuestion = props.page;
   const dispatch = useDispatch ();
 
   const blue = {
@@ -289,13 +289,13 @@ export default function SurveyOptions(props) {
   }
 
   const handleChange = (value) => {
-    let questionNum = 'q' + props.page;
+    let questionNum = props.page;
     setSliderValue(value);
     dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
   }
 
   const handleChangeRadio = (value) => {
-    let questionNum = 'q' + props.page;
+    let questionNum = props.page;
     dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
   }
 
