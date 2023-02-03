@@ -293,7 +293,7 @@ export default function SurveyOptions(props) {
     <>
       <h3>Value: {survey[currentQuestion]}</h3>
       <section id="survey-select">
-        {props.page < 19 ? (
+        {props.page < 16 ? (
           <Box sx={{ width: 'calc(100% - 150px)' }}>
             <StyledSlider
               aria-label="Survey Question"
