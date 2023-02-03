@@ -1,3 +1,10 @@
+import React from 'react';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import GridList from '@mui/material/GridList';
+import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';
+
 export default function GlossaryItem() {
 	const glossaryTerms = [
 		'2D',
@@ -199,6 +206,11 @@ export default function GlossaryItem() {
 		'Walking Simulator',
 		'Zombies',
 	];
-
-	return console.log('Terms: ', glossaryTerms);
+	return (
+		<Paper>
+			<Grid>
+				<Tab> A</Tab>
+			</Grid>
+		</Paper>
+	);
 }
