@@ -19,7 +19,7 @@ function* fetchSurvey() {
 function* postSurveyData({payload}) {
   console.log('in postsurveydata');
   try {
-    yield axios.post('/api/games/survey', payload)
+    yield axios.post('/api/survey/userScores', payload)
     console.log('axios: survey post successful');
   } catch (err) {
     handleErrors('Failed to post survey data', err);
