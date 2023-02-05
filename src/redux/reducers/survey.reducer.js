@@ -19,11 +19,20 @@ let survey = {
     16: 'no',
     17: 'no'
 }
+
 const surveyResults = (state = survey, { type, payload }) => {
     return {
       'SET_SURVEY_ANSWERS': {...state, ...payload},
     }[type] || state;
-  } 
+}
+
+const surveyQuestions = (state = [], { type, payload }) => {
+  return {
+    'SURVEY/SET_QUESTIONS': payload
+  }[type] || state;
+}
+
 export default combineReducers({
-    surveyResults
+    surveyResults,
+    surveyQuestions,
 })

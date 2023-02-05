@@ -13,6 +13,7 @@ const gameRouter = require('./routes/game.router');
 const rawgRouter = require('./routes/rawg.router');
 const tagsRouter = require('./routes/tags.router');
 const adminRouter = require('./routes/admin.router');
+const surveyRouter = require('./routes/survey.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use('/api/user', userRouter);
 app.use('/api/games', gameRouter);
 app.use('/api/rawg', rawgRouter);
 app.use('/api/tags', tagsRouter);
+app.use('/api/survey', surveyRouter);
 app.use('/api/admin', adminRouter);
 
 // Serve static files
