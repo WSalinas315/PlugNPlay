@@ -95,10 +95,10 @@ export default function Played() {
 							<Typography>Platform: {game.platform}</Typography>
 							<CardActions>
 								<ButtonGroup sx={{ gap: 18 }}>
-									<InfoIcon />
+									<InfoIcon sx={{ color: '#ffffff' }} />
 									<ButtonGroup sx={{ gap: 5 }}>
-										<ThumbUpIcon />
-										<ThumbDownIcon />
+										<ThumbUpIcon sx={{ color: '#ffffff' }} />
+										<ThumbDownIcon sx={{ color: '#ffffff' }} />
 									</ButtonGroup>
 								</ButtonGroup>
 							</CardActions>
