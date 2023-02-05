@@ -40,13 +40,13 @@ const theme = createTheme({
 				},
 			},
 		},
-		MuiSvgIcon: {
-			styleOverrides: {
-				root: {
-					color: '#ffffff',
-				},
-			},
-		},
+		// MuiSvgIcon: {
+		// 	styleOverrides: {
+		// 		root: {
+		// 			color: '#C02222',
+		// 		},
+		// 	},
+		// },
 		MuiBottomNavigationAction: {
 			styleOverrides: {
 				label: {
