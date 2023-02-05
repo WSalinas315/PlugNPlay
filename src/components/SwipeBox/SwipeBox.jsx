@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
 import Swipe from 'react-easy-swipe'
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
 import { useState } from 'react'
+import SnackbarAlert from '../SnackbarAlert/SnackbarAlert'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+
 
 export default function SwipeBox() {
   const [open, setOpen] = useState(false)
-  const [snackLeftOpen, setSnackLeftOpen] = useState(false)
-  const [snackRightOpen, setSnackRightOpen] = useState(false)
+  const [snackOpen, setSnackOpen] = useState(false)
+  const [severity, setSeverity] = useState('')
+  const [message, setMessage] = useState('')
 
+  // for dialog box
   const handleOpen = () => {
+    setSnackOpen(false)
     setOpen(true)
   }
 
@@ -29,28 +29,11 @@ export default function SwipeBox() {
     setOpen(false)
   }
 
-  const handleSnackLeftOpen = () => {
-    handleSnackRightClose();
-    setSnackLeftOpen(true)
-  }
-  const handleSnackRightOpen = () => {
-    handleSnackLeftClose();
-    setSnackRightOpen(true)
-  }
-
-  const handleSnackLeftClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setSnackLeftOpen(false)
-  }
-  const handleSnackRightClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setSnackRightOpen(false)
+  const handleSnackOpen = (severity, message) => {
+    setSnackOpen(false)
+    setSeverity(severity)
+    setMessage(message)
+    setSnackOpen(true)
   }
 
   // X and Y position variables initialized to 0.
@@ -83,14 +66,14 @@ export default function SwipeBox() {
       if (xPos > 0 && yPos > 0) {
         if (xPos > yPos) {
           swipe = 'Right Swipe'
-          handleSnackRightOpen();
+          handleSnackOpen('success', 'You swiped right!')
         } else {
           swipe = 'Down Swipe'
         }
       } else if (xPos > 0 && yPos < 0) {
         if (xPos > yPos * -1) {
           swipe = 'Right Swipe'
-          handleSnackRightOpen();
+          handleSnackOpen('success', 'You swiped right!')
         } else {
           swipe = 'Up Swipe'
           handleOpen()
@@ -98,7 +81,7 @@ export default function SwipeBox() {
       } else if (xPos < 0 && yPos > 0) {
         if (xPos * -1 > yPos) {
           swipe = 'Left Swipe'
-          handleSnackLeftOpen();
+          handleSnackOpen('error', 'You swiped left!')
         } else {
           swipe = 'Down Swipe'
         }
@@ -108,24 +91,12 @@ export default function SwipeBox() {
           handleOpen()
         } else {
           swipe = 'Left Swipe'
-          handleSnackLeftOpen();
+          handleSnackOpen('error', 'You swiped left!')
         }
       } else {
         console.log("didn't make it into an if/else")
       }
       console.log('Swipe Direction:', swipe)
-
-      /*
-      //handle swipe
-      if (swipe === 'Left Swipe') {
-        //snackbar
-      } else if (swipe === 'Right Swipe') {
-        //snackbar
-      } else if (swipe === 'Up Swipe') {
-        //dialog
-        handleOpen();
-      }
-      */
     }
 
     render() {
@@ -142,24 +113,11 @@ export default function SwipeBox() {
 
       return (
         <>
-          <Snackbar open={snackLeftOpen} autoHideDuration={6000} onClose={handleSnackLeftClose}>
-            <Alert
-              onClose={handleSnackLeftClose}
-              severity="error"
-              sx={{ width: '100%' }}
-            >
-              You swiped left!
-            </Alert>
-          </Snackbar>
-          <Snackbar open={snackRightOpen} autoHideDuration={6000} onClose={handleSnackRightClose}>
-            <Alert
-              onClose={handleSnackRightClose}
-              severity="success"
-              sx={{ width: '100%' }}
-            >
-              You swiped right!
-            </Alert>
-          </Snackbar>
+          <SnackbarAlert
+            snackOpen={snackOpen}
+            severity={severity}
+            message={message}
+          />
           <Dialog
             open={open}
             TransitionComponent={Transition}
