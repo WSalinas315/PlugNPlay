@@ -223,9 +223,9 @@ export default function Glossary() {
 	 */
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
-		setSelectedTerm(value);
+		setSelectedTerm({ word: value });
 		dispatch({
-			type: 'GET_GLOSSARY_TERM',
+			type: 'GLOSSARY/SET_ITEM',
 			payload: value, //This is the term that is was clicked on from the drop down menu.
 		});
 	};
@@ -241,12 +241,7 @@ export default function Glossary() {
 				/>
 			</Box>
 			<Box>
-				<Typography>
-					🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧 This area will contain the GlossaryItem
-					Component based on the term clicked on 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧 🔎
-					🔎
-				</Typography>
-				<GlossaryItem prop={selectedTerm} />
+				<GlossaryItem term={selectedTerm} />
 			</Box>
 		</Paper>
 	);

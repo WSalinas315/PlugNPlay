@@ -5,5 +5,5 @@ import Grid from '@mui/material/Grid';
 export default function GlossaryItem(prop) {
 	//TODO Get the store
 
-	return <h2>prop</h2>;
+	return <h2>{prop.term}</h2>;
 }
