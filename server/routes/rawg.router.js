@@ -68,6 +68,12 @@ router.get('/byGenre/', async (req, res) => {
   const searchQueries = [];
   const userID = req.user.id;
 
+  const ignoreList = pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
+                                UNION
+                                SELECT "game_id" FROM "ignorelist" WHERE "user_id" = $1
+                                UNION
+                                SELECT "game_id" FROM "played" WHERE "user_id" = $1;`);
+
   // get list of positively rated user genres, 
   // randomize list 
   // and only query RAWG for the first 3
