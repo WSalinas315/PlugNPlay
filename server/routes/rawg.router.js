@@ -66,6 +66,11 @@ router.get('/byGenre/:genre', async (req, res) => {
 router.get('/byTags', async (req, res) => {
 
   const { userTags } = req.body;
+
+  // Replace req.body request above 
+  // const userID = req.user.id;
+  // const userTags = await pool.query(`SELECT "tag_name" FROM "user_tags" WHERE "user_id" = $1 AND score > 0;`, [userID]);
+
   const searchQueries = []
 
   // HELPER FUNCTIONS

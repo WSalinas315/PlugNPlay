@@ -44,8 +44,19 @@ function* searchByTags({ payload }) {
   }
 }
 
+// SEARCH RAWG BY GENRE
+// function* searchByGenre({ payload }) {
+//   try {
+//     const { data: results } = yield axios.get('api/rawg/byGenre')
+//     yield setSearchResults(results)
+//   } catch (err) {
+//     handleErrors('Searching RAWG by Genre failed', err);
+//   }
+// }
+
 export default function* rawgSaga() {
-  yield takeLatest('RAWG/FETCH_CURRENT_GAME', fetchByID)
-  yield takeLatest('RAWG/SEARCH_BY_NAME', searchByName)
-  yield takeLatest('RAWG/SEARCH_BY_TAGS', searchByTags)
+  yield takeLatest('RAWG/FETCH_CURRENT_GAME', fetchByID);
+  yield takeLatest('RAWG/SEARCH_BY_NAME', searchByName);
+  yield takeLatest('RAWG/SEARCH_BY_TAGS', searchByTags);
+  // yield takeLatest('RAWG/SEARCH_BY_GENRE', searchByGenre);
 }

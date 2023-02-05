@@ -8,9 +8,9 @@ const processSurveyResults = require('../modules/processSurvey')
   WISHLIST ROUTES 
 */
 
-// Wishlist - GET by user ID
+// Wishlist - GET
 router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Wishlist - GET by user ID');
+  // console.log('In game router: Wishlist - GET');
   try {
     const userID = req.user.id
     const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
@@ -52,9 +52,9 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   IGNORE LIST ROUTES 
 */
 
-// Ignore List - GET by user ID
+// Ignore List - GET
 router.get('/ignorelist', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Ignore List - GET by user ID');
+  // console.log('In game router: Ignore List - GET');
   try {
     const userID = req.user.id;
     const ignorelistResult = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
@@ -96,9 +96,9 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
   PLAYED GAMES ROUTES
 */
 
-// Played List - GET by user ID
+// Played List - GET
 router.get('/played', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Played List - GET by user ID');
+  // console.log('In game router: Played List - GET');
   try {
     const userID = req.user.id;
     const playedResult = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
@@ -154,12 +154,12 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   GLOSSARY LIST ROUTES
 */
 
-// Glossary - GET by tag ID
+// Glossary - GET by ID
 router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Glossary - GET by ID');
   try {
-    const tagID = req.params.id;
-    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "tag_id" = $1;`, [tagID]);
+    const termID = req.params.id;
+    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "id" = $1;`, [termID]);
     res.send(glossaryResult);
   } catch (err) {
     console.log('Game Router Glossary GET by ID error:', err);
