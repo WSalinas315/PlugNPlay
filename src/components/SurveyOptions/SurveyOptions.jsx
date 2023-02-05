@@ -169,30 +169,24 @@ export default function SurveyOptions(props) {
       case 5:
         return 'Short'
       case 6:
-        return '2D'
+        return 'I like stylized games'
       case 7:
-        return 'Cartoony'
-      case 8:
-        return 'I love Retro'
-      case 9:
         return 'Fantasy'
-      case 10:
+      case 8:
         return 'Immersive'
-      case 11:
-        return 'Defeating an Enemy'
-      case 12:
+      case 9:
         return 'Fast-paced'
-      case 13:
+      case 10:
         return 'Repeat Activities'
-      case 14:
+      case 11:
         return 'I feel powerful'
-      case 15:
+      case 12:
         return 'Practical skills'
-      case 16:
-        return 'Top Player'
-      case 17:
-        return 'Relaxed'
-      case 18:
+      case 13:
+        return 'Free to Roam'
+      case 14:
+        return 'Story-driven'
+      case 15:
         return 'Yes, I like dark themes'
       default:
         return ''
@@ -206,36 +200,30 @@ export default function SurveyOptions(props) {
       case 2:
         return 'With Friends'
       case 3:
-        return 'Compete Against Each Other'
+        return 'Compete against each other'
       case 4:
         return 'Challenging'
       case 5:
         return 'Long'
       case 6:
-        return '3D'
+        return 'Not a fan of cartoonish style'
       case 7:
-        return 'Realistic'
-      case 8:
-        return 'I prefer Modern'
-      case 9:
         return 'Reality'
-      case 10:
-        return 'Observe from Afar'
-      case 11:
-        return 'Solving a Puzzle'
-      case 12:
+      case 8:
+        return 'Observe from afar'
+      case 9:
         return 'Slower'
-      case 13:
-        return 'A Definitive Ending'
-      case 14:
+      case 10:
+        return 'A definitive ending'
+      case 11:
         return 'I must beat the odds'
-      case 15:
+      case 12:
         return 'Heroic skills'
-      case 16:
-        return '100% Completion'
-      case 17:
-        return 'Excited'
-      case 18:
+      case 13:
+        return 'Having Direction'
+      case 14:
+        return 'Story isn\'t important'
+      case 15:
         return 'No dark themes'
       default:
         return ''

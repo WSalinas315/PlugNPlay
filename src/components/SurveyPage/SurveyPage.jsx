@@ -13,10 +13,11 @@ export default function SurveyPage() {
   const [page, setPage] = useState(1)
   const surveyData = useSurveyData();
   const dispatch = useDispatch();
+  console.log(surveyData);
 
   const nextPage = () => {
     console.log('in nextpage')
-    if (page < 20) {
+    if (page < 17) {
       setPage(page + 1)
     } else {
       dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
@@ -28,7 +29,7 @@ export default function SurveyPage() {
   }
 
   const nextBtnText = () => {
-    return page === 20 ? 'Submit' : 'Next'
+    return page === 17 ? 'Submit' : 'Next'
   }
 
   const autofill = () => {
