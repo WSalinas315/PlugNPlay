@@ -1,9 +1,5 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
-import Tab from '@mui/material/Tab';
-import TabList from '@mui/lab/TabList';
-import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
 import Autocomplete from '@mui/material/Autocomplete';
@@ -11,6 +7,8 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
+
+import GlossaryItem from '../CollectionGlossaryItem/CollectionGlossaryItem';
 
 export default function Glossary() {
 	const userTags = [
@@ -214,17 +212,23 @@ export default function Glossary() {
 		'Zombies',
 	];
 
-	const [inputValue, setInputValue] = useState('');
+	const [selectedTerm, setSelectedTerm] = useState('');
 
 	const dispatch = useDispatch();
 
+	/**
+	 *
+	 * @param {object} event This is the event listener from the Autocomplete component.
+	 * @param {string} value This is the glossary term from the drop down menu.
+	 */
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
+		setSelectedTerm(value);
+		dispatch({
+			type: 'GET_GLOSSARY_TERM',
+			payload: value, //This is the term that is was clicked on from the drop down menu.
+		});
 	};
-	dispatch({
-		type: 'GET_GLOSSARY_TERM',
-		payload: inputValue, //This will hold the term as a string data type.
-	});
 
 	return (
 		<Paper>
@@ -233,7 +237,7 @@ export default function Glossary() {
 					options={userTags}
 					freeSolo //?This will allow suggestions based on input value.
 					renderInput={params => <TextField {...params} label='Search Tags' />}
-					onChange={this.handleChange}
+					onInputChange={handleChange}
 				/>
 			</Box>
 			<Box>
@@ -242,6 +246,7 @@ export default function Glossary() {
 					Component based on the term clicked on 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧 🔎
 					🔎
 				</Typography>
+				<GlossaryItem prop={selectedTerm} />
 			</Box>
 		</Paper>
 	);
