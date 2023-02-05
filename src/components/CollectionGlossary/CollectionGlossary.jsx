@@ -223,7 +223,7 @@ export default function Glossary() {
 	 */
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
-		setSelectedTerm({ word: value });
+		setSelectedTerm(value);
 		dispatch({
 			type: 'GLOSSARY/SET_ITEM',
 			payload: value, //This is the term that is was clicked on from the drop down menu.
