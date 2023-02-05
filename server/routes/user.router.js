@@ -50,10 +50,10 @@ router.get('/scores', rejectUnauthenticated, async (req, res) => {
     const genreQuery = 'SELECT * FROM user_genres WHERE user_id = $1'
     const tagQuery = 'SELECT * FROM user_tags WHERE user_id = $1'
 
-    const userGenreScores = await pool.query(genreQuery, [req.user.id])
-    const userTagScores = await pool.query(tagQuery, [req.user.id])
+    const {rows: userGenreScores} = await pool.query(genreQuery, [req.user.id])
+    const {rows: userTagScores} = await pool.query(tagQuery, [req.user.id])
 
-    res.send([userGenreScores, userTagScores])
+    res.send({userGenreScores, userTagScores})
   } catch (err) {
     console.log('Failed to get user scores', err);
     res.sendStatus(500)
