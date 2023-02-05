@@ -35,7 +35,7 @@ CREATE TABLE "user_genres" (
 	"id"    				serial NOT NULL,
 	"user_id" 	  	int REFERENCES "user" (id) NOT NULL,
 	"genre_name"		varchar(80) NOT NULL,
- 	"genre_score" 	float NOT NULL,
+ 	"score" 	float NOT NULL,
   CONSTRAINT "user_genre_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
