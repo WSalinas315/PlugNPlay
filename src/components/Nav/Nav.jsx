@@ -69,11 +69,6 @@ function Nav() {
 						component={Link}
 						to='/profile'
 					/>
-					//! Need to figure out this onChange with Material Mui.
-					{/* <BottomNavigationAction
-							label='Logout'
-							onChange={() => dispatch({ type: 'LOGOUT' })}>
-					/> */}
 				</BottomNavigation>
 			)}
 		</Paper>

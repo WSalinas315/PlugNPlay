@@ -8,6 +8,9 @@ import Box from '@mui/material/Box';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Typography } from '@mui/material';
 
 export default function Glossary() {
 	const userTags = [
@@ -211,22 +214,34 @@ export default function Glossary() {
 		'Zombies',
 	];
 
+	const [inputValue, setInputValue] = useState('');
+
+	const dispatch = useDispatch();
+
+	const handleChange = (event, value) => {
+		console.log('Value is: ', value);
+	};
+	dispatch({
+		type: 'GET_GLOSSARY_TERM',
+		payload: inputValue, //This will hold the term as a string data type.
+	});
+
 	return (
 		<Paper>
 			<Box>
 				<Autocomplete
 					options={userTags}
+					freeSolo //?This will allow suggestions based on input value.
 					renderInput={params => <TextField {...params} label='Search Tags' />}
-					sx={{
-						MuiSvgIcon: {
-							styleOverrides: {
-								root: {
-									color: '#C02222',
-								},
-							},
-						},
-					}}
+					onChange={this.handleChange}
 				/>
+			</Box>
+			<Box>
+				<Typography>
+					🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧 This area will contain the GlossaryItem
+					Component based on the term clicked on 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧 🔎
+					🔎
+				</Typography>
 			</Box>
 		</Paper>
 	);
