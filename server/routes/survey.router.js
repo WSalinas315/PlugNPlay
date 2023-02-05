@@ -8,8 +8,20 @@ const processSurveyResults = require('../modules/processSurvey')
   SURVEY ROUTES
 */
 
+// GET SURVEY QUESTIONS
+router.get('/', rejectUnauthenticated, async (req, res) => {
+
+  try {
+    const surveyQuestions = await pool.query('SELECT * FROM survey_questions');
+    res.send(surveyQuestions.rows);
+  } catch (err) {
+    console.log('Error getting survey questions', err);
+    res.sendStatus(500);
+  }
+})
+
 // CONVERT SURVEY RESULTS TO USER SCORES
-router.post('/survey', rejectUnauthenticated, async (req, res) => {
+router.post('/userScores', rejectUnauthenticated, async (req, res) => {
 
   console.log(req.body);
   const surveyResults = req.body;
@@ -61,3 +73,5 @@ router.post('/survey', rejectUnauthenticated, async (req, res) => {
   }
 
 })
+
+module.exports = router;
