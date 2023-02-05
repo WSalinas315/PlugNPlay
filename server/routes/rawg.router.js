@@ -73,12 +73,15 @@ router.get('/byGenre/', async (req, res) => {
                                 SELECT "game_id" FROM "ignorelist" WHERE "user_id" = $1
                                 UNION
                                 SELECT "game_id" FROM "played" WHERE "user_id" = $1;`);
+  console.log('IgnoreList looks like:', ignoreList);
 
   // get list of positively rated user genres, 
   // randomize list 
   // and only query RAWG for the first 3
   let userGenres = await pool.query(`SELECT "genre_name" FROM "user_genres" WHERE "user_id" = $1 AND genre_score > 0;`, [userID]);
+  console.log('userGenres looks like:',userGenres);
   const genreList = await shuffleArray(userGenres).slice(0,3);
+  console.log('genreList looks like:', genreList);
 
   // HELPER FUNCTIONS
   //* function to shuffle array for randomization and only return 3 genres
@@ -138,6 +141,12 @@ router.get('/byGenre/', async (req, res) => {
         .filter(dupeFilter)
         .map(tagFilter)
         .sort(sortByTagRelevance);
+
+    // Remove any non-matching games between taggedGames and ignoreList
+    // this function needs tweaking for comparing correct pieces of data
+    taggedGames = taggedGames.filter(val => !ignoreList.includes(val));
+
+    
 
     res.send(taggedGames);
 
