@@ -46,7 +46,7 @@ router.post('/userScores', rejectUnauthenticated, async (req, res) => {
     for (let i = 0; i < Object.keys(genreScores).length; i++) {
       await connection.query(`
         INSERT INTO user_genres
-          ("user_id", "genre_name", "genre_score")
+          ("user_id", "genre_name", "score")
           VALUES ($1, $2, $3);
         `,
         [ user_id, Object.keys(genreScores)[i], Object.values(genreScores)[i] ]
