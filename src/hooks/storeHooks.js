@@ -13,6 +13,10 @@ export const useSurveyData = () => {
   return useSelector(store => store.survey.surveyResults)
 }
 
+export const useRecommendations = () => {
+  return useSelector(store => store.games.recommendations)
+}
+
 /*
 EXAMPLE FOR A SELECTOR THAT GETS SOMETHING SPECIFIC
 
