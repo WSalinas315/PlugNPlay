@@ -9,7 +9,7 @@ const { processSurveyResults } = require('../modules/processSurvey')
   SURVEY ROUTES
 */
 
-// GET SURVEY QUESTIONS
+// GET ALL SURVEY QUESTIONS
 router.get('/', rejectUnauthenticated, async (req, res) => {
 
   try {

@@ -68,7 +68,7 @@ function App() {
 					<Route exact path='/home'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
 					</Route>
-					<Route exact path='/survey'>
+					<Route exact path='/survey/:id'>
 						{user.id ? <Survey /> : <LoginPage />}
 					</Route>
 					<Route>
