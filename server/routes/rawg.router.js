@@ -72,13 +72,13 @@ router.get('/byGenre/', async (req, res) => {
   const userID = req.user.id;
 
   // userScores is a combination of genre and tag names & scores
-  const userScores = pool.query(`SELECT "genre_name" AS "name", "genre_score" AS "score" FROM "user_genres" WHERE "user_id" = $1
+  const userScores = await pool.query(`SELECT "genre_name" AS "name", "genre_score" AS "score" FROM "user_genres" WHERE "user_id" = $1
                                 UNION
                                 SELECT "tag_name" AS "name", "score" FROM "user_tags" WHERE "user_id" = $1;`, [userID]);
   console.log('UserScores looks like:', userScores);
 
   // ignoreList is a combination of game IDs for the current user's wishlist, played list and ignore list
-  const ignoreList = pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
+  const ignoreList = await pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
                                 UNION
                                 SELECT "game_id" FROM "ignorelist" WHERE "user_id" = $1
                                 UNION
@@ -144,7 +144,7 @@ router.get('/byGenre/', async (req, res) => {
     const taggedGameObjects = await Promise.all(searchQueries);
 
     const taggedGames =
-      taggedGameObjects
+      await taggedGameObjects
         .filter(obj => obj.status < 300) // filters out any queries that returned a 404
         .map(obj => obj.data.results) // isolates the actual API results
         .flat() // flattens the results into a single one-dimensional array
@@ -154,9 +154,15 @@ router.get('/byGenre/', async (req, res) => {
 
     // Remove any non-matching games between taggedGames and ignoreList
     // this function needs tweaking for comparing correct pieces of data
-    taggedGames = taggedGames.filter(val => !ignoreList.includes(val));
+    taggedGames = await taggedGames.filter(val => !ignoreList.includes(val));
 
-
+    // SCORING HERE
+    // WOO
+    for(let game of taggedGames){
+      // keep matched tags
+      // for each tag, adjust score
+      // push score + id to returnList
+    }
 
     res.send(taggedGames);
 
