@@ -1,10 +1,5 @@
 import React from 'react';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import { useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Popover from '@mui/material/Popover';
 
 export default function GlossaryItem(prop) {
 	//TODO Get the store
@@ -13,30 +8,16 @@ export default function GlossaryItem(prop) {
 
 	const glossary = useSelector(store => store.glossary.glossary);
 
-	// if (user.access_level == 0) {
-	// 	if (prop.term == '') {
-	// 		return (
-	// 			<div>
-	// 				<h2>Select from drop down to see definitions.</h2>;
-	// 			</div>
-	// 		);
-	// 	}
-	// } else {
-	// 	return (
-	// 		<div>
-	// 			<h1>Under Development</h1>
-	// 			<h2>Term: {prop.term}</h2>
-	// 			<p>{JSON.stringify({ user })}</p>
+	const term = glossary.filter(object => object.term == prop.term);
 
-	// 			<h4>
-	// 				// Definition: Lorem ipsum dolor sit amet consectetur adipisicing
-	// 				elit. Neque mollitia pariatur, id iste architecto molestias ratione
-	// 				ab, dolores dolorum reprehenderit, recusandae tenetur eum asperiores
-	// 				rerum in ad perspiciatis officiis sapiente.
-	// 			</h4>
-	// 		</div>
-	// 	);
-	// }
-
-	return null;
+	return (
+		<div>
+			<h1>
+				Term: {prop.term} | id: {term[0].id}
+			</h1>
+			<h2> Definition: {term[0].description}</h2>
+			<h3> Image Path: {term[0].img_path}</h3>
+			{JSON.stringify(term[0])}
+		</div>
+	);
 } // end function
