@@ -41,6 +41,7 @@ export default function SurveyPage() {
       history.push('/survey/' + (Number(id) + 1))
     } else {
       dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
+      history.push('/user')
     }
   }
 
@@ -54,7 +55,7 @@ export default function SurveyPage() {
 
   return (
     <section id="survey-body">
-      {Number(id) === 1 && <SurveyIntro />}
+      <SurveyIntro />
 
       <section id="survey-body-question">
         <h4>
@@ -64,6 +65,7 @@ export default function SurveyPage() {
         <div className="btn more-info" onClick={handleClickOpen}>
           <HelpIcon />More Info
         </div>}
+        <SurveyOptions page={id} />
       </section>
       <Dialog
         open={open}
@@ -80,7 +82,6 @@ export default function SurveyPage() {
           </DialogContentText>
         </DialogContent>
       </Dialog>
-      <SurveyOptions page={id} />
       <div className="survey-previous-next">
         {id > 1 && (
           <div className="survey-btn" onClick={() => prevPage()}>
