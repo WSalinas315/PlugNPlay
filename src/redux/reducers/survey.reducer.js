@@ -71,9 +71,16 @@ let survey = [
     }
   ]
 
+
+  function replaceAt(arr, index, value){
+    const ret = arr.slice(0);
+    ret[index] = value;
+    return ret;
+  }
+
 const surveyResults = (state = survey, { type, payload }) => {
     return {
-      'SET_SURVEY_ANSWERS': [...state, payload],
+      'SET_SURVEY_ANSWERS': replaceAt(state, payload["id"], payload),
     }[type] || state;
 }
 
