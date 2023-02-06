@@ -165,9 +165,14 @@ router.get('/byGenre/', async (req, res) => {
       }
       // Process scoring for games not in ignoreList
       if (omitGame == 'FALSE') {
+        // game score based on user data
         let gameScore = 0;
+        // number of matching tags/genres for averaging
         let tagMatchCount = 0;
+        // metacritic adjustment score
         let metaAdjustment = 0;
+        
+        // tag matching and scoring
         for (let gameTag of game.tags) {
           for (let userTag of userScores) {
             if (gameTag == userTag.name) {
@@ -182,6 +187,23 @@ router.get('/byGenre/', async (req, res) => {
             }
           }
         }
+
+        // genre matching and scoring
+        for (let genre of game.genres) {
+          for (let userGenre of userScores) {
+            if (genre.slug == userGenre.name) {
+              if (userGenre.score < 0) {
+                gameScore += (userGenre.score - 0.1);
+              } else if (userGenre.score > 0.5) {
+                gameScore += (userGenre.score + 0.1);
+              } else {
+                gameScore += userGenre.score;
+              }
+              tagMatchCount++;
+            }
+          }
+        }
+
         // average combined tag scores
         gameScore = gameScore/tagMatchCount;
 
