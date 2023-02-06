@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 import { styled, alpha, Box } from '@mui/system'
 import SliderUnstyled, { sliderUnstyledClasses } from '@mui/base/SliderUnstyled'
 import Radio from '@mui/material/Radio'
@@ -8,12 +9,21 @@ import PropTypes from 'prop-types';
 import './SurveyOptions.css';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 export default function SurveyOptions(props) {
   const [sliderValue, setSliderValue] = useState(0);
   const survey = useSelector((store) => store.survey.surveyResults);
   const currentQuestion = props.page;
   const dispatch = useDispatch ();
+  const { id } = useParams();
+  const surveyQuestion = useSelector((store) => store.survey.surveyQuestions)
+
+  /*
+  useEffect(() => {
+    dispatch({ type: 'SURVEY/FETCH' });
+}, []);
+*/
 
   const blue = {
     100: '#DAECFF',
@@ -155,7 +165,7 @@ export default function SurveyOptions(props) {
     }
   `,
   )
-
+    /*
   const leftLabel = (page) => {
     switch (page) {
       case 1:
@@ -229,11 +239,12 @@ export default function SurveyOptions(props) {
         return ''
     }
   }
+  */
 
   const marks = [
     {
       value: -1,
-      label: leftLabel(props.page),
+      label: surveyQuestion[Number(id) - 1]?.label_left,
     },
     {
       value: -0.75,
@@ -265,7 +276,7 @@ export default function SurveyOptions(props) {
     },
     {
       value: 1,
-      label: rightLabel(props.page),
+      label: surveyQuestion[Number(id) - 1]?.label_right,
     },
   ]
   function SliderValueLabel({ children }) {
@@ -293,7 +304,7 @@ export default function SurveyOptions(props) {
     <>
       <h3>Value: {survey[currentQuestion]}</h3>
       <section id="survey-select">
-        {props.page < 19 ? (
+        {props.page < 16 ? (
           <Box sx={{ width: 'calc(100% - 150px)' }}>
             <StyledSlider
               aria-label="Survey Question"
@@ -311,10 +322,10 @@ export default function SurveyOptions(props) {
           <RadioGroup
             aria-labelledby="radio-buttons-group-label"
             name="radio-buttons-group"
-            defaultValue='no'
+            defaultValue='-1'
             onChange={(_, value) => handleChangeRadio(value)}
           >
-            <FormControlLabel value="yes" control={<Radio sx={{
+            <FormControlLabel value="1" control={<Radio sx={{
         '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
             {
                 color: 'black',
@@ -323,7 +334,7 @@ export default function SurveyOptions(props) {
             color: 'red',
         },
     }} />} label="Yes" />
-            <FormControlLabel value="no" control={<Radio sx={{
+            <FormControlLabel value="-1" control={<Radio sx={{
         '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
             {
                 color: 'black',

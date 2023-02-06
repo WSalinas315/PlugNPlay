@@ -1,35 +1,42 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSurveyData } from '../../hooks/storeHooks'
 import { Button } from '@mui/material'
-
-import SurveyQuestion from '../SurveyQuestion/SurveyQuestion'
+import { useEffect } from 'react'
 import SurveyOptions from '../SurveyOptions/SurveyOptions'
 import SurveyNextButton from '../SurveyNextButton/SurveyNextButton'
 import SurveyPrevButton from '../SurveyPrevButton/SurveyPrevButton'
 import './SurveyPage.css'
+import { useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 export default function SurveyPage() {
-  const [page, setPage] = useState(1)
   const surveyData = useSurveyData();
   const dispatch = useDispatch();
   console.log(surveyData);
+  const { id } = useParams();
+  const history = useHistory();
+  const surveyQuestion = useSelector((store) => store.survey.surveyQuestions)
+
+  useEffect(() => {
+    dispatch({ type: 'SURVEY/FETCH' });
+}, []);
 
   const nextPage = () => {
     console.log('in nextpage')
-    if (page < 17) {
-      setPage(page + 1)
+    if (id < 17) {
+      history.push('/survey/' + (Number(id) + 1));
     } else {
       dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
     }
   }
 
   const prevPage = () => {
-    setPage(page - 1)
+    history.push('/survey/' + (Number(id) - 1));
   }
 
   const nextBtnText = () => {
-    return page === 17 ? 'Submit' : 'Next'
+    return Number(id) === 17 ? 'Submit' : 'Next'
   }
 
   const autofill = () => {
@@ -66,10 +73,11 @@ export default function SurveyPage() {
         sx={{ fontSize: "16px" }}
         variant="outlined"
       >Click me to autofill survey & test DATABASE post</Button>
-      <SurveyQuestion page={page} />
-      <SurveyOptions page={page} />
+      <h3>{surveyQuestion[Number(id) - 1]?.question}</h3>
+      <h4>{surveyQuestion[Number(id) - 1]?.caption}</h4>
+      <SurveyOptions page={id} />
       <div className="survey-previous-next">
-        {page > 1 && (
+        {id > 1 && (
           <div className="survey-btn" onClick={() => prevPage()}>
             {' '}
             <SurveyPrevButton />
