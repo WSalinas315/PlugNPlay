@@ -1,6 +1,4 @@
-
 CREATE database "plug-n-play";
-
 
 CREATE TABLE "user" (
 	"id" 								serial NOT NULL,
