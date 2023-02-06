@@ -306,7 +306,7 @@ export default function SurveyOptions(props) {
     // pages 1-17 are slider questions
     // if page 18-20, show checkbox instead
     <>
-      {<h3>Value: {currentScore}</h3>}
+      {/*<h3>Value: {currentScore}</h3>*/}
       <section id="survey-select">
         {props.page < 16 ? (
           <Box sx={{ width: 'calc(100% - 150px)' }}>
