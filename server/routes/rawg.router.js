@@ -128,6 +128,7 @@ router.get('/byGenre/', async (req, res) => {
   }
 
   console.log('searching for genres...');
+  // Axios GET calls to RAWG.io for the 3 selected genres
   try {
     for (let genre of genreList) {
       searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.genre_name}&${keyUrl}&page_size=40`,
@@ -146,9 +147,6 @@ router.get('/byGenre/', async (req, res) => {
         .flat() // flattens the results into a single one-dimensional array
         .filter(dupeFilter)
         .map(tagFilter);
-    console.log('--------------------------------------------');
-    console.log('Tagged Games after creation:', taggedGames);
-    console.log('--------------------------------------------');
 
     // Game Scoring
     console.log('--------------------------------------------');
@@ -171,7 +169,7 @@ router.get('/byGenre/', async (req, res) => {
         let tagMatchCount = 0;
         // metacritic adjustment score
         let metaAdjustment = 0;
-        
+
         // tag matching and scoring
         for (let gameTag of game.tags) {
           for (let userTag of userScores) {
@@ -205,31 +203,33 @@ router.get('/byGenre/', async (req, res) => {
         }
 
         // average combined tag scores
-        gameScore = gameScore/tagMatchCount;
+        gameScore = gameScore / tagMatchCount;
 
         // adjust gameScore with metacritic rating
-        if(game.metacritic){
-          metaAdjustment = ((game.metacritic - 70)/20)*0.075;
+        if (game.metacritic) {
+          metaAdjustment = ((game.metacritic - 70) / 20) * 0.075;
           gameScore += metaAdjustment;
         }
 
         // Adjust outlier scores to end of scoring range
-        if(gameScore > 1){
+        if (gameScore > 1) {
           gameScore = 1;
-        } else if(gameScore < -1){
+        } else if (gameScore < -1) {
           gameScore = -1;
         }
-
+        // add game data and game score to scoredGames array
         scoredGames.push({ gameData: game, gameScore: gameScore });
       }
-      console.log('--------------------------------------------');
-      console.log('Scored Games?????', scoredGames);
-      console.log('--------------------------------------------');
     }
 
-    res.send(taggedGames);
+    // Sort scored games by user's personalized game score
+    const sortedGames = scoredGames.sort((g1, g2) => (g1.gameScore < g2.gameScore) ? 1 : (g1.gameScore > g2.gameScore) ? -1 : 0);
+    console.log('--------------------------------------------');
+    console.log('Sorted & Scored Games!!!!', sortedGames);
+    console.log('--------------------------------------------');
 
-
+    // send sortedGames back to client side
+    res.send(sortedGames);
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
