@@ -151,10 +151,12 @@ router.get('/byGenre/', async (req, res) => {
         .filter(dupeFilter)
         .map(tagFilter)
         .sort(sortByTagRelevance);
+    console.log('Tagged Games after creation:',taggedGames);
 
     // Remove any non-matching games between taggedGames and ignoreList
     // this function needs tweaking for comparing correct pieces of data
     taggedGames = await taggedGames.filter(val => !ignoreList.includes(val));
+    console.log('Tagged Games after ignore list filter:', taggedGames);
 
     // SCORING HERE
     // WOO
