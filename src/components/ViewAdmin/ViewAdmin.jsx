@@ -120,6 +120,55 @@ function AdminPage() {
 				</Box>
 			</Box>
 		);
+	} else if (
+		toggleAdd == false &&
+		// toggleEdit == false &&
+		toggleView == true
+		// toggleDelete == false
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Box>
+					<Card>
+						<Typography> {glossaryTerm}</Typography>
+						<Typography> {glossary.map()} </Typography>
+					</Card>
+				</Box>
+			</Box>
+		);
 	} else {
 		return (
 			<Box
