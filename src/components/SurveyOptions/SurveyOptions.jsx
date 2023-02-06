@@ -293,7 +293,7 @@ export default function SurveyOptions(props) {
   const handleChange = (value) => {
     let questionNum = props.page;
     setSliderValue(value);
-    dispatch({type: 'SET_SURVEY_ANSWERS', payload: {[questionNum]: value}});
+    dispatch({type: 'SET_SURVEY_ANSWERS', payload: {id: props.page, score: value}});
   }
 
   const handleChangeRadio = (value) => {
@@ -305,13 +305,13 @@ export default function SurveyOptions(props) {
     // pages 1-17 are slider questions
     // if page 18-20, show checkbox instead
     <>
-      <h3>Value: {survey[currentQuestion]}</h3>
+      {<h3>Value: {survey[currentQuestion].score}</h3>}
       <section id="survey-select">
         {props.page < 16 ? (
           <Box sx={{ width: 'calc(100% - 150px)' }}>
             <StyledSlider
               aria-label="Survey Question"
-              defaultValue={survey[currentQuestion]}
+              defaultValue={survey[currentQuestion].score}
               step={null}
               marks={marks}
               min={-1}
@@ -326,7 +326,7 @@ export default function SurveyOptions(props) {
           <RadioGroup
             aria-labelledby="radio-buttons-group-label"
             name="radio-buttons-group"
-            value={survey[currentQuestion]}
+            value={survey[currentQuestion].score}
             onChange={(_, value) => handleChangeRadio(value)}
           >
             <FormControlLabel value={1} control={<Radio sx={{
