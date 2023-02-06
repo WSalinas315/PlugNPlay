@@ -16,8 +16,8 @@ let survey = {
     13: 0,
     14: 0,
     15: 0,
-    16: 'no',
-    17: 'no'
+    16: -1,
+    17: -1,
 }
 
 const surveyResults = (state = survey, { type, payload }) => {

@@ -58,8 +58,8 @@ export default function SurveyPage() {
         "13": 0.5,
         "14": -0.25,
         "15": -0.25,
-        "16": "no",
-        "17": "no"
+        "16": -1,
+        "17": -1
     }
   })
     dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
@@ -73,8 +73,8 @@ export default function SurveyPage() {
         sx={{ fontSize: "16px" }}
         variant="outlined"
       >Click me to autofill survey & test DATABASE post</Button>
-      <h3>{surveyQuestion[Number(id) - 1]?.question}</h3>
-      <h4>{surveyQuestion[Number(id) - 1]?.caption}</h4>
+      <h4>{surveyQuestion[Number(id) - 1]?.question}</h4>
+      <p>{surveyQuestion[Number(id) - 1]?.caption}</p>
       <SurveyOptions page={id} />
       <div className="survey-previous-next">
         {id > 1 && (

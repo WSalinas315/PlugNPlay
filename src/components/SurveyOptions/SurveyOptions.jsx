@@ -10,6 +10,7 @@ import './SurveyOptions.css';
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { FormControl } from '@material-ui/core'
 
 export default function SurveyOptions(props) {
   const [sliderValue, setSliderValue] = useState(0);
@@ -19,6 +20,8 @@ export default function SurveyOptions(props) {
   const { id } = useParams();
   const surveyQuestion = useSelector((store) => store.survey.surveyQuestions)
 
+
+  console.log(survey)
   /*
   useEffect(() => {
     dispatch({ type: 'SURVEY/FETCH' });
@@ -319,13 +322,14 @@ export default function SurveyOptions(props) {
             />
           </Box>
         ) : (
+          <FormControl>
           <RadioGroup
             aria-labelledby="radio-buttons-group-label"
             name="radio-buttons-group"
-            defaultValue='-1'
+            value={survey[currentQuestion]}
             onChange={(_, value) => handleChangeRadio(value)}
           >
-            <FormControlLabel value="1" control={<Radio sx={{
+            <FormControlLabel value={1} control={<Radio sx={{
         '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
             {
                 color: 'black',
@@ -334,7 +338,7 @@ export default function SurveyOptions(props) {
             color: 'red',
         },
     }} />} label="Yes" />
-            <FormControlLabel value="-1" control={<Radio sx={{
+            <FormControlLabel value={-1} control={<Radio sx={{
         '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
             {
                 color: 'black',
@@ -344,6 +348,7 @@ export default function SurveyOptions(props) {
         },
     }} />} label="No" />
           </RadioGroup>
+          </FormControl>
         )}
       </section>
     </>
