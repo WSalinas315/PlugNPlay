@@ -60,9 +60,10 @@ export default function SurveyPage() {
         <h4>
           Question {id}: {surveyQuestion[Number(id) - 1]?.question}
         </h4>
+        {id < 16 &&
         <div className="btn more-info" onClick={handleClickOpen}>
           <HelpIcon />More Info
-        </div>
+        </div>}
       </section>
       <Dialog
         open={open}
