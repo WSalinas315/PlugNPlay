@@ -80,7 +80,7 @@ let survey = [
 
 const surveyResults = (state = survey, { type, payload }) => {
     return {
-      'SET_SURVEY_ANSWERS': replaceAt(state, payload["id"], payload),
+      'SET_SURVEY_ANSWERS': replaceAt(state, payload?.id - 1, payload),
     }[type] || state;
 }
 

@@ -40,41 +40,10 @@ export default function SurveyPage() {
     return Number(id) === 17 ? 'Submit' : 'Next'
   }
 
-  const autofill = () => {
-    dispatch({
-      type: 'SET_SURVEY_ANSWERS',
-      payload: {
-        "1": -0.25,
-        "2": -0.5,
-        "3": -1,
-        "4": 0,
-        "5": -0.25,
-        "6": 0,
-        "7": -0.25,
-        "8": -0.25,
-        "9": -0.75,
-        "10": 0,
-        "11": 0,
-        "12": -0.25,
-        "13": 0.5,
-        "14": -0.25,
-        "15": -0.25,
-        "16": -1,
-        "17": -1
-    }
-  })
-    dispatch({ type: 'SURVEY/POST_DATA', payload: surveyData })
-  }
-
   return (
     <section id="survey-body">
       {Number(id) === 1 && <SurveyIntro />}
-      <Button
-        onClick={autofill}
-        size="small"
-        sx={{ fontSize: "16px" }}
-        variant="outlined"
-      >Click me to autofill survey & test DATABASE post</Button>
+
       <h4>{surveyQuestion[Number(id) - 1]?.question}</h4>
       <p>{surveyQuestion[Number(id) - 1]?.caption}</p>
       <SurveyOptions page={id} />
