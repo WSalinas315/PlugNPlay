@@ -63,7 +63,7 @@ router.get('/byGenre/:genre', async (req, res) => {
 // ==========================================================================================
 // GET BY GENRE - TEST FOR RECOMMENDATIONS
 
-router.get('/byGenre/', async (req, res) => {
+router.get('/byGenre', async (req, res) => {
 
   // initialize empty array
   const searchQueries = [];
