@@ -1,38 +1,45 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRecommendations } from "../../hooks/storeHooks";
+import { Link } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 export default function RecommendedList() {
   const dispatch = useDispatch();
   const recommendations = useRecommendations();
 
-  useEffect(() => {
-    dispatch({ type: "RAWG/FETCH_RECOMMENDATIONS" });
-  }, []);
+  const checkForRecs = (refresh = false) => {
+    if (refresh || recommendations.length === 0) {
+      dispatch({ type: "RAWG/FETCH_RECOMMENDATIONS" })
+    } else return;
+  }
 
+  const clearGameData = () => dispatch({ type: 'GAME/CLEAR_CURRENT' })
+
+  useEffect(checkForRecs, []);
+  
   const ListItem = ({ gameData }) => {
     return (
       <div className="recommended">
-        <a href={`/#/games/${gameData.id}`}>
+        <Link to={`/games/${gameData.id}`} onClick={clearGameData} >
           <div className="card">
-            <h1>{gameData.name}</h1>
-            <p>
-              {gameData.genres.map(genre => genre.name + " ")}
-            </p>
+            <h2>{gameData.name}</h2>
+            <p>{gameData.genres.map((genre) => genre.name + " ")}</p>
           </div>
-        </a>
+        </Link>
       </div>
     );
   };
 
-  return (
+  return recommendations.length > 0 ? (
     <>
-    {/* {JSON.stringify(recommendations)} */}
       {recommendations
         .map((game) => {
           return <ListItem gameData={game.gameData} />;
         })
         .sort((a, b) => a.gameScore - b.gameScore)}
     </>
+  ) : (
+    <Loading />
   );
 }
