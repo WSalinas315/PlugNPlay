@@ -1,120 +1,75 @@
-const { gameGenres, gameTags } = require("../constants/gameTags");
-const survey = require("../constants/surveyResponseValues");
-
-const { surveyScaleQuestions, surveyBooleanQuestions } = survey
-
+// limits value to three decimal points, between 1 and -1
 const limitValue = (value) => {
-  return Math.min(Math.max(value, -1), 1);
+  return Math.min(
+      Math.max(
+        Math.round(value * 1000) / 1000, -1
+      ), 1
+  );
 }
 
-const roundToThreeDecimals = (float) => {
-  return Math.round(float * 1000) / 1000
-}
+// IDs of boolean questions
+//* this is hard-coded for now. could perhaps add an identifier to DB entries in the future.
+const booleanQuestionIDs = [ 16, 17 ]
 
-function processSurveyResults(surveyResObj) {
+function processSurveyResults(surveyQuestions, surveyResults) {
 
   let userGenreScores = [];
   let userTagScores = [];
 
-  // loop over each answer
-  // check if the value is a number or a boolean
-  //      if number: loop over tags and adjust accordingly
-  //      if boolean: custom solution.....
+  // Modify this to adjust weighting of user scores globally
+  const scoreCoefficient = 1;
 
-  const userSurveyResponse = surveyResObj
-  let scoreCoefficient = 1;
+  // MAIN LOGIC LOOP
+  for (let result of surveyResults) {
+    // "result" is an object: { id, score }.  
 
-  for (let i = 1; i <= Object.keys(userSurveyResponse).length; i++) {
-    const answerScore = userSurveyResponse[i.toString()];
+    console.log(surveyQuestions);
+    
+    const question = surveyQuestions.find(q => q.id === result.id)
+    // "question" is an object with many properties related to the survey questions.
+    // For this function, we are only concerned with question.genre_left/right,
+    // and question.tags_left/right.
 
-    if (typeof answerScore === 'number') {
+    let leftAdjustment;
+    let rightAdjustment;
 
-      const [questionObj] = surveyScaleQuestions.filter(q => q.id === i)
-
-      const adjustmentValue = roundToThreeDecimals(answerScore * scoreCoefficient)
-
-      const leftAdjustment = -adjustmentValue;
-      const rightAdjustment = adjustmentValue;
-
-      for (let genre of questionObj.genres.left) {
-        userGenreScores = {
-          ...userGenreScores,
-          [genre]: limitValue((userGenreScores[genre] ?? 0) + leftAdjustment)
-        }
-      }
-
-      for (let genre of questionObj.genres.right) {
-        userGenreScores = {
-          ...userGenreScores,
-          [genre]: limitValue((userGenreScores[genre] ?? 0) + rightAdjustment)
-        }
-      }
-
-      for (let tag of questionObj.tags.left) {
-        userTagScores =
-        {
-          ...userTagScores,
-          [tag]: limitValue((userTagScores[tag] ?? 0) + leftAdjustment)
-        }
-      }
-
-      for (let tag of questionObj.tags.right) {
-        userTagScores =
-        {
-          ...userTagScores,
-          [tag]: limitValue((userTagScores[tag] ?? 0) + rightAdjustment)
-        }
-      }
-
-    } else if (typeof answerScore === 'string') {
-
-      const [questionObj] = surveyBooleanQuestions.filter(q => q.id === i)
-
-      if (answerScore === 'yes') {
-        for (let tag of questionObj.tags.increase) {
-
-          userTagScores = {
-            ...userTagScores,
-            [tag]: limitValue(roundToThreeDecimals((userTagScores[tag] ?? 0) + 0.5))
-          }
-        }
-
-        for (let tag of questionObj.tags.decrease) {
-          userTagScores.tag = -1
-        }
-
-      }
-
+    // Boolean questions are about subject matter the user wants to avoid
+    // if current question is one of these booleans, we will set hard limits:
+    if (booleanQuestionIDs.includes(question.id)) {
+      // if user answers "yes" to avoiding certain content (value of 1),
+      // left-side genres & tags get a moderate bump, and right-side is tanked.
+      // if answer is "no", there is no change.
+      leftAdjustment = result.score === 1 ? 0.5 : 0
+      rightAdjustment = result.score === 1 ? -1 : 0
     } else {
-      // error
-      return null;
+      // for all other questions, we will use the score from the survey,
+      // multiplied by the score coefficient
+      leftAdjustment = -(result.score * scoreCoefficient);
+      rightAdjustment = result.score * scoreCoefficient;
     }
 
-  }
-  return [userGenreScores, userTagScores]
+    // Loop over genres and make score adjustments
+    for (const genre of question.genres_left) {
+      userGenreScores[genre] = 
+      limitValue((userGenreScores[genre] ?? 0) + leftAdjustment)
+    }
+    for (const genre of question.genres_right) {
+      userGenreScores[genre] = 
+      limitValue((userGenreScores[genre] ?? 0) + rightAdjustment)
+    }
+    
+    // Same thing for the tags
+    for (const tag of question.tags_left) {
+      userTagScores[tag] = 
+        limitValue((userTagScores[tag] ?? 0) + leftAdjustment)
+    }
+    for (const tag of question.tags_right) {
+      userTagScores[tag] = 
+        limitValue((userTagScores[tag] ?? 0) + rightAdjustment)
+    }
+  } // end logic loop
 
+  return [userGenreScores, userTagScores]
 }
 
-const sampleAnswer = processSurveyResults(
-  {
-    1: -0.25,
-    2: -0.5,
-    3: -1,
-    4: 0,
-    5: -0.25,
-    6: 0,
-    7: -0.25,
-    8: -0.25,
-    9: -0.75,
-    10: 0,
-    11: 0,
-    12: -0.25,
-    13: 0.5,
-    14: -0.25,
-    15: -0.25,
-    16: "no",
-    17: "no",
-  }
-)
-
-module.exports = processSurveyResults;
+module.exports = { processSurveyResults };
