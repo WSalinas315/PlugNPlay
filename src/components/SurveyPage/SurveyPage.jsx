@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import SurveyOptions from '../SurveyOptions/SurveyOptions'
 import SurveyNextButton from '../SurveyNextButton/SurveyNextButton'
 import SurveyPrevButton from '../SurveyPrevButton/SurveyPrevButton'
+import SurveyIntro from "../SurveyIntro/SurveyIntro";
 import './SurveyPage.css'
 import { useHistory } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
@@ -67,6 +68,7 @@ export default function SurveyPage() {
 
   return (
     <section id="survey-body">
+      {Number(id) === 1 && <SurveyIntro />}
       <Button
         onClick={autofill}
         size="small"
