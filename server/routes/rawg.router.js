@@ -167,6 +167,7 @@ router.get('/byGenre/', async (req, res) => {
       if (omitGame == 'FALSE') {
         let gameScore = 0;
         let tagMatchCount = 0;
+        let metaAdjustment = 0;
         for (let gameTag of game.tags) {
           for (let userTag of userScores) {
             if (gameTag == userTag.name) {
@@ -184,12 +185,18 @@ router.get('/byGenre/', async (req, res) => {
         // average combined tag scores
         gameScore = gameScore/tagMatchCount;
 
-        // score metacritic 
-        
+        // adjust gameScore with metacritic rating
+        if(game.metacritic){
+          metaAdjustment = ((game.metacritic - 70)/20)*0.075;
+          gameScore += metaAdjustment;
+        }
 
-
-        // cap at 1 and -1
-
+        // Adjust outlier scores to end of scoring range
+        if(gameScore > 1){
+          gameScore = 1;
+        } else if(gameScore < -1){
+          gameScore = -1;
+        }
 
         scoredGames.push({ gameData: game, gameScore: gameScore });
       }
