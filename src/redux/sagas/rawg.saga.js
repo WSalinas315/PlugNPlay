@@ -4,6 +4,7 @@ import { put, takeLatest } from "redux-saga/effects";
 // HELPER FUNCTIONS
 const setSearchResults = (results) => {
   put({ type: 'GAME/SET_SEARCH_RESULTS', payload: results })
+  put({ type: 'GAME/SET_RECOMMENDATIONS', payload: results })
 }
 
 const handleErrors = (msg, err) => {
@@ -38,6 +39,7 @@ function* searchByName({ payload }) {
 function* searchByTags({ payload }) {
   try {
     const { data: results } = yield axios.get('api/rawg/byTags')
+
     yield setSearchResults(results)
   } catch (err) {
     handleErrors('Searching RAWG by tags failed', err);
@@ -48,7 +50,8 @@ function* searchByTags({ payload }) {
 function* searchByGenre({ payload }) {
   try {
     const { data: results } = yield axios.get('api/rawg/byGenre')
-    yield setSearchResults(results)
+    yield put({ type: 'GAME/SET_RECOMMENDATIONS', payload: results })
+    // yield setSearchResults(results)
   } catch (err) {
     handleErrors('Searching RAWG by Genre failed', err);
   }
