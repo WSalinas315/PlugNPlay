@@ -11,28 +11,32 @@ export default function GlossaryItem(prop) {
 
 	const user = useSelector(store => store.user);
 
-	if (user.access_level == 0) {
-		if (prop.term == '') {
-			return (
-				<div>
-					<h2>Select from drop down to see definitions.</h2>;
-				</div>
-			);
-		}
-	} else {
-		return (
-			<div>
-				<h1>Under Development</h1>
-				<h2>Term: {prop.term}</h2>
-				<p>{JSON.stringify({ user })}</p>
+	const glossary = useSelector(store => store.glossary.glossary);
 
-				<h4>
-					// Definition: Lorem ipsum dolor sit amet consectetur adipisicing
-					elit. Neque mollitia pariatur, id iste architecto molestias ratione
-					ab, dolores dolorum reprehenderit, recusandae tenetur eum asperiores
-					rerum in ad perspiciatis officiis sapiente.
-				</h4>
-			</div>
-		);
-	}
+	// if (user.access_level == 0) {
+	// 	if (prop.term == '') {
+	// 		return (
+	// 			<div>
+	// 				<h2>Select from drop down to see definitions.</h2>;
+	// 			</div>
+	// 		);
+	// 	}
+	// } else {
+	// 	return (
+	// 		<div>
+	// 			<h1>Under Development</h1>
+	// 			<h2>Term: {prop.term}</h2>
+	// 			<p>{JSON.stringify({ user })}</p>
+
+	// 			<h4>
+	// 				// Definition: Lorem ipsum dolor sit amet consectetur adipisicing
+	// 				elit. Neque mollitia pariatur, id iste architecto molestias ratione
+	// 				ab, dolores dolorum reprehenderit, recusandae tenetur eum asperiores
+	// 				rerum in ad perspiciatis officiis sapiente.
+	// 			</h4>
+	// 		</div>
+	// 	);
+	// }
+
+	return null;
 } // end function
