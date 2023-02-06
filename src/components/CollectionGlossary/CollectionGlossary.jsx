@@ -225,7 +225,7 @@ export default function Glossary() {
 		console.log('Value is: ', value);
 		setSelectedTerm(value);
 		dispatch({
-			type: 'GLOSSARY/SET_ITEM',
+			type: 'GLOSSARY/SET',
 			payload: value, //This is the term that is was clicked on from the drop down menu.
 		});
 	};
