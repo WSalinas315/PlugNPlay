@@ -35,7 +35,7 @@ CREATE TABLE "user_genres" (
 	"id"    				serial NOT NULL,
 	"user_id" 	  	int REFERENCES "user" (id) NOT NULL,
 	"genre_name"		varchar(80) NOT NULL,
- 	"genre_score" 	float NOT NULL,
+ 	"score" 	float NOT NULL,
   CONSTRAINT "user_genre_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -97,11 +97,9 @@ CREATE TABLE "survey_questions" (
 
 
 ALTER TABLE "user_tags" ADD CONSTRAINT "user_tags_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "user_tags" ADD CONSTRAINT "user_tags_fk1" FOREIGN KEY ("tag_id") REFERENCES "tag"("id");
 ALTER TABLE "played" ADD CONSTRAINT "played_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 ALTER TABLE "wishlist" ADD CONSTRAINT "wishlist_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 ALTER TABLE "ignorelist" ADD CONSTRAINT "ignorelist_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "glossary" ADD CONSTRAINT "glossary_fk0" FOREIGN KEY ("tag_id") REFERENCES "tag"("id");
 
 -- Glossary Terms
 -- Add Tags

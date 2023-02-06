@@ -1,14 +1,15 @@
 const express = require('express');
 const pool = require('../modules/pool');
-const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const router = express.Router();
-const processSurveyResults = require('../modules/processSurvey')
+
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { processSurveyResults } = require('../modules/processSurvey')
 
 /*
   SURVEY ROUTES
 */
 
-// GET SURVEY QUESTIONS
+// GET ALL SURVEY QUESTIONS
 router.get('/', rejectUnauthenticated, async (req, res) => {
 
   try {
@@ -24,7 +25,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 router.post('/userScores', rejectUnauthenticated, async (req, res) => {
 
   console.log(req.body);
-  const surveyResults = req.body;
+  const surveyResults = req.body; // array of { id, score } objects for each question
   const user_id = req.user.id;
 
   const connection = await pool.connect();
@@ -32,7 +33,11 @@ router.post('/userScores', rejectUnauthenticated, async (req, res) => {
   console.log(surveyResults);
   try {
 
-    const [genreScores, tagScores] = processSurveyResults(surveyResults)
+    // get survey questions
+    const { rows: surveyQuestions } = await pool.query('SELECT * FROM survey_questions');
+
+    // feed questions and results into processing module
+    const [genreScores, tagScores] = processSurveyResults(surveyQuestions, surveyResults)
 
     // SQL transaction
     await connection.query('BEGIN;')
@@ -41,7 +46,7 @@ router.post('/userScores', rejectUnauthenticated, async (req, res) => {
     for (let i = 0; i < Object.keys(genreScores).length; i++) {
       await connection.query(`
         INSERT INTO user_genres
-          ("user_id", "genre_name", "genre_score")
+          ("user_id", "genre_name", "score")
           VALUES ($1, $2, $3);
         `,
         [ user_id, Object.keys(genreScores)[i], Object.values(genreScores)[i] ]
@@ -60,14 +65,14 @@ router.post('/userScores', rejectUnauthenticated, async (req, res) => {
     }
 
     // commit changes
-    await connection.query('COMMIT;')
+    await connection.query('COMMIT;');
+    res.sendStatus(201);
 
-    res.sendStatus(200)
   } catch (err) {
     // if anything goes wrong, discard all changes
-    await connection.query('ROLLBACK;')
+    await connection.query('ROLLBACK;');
     console.log(err);
-    res.sendStatus(500)
+    res.sendStatus(500);
   } finally {
     connection.release();
   }
