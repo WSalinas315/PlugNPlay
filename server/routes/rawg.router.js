@@ -81,13 +81,13 @@ router.get('/byGenre/', async (req, res) => {
   }
 
   // userScores is a combination of genre and tag names & scores
-  const {rows: userScores} = await pool.query(`SELECT "genre_name" AS "name", "score" FROM "user_genres" WHERE "user_id" = $1
+  const { rows: userScores } = await pool.query(`SELECT "genre_name" AS "name", "score" FROM "user_genres" WHERE "user_id" = $1
                                 UNION
                                 SELECT "tag_name" AS "name", "score" FROM "user_tags" WHERE "user_id" = $1;`, [userID]);
   console.log('UserScores looks like:', userScores);
 
   // ignoreList is a combination of game IDs for the current user's wishlist, played list and ignore list
-  const {rows: ignoreList} = await pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
+  const { rows: ignoreList } = await pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
                                 UNION
                                 SELECT "game_id" FROM "ignorelist" WHERE "user_id" = $1
                                 UNION
@@ -97,7 +97,7 @@ router.get('/byGenre/', async (req, res) => {
   // get list of positively rated user genres, 
   // randomize list 
   // and only query RAWG for the first 3
-  let {rows: userGenres} = await pool.query(`SELECT "genre_name" FROM "user_genres" WHERE "user_id" = $1 AND "score" > 0;`, [userID]);
+  let { rows: userGenres } = await pool.query(`SELECT "genre_name" FROM "user_genres" WHERE "user_id" = $1 AND "score" > 0;`, [userID]);
   console.log('userGenres looks like:', userGenres);
   const genreList = await shuffleArray(userGenres).slice(0, 3);
   //const genreList = await shuffleArray(userGenres);
@@ -105,15 +105,6 @@ router.get('/byGenre/', async (req, res) => {
   console.log('genreList looks like:', genreList);
 
   // HELPER FUNCTIONS
-  //* function to shuffle array for randomization and only return 3 genres
-  // const shuffleArray = (arr) => {
-  //   for (let i = arr.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [arr[i], arr[j]] = [arr[j], arr[i]];
-  //   }
-  //   return arr;
-  // }
-
   //* function to filter out duplicate results
   const dupeFilter = (obj, idx, arr) => {
     return idx === arr.findIndex((game) => {
@@ -136,45 +127,75 @@ router.get('/byGenre/', async (req, res) => {
     }
   }
 
-  //* sorts games in order of most matched tags to fewest
-  const sortByTagRelevance = (a, b) => {
-    return b.tags.filter(tag => userTags.includes(tag.toLowerCase())).length -
-      a.tags.filter(tag => userTags.includes(tag.toLowerCase())).length
-  }
-
   console.log('searching for genres...');
   try {
     for (let genre of genreList) {
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.toLowerCase()}&${keyUrl}&page_size=40`,
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.genre_name}&${keyUrl}&page_size=40`,
         { validateStatus: (status) => status < 500 })) // prevents request from throwing error if it returns a 404
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.toLowerCase()}&${keyUrl}&page_size=40&page=2`,
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.genre_name}&${keyUrl}&page_size=40&page=2`,
         { validateStatus: (status) => status < 500 }))
-      searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.toLowerCase()}&${keyUrl}&page_size=40&page=3`,
+      searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.genre_name}&${keyUrl}&page_size=40&page=3`,
         { validateStatus: (status) => status < 500 }))
     }
     const taggedGameObjects = await Promise.all(searchQueries);
 
-    const taggedGames =
+    let taggedGames =
       await taggedGameObjects
         .filter(obj => obj.status < 300) // filters out any queries that returned a 404
         .map(obj => obj.data.results) // isolates the actual API results
         .flat() // flattens the results into a single one-dimensional array
         .filter(dupeFilter)
-        .map(tagFilter)
-        .sort(sortByTagRelevance);
-    console.log('Tagged Games after creation:',taggedGames);
+        .map(tagFilter);
+    console.log('--------------------------------------------');
+    console.log('Tagged Games after creation:', taggedGames);
+    console.log('--------------------------------------------');
 
-    // Remove any non-matching games between taggedGames and ignoreList
-    // this function needs tweaking for comparing correct pieces of data
-    taggedGames = await taggedGames.filter(val => !ignoreList.includes(val));
-    console.log('Tagged Games after ignore list filter:', taggedGames);
+    // Game Scoring
+    console.log('--------------------------------------------');
+    console.log('Entering scoring!');
+    console.log('--------------------------------------------');
+    let scoredGames = [];
+    for (let game of taggedGames) {
+      // Ignore games in the ignoreList
+      let omitGame = 'FALSE';
+      for (let outcast of ignoreList) {
+        if (outcast.game_id == game.id) {
+          omitGame = 'TRUE';
+        }
+      }
+      // Process scoring for games not in ignoreList
+      if (omitGame == 'FALSE') {
+        let gameScore = 0;
+        let tagMatchCount = 0;
+        for (let gameTag of game.tags) {
+          for (let userTag of userScores) {
+            if (gameTag == userTag.name) {
+              if (userTag.score < 0) {
+                gameScore += (userTag.score - 0.1);
+              } else if (userTag.score > 0.5) {
+                gameScore += (userTag.score + 0.1);
+              } else {
+                gameScore += userTag.score;
+              }
+              tagMatchCount++;
+            }
+          }
+        }
+        // average combined tag scores
+        gameScore = gameScore/tagMatchCount;
 
-    // SCORING HERE
-    // WOO
-    for(let game of taggedGames){
-      // keep matched tags
-      // for each tag, adjust score
-      // push score + id to returnList
+        // score metacritic 
+        
+
+
+        // cap at 1 and -1
+
+
+        scoredGames.push({ gameData: game, gameScore: gameScore });
+      }
+      console.log('--------------------------------------------');
+      console.log('Scored Games?????', scoredGames);
+      console.log('--------------------------------------------');
     }
 
     res.send(taggedGames);
