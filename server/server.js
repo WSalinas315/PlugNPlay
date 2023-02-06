@@ -14,6 +14,7 @@ const rawgRouter = require('./routes/rawg.router');
 const tagsRouter = require('./routes/tags.router');
 const adminRouter = require('./routes/admin.router');
 const surveyRouter = require('./routes/survey.router');
+const glossaryRouter = require('./routes/glossary.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.use('/api/rawg', rawgRouter);
 app.use('/api/tags', tagsRouter);
 app.use('/api/survey', surveyRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/glossary', glossaryRouter);
 
 // Serve static files
 app.use(express.static('build'));

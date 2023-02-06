@@ -9,6 +9,13 @@
     width: 100%;
 }
 
+.more-info {
+    width: fit-content;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 /*
 .survey-prev {
     display: flex;
@@ -30,8 +37,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: center;
 }
 
-#survey-question {
-    height: 300px;
+#survey-body-question {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 300px;
+    max-height: 300px;
 }
