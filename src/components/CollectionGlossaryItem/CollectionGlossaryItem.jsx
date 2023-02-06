@@ -13,21 +13,26 @@ export default function GlossaryItem(prop) {
 
 	if (user.access_level == 0) {
 		if (prop.term == '') {
-			return <h2>Select from drop down to see definitions.</h2>;
-		} else {
 			return (
 				<div>
-					<h1>Under Development</h1>
-					<h2>Term: {prop.term}</h2>
-					<p>{JSON.stringify({ user })}</p>
-					<h4>
-						Definition: Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Neque mollitia pariatur, id iste architecto molestias ratione ab,
-						dolores dolorum reprehenderit, recusandae tenetur eum asperiores
-						rerum in ad perspiciatis officiis sapiente.
-					</h4>
+					<h2>Select from drop down to see definitions.</h2>;
 				</div>
 			);
 		}
+	} else {
+		return (
+			<div>
+				<h1>Under Development</h1>
+				<h2>Term: {prop.term}</h2>
+				<p>{JSON.stringify({ user })}</p>
+
+				<h4>
+					// Definition: Lorem ipsum dolor sit amet consectetur adipisicing
+					elit. Neque mollitia pariatur, id iste architecto molestias ratione
+					ab, dolores dolorum reprehenderit, recusandae tenetur eum asperiores
+					rerum in ad perspiciatis officiis sapiente.
+				</h4>
+			</div>
+		);
 	}
 } // end function
