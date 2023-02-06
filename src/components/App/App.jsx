@@ -27,6 +27,7 @@ import Survey from '../Survey/Survey';
 import ViewRecommendation from '../ViewRecommended/ViewRecommended';
 
 import './App.css';
+import GameItem from '../GameItem/GameItem';
 
 function App() {
 	const dispatch = useDispatch();
@@ -63,6 +64,10 @@ function App() {
 					<ProtectedRoute exact path='/admin'>
 						<AdminPage />
 					</ProtectedRoute>
+
+          <ProtectedRoute exact path='/games/:id'>
+            <GameItem />
+          </ProtectedRoute>
 
 					<Route exact path='/login'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}

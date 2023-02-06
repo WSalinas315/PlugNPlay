@@ -13,9 +13,12 @@ export default function RecommendedList() {
   const ListItem = ({ gameData }) => {
     return (
       <div className="recommended">
-        <a href="/#/">
+        <a href={`/#/games/${gameData.id}`}>
           <div className="card">
             <h1>{gameData.name}</h1>
+            <p>
+              {gameData.genres.map(genre => genre.name + " ")}
+            </p>
           </div>
         </a>
       </div>

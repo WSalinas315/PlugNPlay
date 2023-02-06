@@ -1,5 +1,12 @@
+import { useParams } from "react-router-dom";
 
 export default function () {
 
-  return (<></>)
+  const { id } = useParams();
+
+  return (
+  <>
+    Welcome to game ID {id}
+  </>
+  )
 }
