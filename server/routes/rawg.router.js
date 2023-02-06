@@ -71,14 +71,23 @@ router.get('/byGenre/', async (req, res) => {
   // current user ID
   const userID = req.user.id;
 
+  //* function to shuffle array for randomization and only return 3 genres
+  const shuffleArray = (arr) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
   // userScores is a combination of genre and tag names & scores
-  const userScores = await pool.query(`SELECT "genre_name" AS "name", "genre_score" AS "score" FROM "user_genres" WHERE "user_id" = $1
+  const {rows: userScores} = await pool.query(`SELECT "genre_name" AS "name", "score" FROM "user_genres" WHERE "user_id" = $1
                                 UNION
                                 SELECT "tag_name" AS "name", "score" FROM "user_tags" WHERE "user_id" = $1;`, [userID]);
   console.log('UserScores looks like:', userScores);
 
   // ignoreList is a combination of game IDs for the current user's wishlist, played list and ignore list
-  const ignoreList = await pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
+  const {rows: ignoreList} = await pool.query(`SELECT "game_id" FROM "wishlist" WHERE "user_id" = $1
                                 UNION
                                 SELECT "game_id" FROM "ignorelist" WHERE "user_id" = $1
                                 UNION
@@ -88,20 +97,22 @@ router.get('/byGenre/', async (req, res) => {
   // get list of positively rated user genres, 
   // randomize list 
   // and only query RAWG for the first 3
-  let userGenres = await pool.query(`SELECT "genre_name" FROM "user_genres" WHERE "user_id" = $1 AND genre_score > 0;`, [userID]);
+  let {rows: userGenres} = await pool.query(`SELECT "genre_name" FROM "user_genres" WHERE "user_id" = $1 AND "score" > 0;`, [userID]);
   console.log('userGenres looks like:', userGenres);
   const genreList = await shuffleArray(userGenres).slice(0, 3);
+  //const genreList = await shuffleArray(userGenres);
+
   console.log('genreList looks like:', genreList);
 
   // HELPER FUNCTIONS
   //* function to shuffle array for randomization and only return 3 genres
-  const shuffleArray = (arr) => {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
+  // const shuffleArray = (arr) => {
+  //   for (let i = arr.length - 1; i > 0; i--) {
+  //     const j = Math.floor(Math.random() * (i + 1));
+  //     [arr[i], arr[j]] = [arr[j], arr[i]];
+  //   }
+  //   return arr;
+  // }
 
   //* function to filter out duplicate results
   const dupeFilter = (obj, idx, arr) => {
@@ -131,7 +142,7 @@ router.get('/byGenre/', async (req, res) => {
       a.tags.filter(tag => userTags.includes(tag.toLowerCase())).length
   }
 
-  console.log('searching for genre', genre, '...');
+  console.log('searching for genres...');
   try {
     for (let genre of genreList) {
       searchQueries.push(axios.get(`https://api.rawg.io/api/games?genres=${genre.toLowerCase()}&${keyUrl}&page_size=40`,

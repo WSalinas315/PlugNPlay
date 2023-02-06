@@ -5,9 +5,12 @@ import SwipeBox from '../SwipeBox/SwipeBox';
 
 export default function ViewRecommendation() {
 
+  // Initialize dispatch
+  const dispatch = useDispatch();
+
   // Fetch game recommendations
   useEffect(() => {
-    // dispatch({ type: 'RAWG/SEARCH_BY_TAGS', payload:  });
+    dispatch({ type: 'RAWG/FETCH_RECOMMENDATIONS' });
   }, []);
 
   return (
