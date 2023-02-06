@@ -18,6 +18,7 @@ import UserPage from '../UserPage/UserPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
+import AdminPage from '../ViewAdmin/ViewAdmin';
 
 import CollectionPage from '../ViewCollection/ViewCollection';
 import ViewProfile from '../ViewProfile/ViewProfile';
@@ -50,13 +51,17 @@ function App() {
 						{/* <UserPage /> */}
 						<ViewRecommendation />
 					</ProtectedRoute>
-					
+
 					<ProtectedRoute exact path='/collection'>
 						<CollectionPage />
 					</ProtectedRoute>
 
-					<ProtectedRoute exact path= '/profile'>
+					<ProtectedRoute exact path='/profile'>
 						<ViewProfile />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path='/admin'>
+						<AdminPage />
 					</ProtectedRoute>
 
 					<Route exact path='/login'>
