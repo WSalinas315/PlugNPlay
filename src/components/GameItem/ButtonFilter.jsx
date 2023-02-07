@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useUserLists } from "../../hooks/storeHooks";
-import { GameListButton } from "./Buttons";
+import { LikeDislikeButton, GameListButton } from "./Buttons";
 
 import { Button } from "@mui/material";
 
@@ -40,8 +40,8 @@ export default function UserFunctions({ game }) {
       
       return (
         <div>
-          <Button startIcon={<ThumbUp />}>Like</Button>
-          <Button startIcon={<ThumbDown />}>Dislike</Button>
+          <LikeDislikeButton gameID={game.id} action={"like"} />
+          <LikeDislikeButton gameID={game.id} action={"dislike"} />
           <GameListButton gameID={game.id} list={"played_list"} action={"delete"} />
         </div>
       );

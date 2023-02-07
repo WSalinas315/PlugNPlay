@@ -15,12 +15,25 @@ import {
   ThumbUpOffAlt,
 } from "@mui/icons-material";
 
+export const LikeDislikeButton = ({ gameID, action }) => {
+
+  const icon = action === "like" ? (
+    <ThumbUp />
+  ) : (
+    <ThumbDown />
+  )
+
+  return (
+    <Button startIcon={icon} />
+  )
+}
 
 export const GameListButton = ({ gameID, list, action }) => {
   
   const dispatch = useDispatch();
 
   const handleClick = () => {
+    console.log('posting data for gameid', gameID)
     dispatch({ type: `USER/${list.toUpperCase()}/${action.toUpperCase()}`, payload: gameID });
   };
 
