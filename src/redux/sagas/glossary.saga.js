@@ -26,7 +26,15 @@ function* fetchGlossaryItem({ payload }) {
 	}
 }
 
+function* PostGlossaryTerm({ payload }) {
+	try {
+	} catch (error) {
+		handleErrors('Posting new glossary term failed', error);
+	}
+}
+
 export default function* glossarySaga() {
 	yield takeLatest('GLOSSARY/FETCH', fetchGlossary);
 	yield takeLatest('GLOSSARY/FETCH_ITEM', fetchGlossaryItem);
+	yield takeLatest('GLOSSARY/SET_NEW_TERM', PostGlossaryTerm);
 }
