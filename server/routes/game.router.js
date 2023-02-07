@@ -159,34 +159,4 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-/* --------------------
-  GLOSSARY LIST ROUTES
------------------------*/
-
-// Glossary - GET by ID
-router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Glossary - GET by ID');
-  try {
-    const termID = req.params.id;
-    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "id" = $1;`, [termID]);
-    res.send(glossaryResult);
-  } catch (err) {
-    console.log('Game Router Glossary GET by ID error:', err);
-    res.sendStatus(500);
-  }
-});
-
-// Glossary - GET all
-router.get('/glossary', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Glossary - GET');
-  try {
-    const glossaryResult = await pool.query(`SELECT "tag_id", "term" FROM "glossary";`);
-    res.send(glossaryResult);
-  } catch (err) {
-    console.log('Game Router Glossary GET error:', err);
-    res.sendStatus(500);
-  }
-});
-
-
 module.exports = router;
