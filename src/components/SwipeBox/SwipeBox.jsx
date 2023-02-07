@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useEffect } from "react";
 import Swipe from 'react-easy-swipe'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
@@ -7,17 +8,28 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
 import { useState } from 'react'
 import SnackbarAlert from '../SnackbarAlert/SnackbarAlert'
+import { useGameByID } from "../../hooks/storeHooks";
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
-
-export default function SwipeBox() {
+export default function SwipeBox(props) {
   const [open, setOpen] = useState(false)
   const [snackOpen, setSnackOpen] = useState(false)
   const [severity, setSeverity] = useState('')
   const [message, setMessage] = useState('')
+  const game = useGameByID();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [gameQueue, setGameQueue] = useState(0);
+  /*
+  useEffect(() => {
+    dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[0]?.gameData.id });
+  }, []);
+  */
 
   // for dialog box
   const handleOpen = () => {
@@ -47,6 +59,7 @@ export default function SwipeBox() {
   // SwipeContainer Class for creating the SwipeBox
   class SwipeContainer extends Component {
     // onSwipeStart function
+    
     onSwipeStart(event) {
       console.log('Start swiping...', event)
     }
@@ -67,6 +80,8 @@ export default function SwipeBox() {
         if (xPos > yPos) {
           swipe = 'Right Swipe'
           handleSnackOpen('success', 'You swiped right!')
+          setGameQueue(gameQueue + 1);
+      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
           swipe = 'Down Swipe'
         }
@@ -74,30 +89,56 @@ export default function SwipeBox() {
         if (xPos > yPos * -1) {
           swipe = 'Right Swipe'
           handleSnackOpen('success', 'You swiped right!')
+          setGameQueue(gameQueue + 1);
+      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
           swipe = 'Up Swipe'
+          dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
           handleOpen()
         }
       } else if (xPos < 0 && yPos > 0) {
         if (xPos * -1 > yPos) {
           swipe = 'Left Swipe'
           handleSnackOpen('error', 'You swiped left!')
+          setGameQueue(gameQueue + 1);
+          dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
           swipe = 'Down Swipe'
         }
       } else if (xPos < 0 && yPos < 0) {
         if (xPos > yPos) {
           swipe = 'Up Swipe'
+          dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
           handleOpen()
+
         } else {
           swipe = 'Left Swipe'
           handleSnackOpen('error', 'You swiped left!')
+          setGameQueue(gameQueue + 1);
+        dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         }
       } else {
         console.log("didn't make it into an if/else")
       }
       console.log('Swipe Direction:', swipe)
     }
+    
+   /*
+    onSwipeLeft() {
+      handleSnackOpen('error', 'You swiped left!')
+      setGameQueue(gameQueue + 1);
+      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+
+    }
+    onSwipeRight() {
+      handleSnackOpen('success', 'You swiped right!')
+      setGameQueue(gameQueue + 1);
+      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+    }
+    onSwipeUp() {
+      handleOpen()
+    }
+    */
 
     render() {
       // Styles the box to be rendered
@@ -107,12 +148,15 @@ export default function SwipeBox() {
         border: '1px solid black',
         background: '#ccc',
         padding: '20px',
-        fontSize: '3em',
+        fontSize: '1em',
         margin: '20px',
+        backgroundImage: `url(${props.games[gameQueue].gameData.background_image})`,
+        objectFit: 'cover',
+        backgroundSize: 'auto 100%',
       }
 
       return (
-        <>
+        <div>
           <SnackbarAlert
             snackOpen={snackOpen}
             severity={severity}
@@ -125,10 +169,15 @@ export default function SwipeBox() {
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
           >
-            <DialogTitle>{'Game name'}</DialogTitle>
+            <DialogTitle>{props.games[gameQueue]?.gameData.name}</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-                Description of the game that you swiped up on.
+              {game.description_raw?.length > 200 ? game.description_raw?.substring(0,199) + '...' : game.description_raw}
+              <button onClick={() => history.push(`/games/${props.games[gameQueue]?.gameData.id}`)} className='btn'>Details</button>
+                {/*
+              Released on: {props.games[0]?.gameData.released}<br/>
+              {game.publishers[0] && 'Published by: ' + game.publishers[0]?.name}<br />
+      {game.description_raw}<br/>*/}
               </DialogContentText>
             </DialogContent>
           </Dialog>
@@ -137,9 +186,9 @@ export default function SwipeBox() {
             onSwipeMove={this.onSwipeMove}
             onSwipeEnd={this.onSwipeEnd}
           >
-            <div style={boxStyle}>It's Swipin' Time! 👆</div>
+            <div draggable="true" style={boxStyle}><span style={{backgroundColor: 'white'}}>{props.games[gameQueue].gameData.name}</span></div>
           </Swipe>
-        </>
+        </div>
       )
     }
   }
