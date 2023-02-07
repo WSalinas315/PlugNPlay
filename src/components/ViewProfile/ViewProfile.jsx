@@ -11,6 +11,13 @@ import { Button, ButtonGroup, Link } from '@mui/material';
 function ViewProfile() {
 	// Pull user information from store
 	const user = useSelector(store => store.user);
+
+	const history = useHistory();
+
+	const handleAdminClick = () => {
+		history.push('/admin');
+	};
+
 	if (user.access_level == 1) {
 		return (
 			<div>
@@ -27,7 +34,9 @@ function ViewProfile() {
 							}}
 						/>
 					</Button>
-					<Button sx={{ border: 'transparent', select: '#ffffff' }}>
+					<Button
+						sx={{ border: 'transparent', select: '#ffffff' }}
+						onClick={handleAdminClick}>
 						<AdminPanelSettingsIcon
 							sx={{
 								color: '#C02222',
