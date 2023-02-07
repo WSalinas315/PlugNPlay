@@ -155,7 +155,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -184,11 +184,13 @@ function AdminPage() {
 							label='name'
 							value={termInput}
 							onChange={handleTermInput}
+							required
 						/>
 						<TextField
 							label='Definition'
 							value={definitionInput}
 							onChange={handleDefinitionInput}
+							required
 						/>
 						<TextField
 							label='Image'
@@ -225,7 +227,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -278,7 +280,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -331,7 +333,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -387,7 +389,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -452,6 +454,69 @@ function AdminPage() {
 				</Modal>
 			</Box>
 		); //!END OF DELETE TERM SECTION
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == true &&
+		toggleView == false &&
+		toggleDelete == false
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} required label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Box>
+					<Card>
+						<Typography> Term : {glossaryTerm[0].term} </Typography>
+						<Typography>Definition : {glossaryTerm[0].description}</Typography>
+						<CardMedia
+							image={`{glossaryTerm[0].img_path}`}
+							sx={{ maxHeight: 400, maxWidth: 300 }}
+						/>
+						{/* <Typography>Image Path : {glossaryTerm[0].description}</Typography> */}
+
+						<TextField label='Term'></TextField>
+						<TextField label='Description'></TextField>
+						<TextField label='Image Path'></TextField>
+						<Button
+							onClick={handleDeleteConfirm}
+							variant='contained'
+							sx={{ padding: 1 }}>
+							Delete
+						</Button>
+					</Card>
+				</Box>
+			</Box>
+		);
 	}
 	//! DEFAULT SET UP ON INITIAL LOAD.
 	else {
@@ -467,7 +532,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
