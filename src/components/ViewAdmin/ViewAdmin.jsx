@@ -70,6 +70,12 @@ function AdminPage() {
 			definitionInput,
 			imagePathInput
 		);
+
+		dispatch();
+
+		setTermInput('');
+		setDefinitionInput('');
+		setImagePathInput('');
 	};
 
 	const handleEdit = () => {
