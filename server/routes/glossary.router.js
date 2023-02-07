@@ -19,6 +19,19 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 	}
 });
 
+router.get('/term/:stringTerm', rejectUnauthenticated, async (req, res) => {
+	try {
+		const stringTerm = req.params.stringTerm;
+		console.log('StringTerm is: ', stringTerm);
+		const sqlText = `SELECT * FROM "glossary" WHERE "term" = $1;`;
+		const glossaryTerm = await pool.query(sqlText, [stringTerm]);
+		res.send(glossaryTerm.rows);
+	} catch (err) {
+		console.log('Error getting glossary term from database.', err);
+		res.sendStatus(500);
+	}
+});
+
 // POST AN UPDATE TO THE TERMS DESCRIPTION
 router.post('/edit/:termId', rejectUnauthenticated, async (req, res) => {
 	const termId = req.params.termId; //the term being changed
@@ -41,10 +54,10 @@ router.post('/edit/:termId', rejectUnauthenticated, async (req, res) => {
 
 //DELETE A SELECTED TERM FROM THE GLOSSARY TABLE BY TERM ID.
 router.delete('/delete/:termId', rejectUnauthenticated, (req, res) => {
-	const glossaryTerm = req.params;
+	const glossaryTerm = req.params.termId;
 	console.log('Term being removed: ', glossaryTerm);
 
-	const sqlText = `DELETE FROM "glossary WHERE term = $1;`;
+	const sqlText = `DELETE FROM "glossary" WHERE "id" = $1;`;
 
 	try {
 		pool.query(sqlText, [glossaryTerm]).then(() => {
@@ -57,15 +70,15 @@ router.delete('/delete/:termId', rejectUnauthenticated, (req, res) => {
 	}
 });
 
-router.put('/Add/Term', rejectUnauthenticated, (req, res) => {
+router.post('/Add/Term', rejectUnauthenticated, (req, res) => {
 	const term = req.body.term;
-	const description = req.body.description;
-	const imagePath = req.body.imagepath;
+	const definition = req.body.definition;
+	const imagePath = req.body.imagePath;
 
-	const sqlText = `INSERT INTO "glossary" ("term", "description", "img_path" VALUES ($1,$2,$3); `;
+	const sqlText = `INSERT INTO "glossary" ("term", "description", "img_path") VALUES ($1,$2,$3); `;
 
 	try {
-		pool.query(sqlText, [term, description, imagePath]);
+		pool.query(sqlText, [term, definition, imagePath]);
 		console.log('Successfully Added a new term to Database');
 		res.sendStatus(201);
 	} catch (error) {

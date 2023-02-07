@@ -5,6 +5,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Card from '@mui/material/Card';
 import ProfileBartleType from '../ProfileBartleType/ProfileBartleType';
 import './ViewProfile.css';
+import LogOutButton from '../LogOutButton/LogOutButton'
 
 function ViewProfile() {
 
@@ -31,6 +32,7 @@ function ViewProfile() {
         {/* Bartle Player Type */}
         {/* <ProfileBartleType /> */}
         <h3>Player Type: Killer (Placeholder)</h3>
+        <LogOutButton />
       </Card>
     </div>
   )
