@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -7,10 +7,13 @@ import { useGameByID } from "../../hooks/storeHooks";
 import { capitalizeFirst } from "../../helpers/words";
 import Loading from "../Loading/Loading";
 
+import './GameItem.css'
+
 export default function () {
   const dispatch = useDispatch();
   const { id } = useParams();
   const game = useGameByID();
+  const [ titleHidden, hideTitle ] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,16 +36,12 @@ export default function () {
   };
 
   const MetacriticLink = () => {
-    return (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={game.metacritic_url}
-      >
+    return game.metacritic ? (
+      <a target="_blank" rel="noopener noreferrer" href={game.metacritic_url}>
         Rated {game.metacritic} on Metacritic
       </a>
-    )
-  }
+    ) : '';
+  };
 
   const GenreUL = () => {
     return (
@@ -54,10 +53,28 @@ export default function () {
     );
   };
 
+  const GameSplashTitle = () => {
+
+    const backgroundStyling = {
+      backgroundImage: "url(" + game.background_image + ")",
+    };
+
+    const titleClass = titleHidden ? 'hidden-title' : '';
+
+    return (
+      <div
+        style={backgroundStyling}
+        onClick={() => hideTitle(!titleHidden) }
+        className={`game-splash-container ${titleClass}`}>
+        <h1>{game.name}</h1>
+      </div>
+    );
+  };
+
   return game.name ? (
     <>
       <div>
-        <h1>{game.name}</h1>
+        <GameSplashTitle />
         <p>
           <MetacriticLink />
         </p>
@@ -80,7 +97,6 @@ export default function () {
         </ul>
         <p>Released {formatDate(game.released)}</p>
         <p>{game.description_raw}</p>
-        <img src={game.background_image} />
       </div>
     </>
   ) : (
