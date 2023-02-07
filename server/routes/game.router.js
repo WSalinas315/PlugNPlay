@@ -3,9 +3,9 @@ const pool = require('../modules/pool');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const router = express.Router();
 
-/* 
+/* ----------------
   WISHLIST ROUTES 
-*/
+------------------*/
 
 // Wishlist - GET
 router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
@@ -47,9 +47,9 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-/* 
+/* -------------------
   IGNORE LIST ROUTES 
-*/
+---------------------*/
 
 // Ignore List - GET
 router.get('/ignorelist', rejectUnauthenticated, async (req, res) => {
@@ -91,9 +91,9 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-/* 
+/* -------------------
   PLAYED GAMES ROUTES
-*/
+----------------------*/
 
 // Played List - GET
 router.get('/played', rejectUnauthenticated, async (req, res) => {
@@ -149,9 +149,9 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-/* 
+/* --------------------
   GLOSSARY LIST ROUTES
-*/
+-----------------------*/
 
 // Glossary - GET by ID
 router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
@@ -177,5 +177,6 @@ router.get('/glossary', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 
 module.exports = router;
