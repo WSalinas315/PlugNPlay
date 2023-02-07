@@ -24,9 +24,10 @@ router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
 router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - POST');
   try {
-    const wishlistGame = req.body;
+    const { gameID } = req.body;
+    console.log(req.body)
     await pool.query(`INSERT INTO "wishlist" ("user_id", "game_id") 
-                      VALUES ($1, $2);`, [wishlistGame.user_id, wishlistGame.game_id]);
+                      VALUES ($1, $2);`, [req.user.id, gameID]);
     res.sendStatus(201);
   } catch (err) {
     console.log('Game Router Wishlist POST error:', err);
@@ -70,7 +71,7 @@ router.post('/ignorelist', rejectUnauthenticated, async (req, res) => {
   try {
     const ignorelistGame = req.body;
     await pool.query(`INSERT INTO "ignorelist" ("user_id", "game_id") 
-                      VALUES ($1, $2);`, [ignorelistGame.user_id, ignorelistGame.game_id]);
+                      VALUES ($1, $2);`, [req.user.id, ignorelistGame.game_id]);
     res.sendStatus(201);
   } catch (err) {
     console.log('Game Router Ignore List POST error:', err);
@@ -114,7 +115,7 @@ router.post('/played', rejectUnauthenticated, async (req, res) => {
   try {
     const playedGame = req.body;
     await pool.query(`INSERT INTO "played" ("user_id", "game_id") 
-                      VALUES ($1, $2);`, [playedGame.user_id, playedGame.game_id]);
+                      VALUES ($1, $2);`, [req.user.id, playedGame.game_id]);
     res.sendStatus(201);
   } catch (err) {
     console.log('Game Router Played List POST error:', err);
