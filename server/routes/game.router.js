@@ -17,7 +17,7 @@ router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - GET');
   const userID = req.user.id;
   try {
-    const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
+    const { rows: wishlistResult } = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
     res.send(wishlistResult);
   } catch (err) {
     console.log('Game Router Wishlist GET by ID error:', err);
@@ -64,7 +64,7 @@ router.get('/ignorelist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - GET');
   const userID = req.user.id;
   try {
-    const ignorelistResult = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
+    const { rows: ignorelistResult } = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
     res.send(ignorelistResult);
   } catch (err) {
     console.log('Game Router Ignore List GET by ID error:', err);
@@ -109,7 +109,7 @@ router.get('/played', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - GET');
   const userID = req.user.id;
   try {
-    const playedResult = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
+    const { rows: playedResult } = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
     res.send(playedResult);
   } catch (err) {
     console.log('Game Router Played List GET by ID error:', err);
@@ -159,8 +159,8 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
     await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "game_id" = $2 AND "user_id" = $3`, [gameRating, gameID, userID]);
 
     // Get game information from RAWG
-    const {data: ratedGame} = await axios.get(`https://api.rawg.io/api/games/${gameID}?${keyUrl}`,
-    { validateStatus: (status) => status < 500 });
+    const { data: ratedGame } = await axios.get(`https://api.rawg.io/api/games/${gameID}?${keyUrl}`,
+      { validateStatus: (status) => status < 500 });
 
     // tag matching for user score adjustments
     for (let tag of ratedGame.tags) {
@@ -169,7 +169,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
           let newScore = 0;
           // calculate score adjustment
           let scoreAdjustment = 0.05;
-          if(gameCount[0].count < 100){
+          if (gameCount[0].count < 100) {
             scoreAdjustment += (0.05 * ((100 - gameCount[0].count) / 100));
           }
           // apply score adjustment based on positive/negative rating
@@ -197,7 +197,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
           let newScore = 0;
           // calculate score adjustment
           let scoreAdjustment = 0.05;
-          if(gameCount[0].count < 100){
+          if (gameCount[0].count < 100) {
             scoreAdjustment += (0.05 * ((100 - gameCount[0].count) / 100));
           }
           // apply score adjustment based on positive/negative rating
