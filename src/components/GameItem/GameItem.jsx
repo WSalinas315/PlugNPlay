@@ -6,6 +6,7 @@ import { formatDate } from "../../helpers/dates";
 import { useGameByID } from "../../hooks/storeHooks";
 import { capitalizeFirst } from "../../helpers/words";
 import Loading from "../Loading/Loading";
+import UserFunctions from './UserFunctions'
 
 import './GameItem.css'
 
@@ -75,6 +76,7 @@ export default function () {
     <>
       <div>
         <GameSplashTitle />
+        <UserFunctions game={game} />
         <p>
           <MetacriticLink />
         </p>
