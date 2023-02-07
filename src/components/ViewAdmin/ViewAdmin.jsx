@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
+import CardMedia from '@mui/material/CardMedia';
 
 function AdminPage() {
 	const dispatch = useDispatch();
@@ -33,18 +34,15 @@ function AdminPage() {
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
 
-	const [term, setTerm] = useState(
-		glossary.filter(object => object.term == glossaryTerm)
-	);
-
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
 		dispatch({
-			type: 'GLOSSARY/SET_ITEM',
+			type: 'GLOSSARY/FETCH_TERM',
 			payload: value, //This is the term that is was clicked on from the drop down menu.
 		});
 	};
 
+	//This section corresponds to the Adding of a new term to DB.
 	const handleAdd = () => {
 		console.log('Clicked on the Add Term Button');
 		setAddBoolean(true);
@@ -71,12 +69,20 @@ function AdminPage() {
 			imagePathInput
 		);
 
-		dispatch();
+		dispatch({
+			type: 'GLOSSARY/SET_NEW_TERM',
+			payload: {
+				term: termInput,
+				definition: definitionInput,
+				imagePath: imagePathInput,
+			},
+		});
 
 		setTermInput('');
 		setDefinitionInput('');
 		setImagePathInput('');
 	};
+	//End of Adding New Term to DB.
 
 	const handleEdit = () => {
 		console.log('Clicked on the Edit Button');
@@ -101,7 +107,7 @@ function AdminPage() {
 		setViewBoolean(false);
 		setDeleteBoolean(true);
 	};
-
+	//! ADD TERM SECTION
 	if (
 		toggleAdd == true &&
 		toggleEdit == false &&
@@ -170,12 +176,16 @@ function AdminPage() {
 					<Typography> {JSON.stringify({ imagePathInput })}</Typography> */}
 				</Box>
 			</Box>
-		);
-	} else if (
+		); //!END OF ADD TERM SECTION
+	}
+	//! START OF VIEW TERM SECTION
+	else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
 		toggleView == true &&
-		toggleDelete == false
+		toggleDelete == false &&
+		glossaryTerm[0].description == null &&
+		glossaryTerm[0].img_path == null
 	) {
 		return (
 			<Box
@@ -214,13 +224,21 @@ function AdminPage() {
 
 				<Box>
 					<Card>
-						<Typography> Term: {glossaryTerm}</Typography>
-						<Typography>{glossary.map({ description })}</Typography>
+						<Typography> Term : {glossaryTerm[0].term} </Typography>
+						<Typography>Definition : No Definition Available</Typography>
+						<Typography>Image : No Image Available</Typography>
 					</Card>
 				</Box>
 			</Box>
 		);
-	} else {
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == false &&
+		toggleView == true &&
+		toggleDelete == false &&
+		glossaryTerm[0].description != null &&
+		glossaryTerm[0].img_path == null
+	) {
 		return (
 			<Box
 				sx={{
@@ -255,9 +273,111 @@ function AdminPage() {
 						Add Term
 					</Button>
 				</Grid>
+
+				<Box>
+					<Card>
+						<Typography> Term : {glossaryTerm[0].term} </Typography>
+						<Typography>Definition : {glossaryTerm[0].description}</Typography>
+						<Typography>Image : No Image Available</Typography>
+					</Card>
+				</Box>
 			</Box>
 		);
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == false &&
+		toggleView == true &&
+		toggleDelete == false &&
+		glossaryTerm[0].description != null &&
+		glossaryTerm[0].img_path != null
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Box>
+					<Card>
+						<Typography> Term : {glossaryTerm[0].term} </Typography>
+						<Typography>Definition : {glossaryTerm[0].description}</Typography>
+						<CardMedia
+							image={`{glossaryTerm[0].img_path}`}
+							sx={{ maxHeight: 400, maxWidth: 300 }}
+						/>
+					</Card>
+				</Box>
+			</Box>
+		);
+		//!END OF VIEW TERM SECTION
 	}
+	//! DEFAULT SET UP ON INITIAL LOAD.
+	else {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+			</Box>
+		);
+	} //! END OF DEFAULT SETUP.
 }
 
 export default AdminPage;
