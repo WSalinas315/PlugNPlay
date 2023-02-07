@@ -19,36 +19,45 @@ import IconButton from '@mui/material/IconButton';
 
 function AdminPage() {
 	const dispatch = useDispatch();
+
+	//*This helps the Modal decide the current state of Modal open/close.
 	const [open, setOpen] = useState(false);
+	//*This is used for the Modal to appear
 	const handleOpen = () => setOpen(true);
+	//*This is used for the Modal to disappear
 	const handleClose = () => setOpen(false);
 
+	//* Fetches the list of glossary to populate to the AutoComplete component upon load.
 	useEffect(() => {
 		dispatch({ type: 'GLOSSARY/FETCH' });
 	}, []);
 
 	const user = useSelector(store => store.user);
+	//* Holds an Array of objects from the Glossary Table in the Database.
 	const glossary = useSelector(store => store.glossary.glossary);
+	//* Holds an Array of 1 object that is replaced by the onChange of the AutoComplete component.
 	const glossaryTerm = useSelector(store => store.glossary.glossaryItem);
-
+	//* These are used to properly set the state of each toggle from the Admins button options. Only 1 will be set to TRUE while the rest are kept at FALSE.
 	const [toggleAdd, setAddBoolean] = useState(false);
 	const [toggleEdit, setEditBoolean] = useState(false);
 	const [toggleView, setViewBoolean] = useState(false);
 	const [toggleDelete, setDeleteBoolean] = useState(false);
 
+	//* These are set for the ADD TERM section when the user wants to input the new terms information to send to the database.
 	const [termInput, setTermInput] = useState('');
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
 
+	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
 		dispatch({
 			type: 'GLOSSARY/FETCH_TERM',
-			payload: value, //This is the term that is was clicked on from the drop down menu.
+			payload: value, //?This is the term that is was clicked on from the drop down menu.
 		});
 	};
 
-	//This section corresponds to the Adding of a new term to DB.
+	//*This section corresponds to the Adding of a new term to DB.
 	const handleAdd = () => {
 		console.log('Clicked on the Add Term Button');
 		setAddBoolean(true);
@@ -56,17 +65,19 @@ function AdminPage() {
 		setViewBoolean(false);
 		setDeleteBoolean(false);
 	};
-
+	//* Saving the name input to State.
 	const handleTermInput = event => {
 		setTermInput(event.target.value);
 	};
+	//* Saving the definition input to State.
 	const handleDefinitionInput = event => {
 		setDefinitionInput(event.target.value);
 	};
+	//* Saving the Image path input to State.
 	const handleImagePathInput = event => {
 		setImagePathInput(event.target.value);
 	};
-
+	//* This section corresponds to sending the saved state to dispatch to the database.
 	const handleTermSubmit = () => {
 		console.log(
 			'Term / definition / image path',
@@ -74,7 +85,6 @@ function AdminPage() {
 			definitionInput,
 			imagePathInput
 		);
-
 		dispatch({
 			type: 'GLOSSARY/SET_NEW_TERM',
 			payload: {
@@ -83,12 +93,12 @@ function AdminPage() {
 				imagePath: imagePathInput,
 			},
 		});
+		//* Clearing the state values after the Admin clicked on the submit button.
 		setTermInput('');
 		setDefinitionInput('');
 		setImagePathInput('');
 	};
-	//End of Adding New Term to DB.
-
+	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
 		console.log('Clicked on the Edit Button');
 		setAddBoolean(false);
@@ -96,7 +106,7 @@ function AdminPage() {
 		setViewBoolean(false);
 		setDeleteBoolean(false);
 	};
-
+	//* Handles the rendering of the View section upon clicking on the View Button.
 	const handleView = () => {
 		console.log('Clicked on the View Button');
 		setAddBoolean(false);
@@ -104,7 +114,7 @@ function AdminPage() {
 		setViewBoolean(true);
 		setDeleteBoolean(false);
 	};
-
+	//* Handles the rendering of the Delete section upon clicking on the Delete Button.
 	const handleDelete = () => {
 		console.log('Clicked on the Delete Button');
 		setAddBoolean(false);
@@ -113,7 +123,7 @@ function AdminPage() {
 		setDeleteBoolean(true);
 		setOpen(true);
 	};
-
+	//* This corresponds to the Modal, where the user confirms the deletion of the term from the database.
 	const handleDeleteConfirm = () => {
 		console.log('Clicked on the delete confirm button!');
 		dispatch({
@@ -122,6 +132,8 @@ function AdminPage() {
 		});
 		setOpen(false);
 		dispatch({ type: 'GLOSSARY/FETCH' });
+		//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
+		window.location.reload();
 	};
 
 	//! ADD TERM SECTION
@@ -192,6 +204,7 @@ function AdminPage() {
 		); //!END OF ADD TERM SECTION
 	}
 	//! START OF VIEW TERM SECTION
+	//* DISPLAY THE TERM AND HIDING DESCRIPTION/IMAGE IF NOTHING TO SHOW.
 	else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -244,6 +257,7 @@ function AdminPage() {
 				</Box>
 			</Box>
 		);
+		//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -296,6 +310,7 @@ function AdminPage() {
 				</Box>
 			</Box>
 		);
+		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -352,6 +367,7 @@ function AdminPage() {
 			</Box>
 		);
 		//!END OF VIEW TERM SECTION
+		//*
 		//! START OF DELETE TERM SECTION
 	} else if (
 		toggleAdd == false &&
