@@ -117,9 +117,11 @@ function AdminPage() {
 	const handleDeleteConfirm = () => {
 		console.log('Clicked on the delete confirm button!');
 		dispatch({
-			type: 'GLOSSARY',
+			type: 'GLOSSARY/DELETE_TERM',
+			payload: { id: glossaryTerm[0].id },
 		});
 		setOpen(false);
+		dispatch({ type: 'GLOSSARY/FETCH' });
 	};
 
 	//! ADD TERM SECTION
@@ -396,7 +398,7 @@ function AdminPage() {
 					open={open}
 					onClose={handleClose}
 					aria-labelledby='modal-title'
-					aria-describeby='modal-description'
+					aria-activedescendant='modal-description'
 					sx={{
 						display: 'flex',
 						justifyContent: 'center',
@@ -415,16 +417,17 @@ function AdminPage() {
 							bgcolor: '#ffffff',
 							padding: 2,
 						}}>
-						<Typography id='modal-title' variant='h5' component='h3'>
-							Confirm Delete
-						</Typography>
-						<Typography id='modal-description' sx={{ mt: 2 }}>
-							Are You sure you want to delete "{glossaryTerm[0].term}" from the
+						<Box sx={{ borderBottom: 'solid 1px #C02222' }}>
+							<Typography id='modal-title' variant='h5' component='h3'>
+								Confirm Delete
+							</Typography>
+						</Box>
+						<Typography id='modal-description' sx={{ m: 2 }}>
+							Are you sure you want to delete "{glossaryTerm[0].term}" from the
 							glossary?
 						</Typography>
 						<Button
 							onClick={handleDeleteConfirm}
-							size='Medium'
 							variant='contained'
 							sx={{ padding: 1 }}>
 							Delete

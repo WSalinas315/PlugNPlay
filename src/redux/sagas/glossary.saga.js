@@ -14,18 +14,6 @@ function* fetchGlossary() {
 	}
 }
 
-// function* fetchGlossaryItem({ payload }) {
-// 	try {
-// 		const { data: glossaryItem } = yield axios.get('/api/glossary/' + payload);
-// 		yield put({
-// 			type: 'GLOSSARY/SET_ITEM',
-// 			payload: glossaryItem,
-// 		});
-// 	} catch (err) {
-// 		handleErrors('Fetching glossary item failed', err);
-// 	}
-// }
-
 function* fetchGlossaryTerm(action) {
 	try {
 		console.log('payload: ', action.payload);
@@ -51,8 +39,24 @@ function* PostGlossaryTerm({ payload }) {
 	}
 }
 
+function* DeleteGlossaryTerm({ payload }) {
+	try {
+		console.log('Payload in DeleteGlossaryTerm: ', payload);
+		yield axios.delete(`/api/glossary/delete/${payload.id}`);
+
+		const { data: glossary } = yield axios.get('/api/glossary');
+		yield put({
+			type: 'GLOSSARY/SET',
+			payload: glossary,
+		});
+	} catch (error) {
+		handleErrors('Deleting term from glossary failed', error);
+	}
+}
+
 export default function* glossarySaga() {
 	yield takeLatest('GLOSSARY/FETCH', fetchGlossary);
 	yield takeLatest('GLOSSARY/FETCH_TERM', fetchGlossaryTerm);
 	yield takeLatest('GLOSSARY/SET_NEW_TERM', PostGlossaryTerm);
+	yield takeLatest('GLOSSARY/DELETE_TERM', DeleteGlossaryTerm);
 }
