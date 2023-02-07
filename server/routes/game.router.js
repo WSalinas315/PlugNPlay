@@ -129,13 +129,55 @@ router.post('/played', rejectUnauthenticated, async (req, res) => {
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - PUT by ID');
   const gameID = req.params.id;
+  // -1,0,1
   const gameRating = req.body.liked;
+  // Should be possible to send tags/genres
+  const tagArray = req.body.tags;
+  const genreArray = req.body.genres;
+  const userID = req.user.id;
 
+  // userScores is a combination of genre and tag names & scores
+  const { rows: userScores } = await pool.query(
+    `SELECT "genre_name" AS "name", "score" FROM "user_genres" WHERE "user_id" = $1
+    UNION
+    SELECT "tag_name" AS "name", "score" FROM "user_tags" WHERE "user_id" = $1;`, [userID]
+  );
+  console.log('UserScores looks like:', userScores);
 
+  // gets count of rated games for current user
+  const { rows: gameCount } = await pool.query(
+    `SELECT COUNT(*) AS "count" FROM "played" 
+    WHERE "user_id" = $1 AND "liked" = 1 OR "liked" = -1;`, [userID]
+  );
 
   try {
-    await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "id" = $2`, [gameRating, gameID]);
+    // Update liked status in played games table
+    await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "game_id" = $2 AND "user_id" = $3`, [gameRating, gameID, userID]);
 
+    // tag matching for user score adjustments
+    for (let tag of tagArray) {
+      for (let userTag of userScores) {
+        if (tag == userTag.name) {
+          let newScore = 0;
+          // calculate score adjustment
+          let scoreAdjustment = 0.05 + (0.05 * ((100 - gameCount) / 100));
+          // apply score adjustment based on positive/negative rating
+          if (gameRating > 0) {
+            newScore = userTag.score + scoreAdjustment;
+          } else if (gameRating < 0) {
+            newScore = userTag.score - scoreAdjustment;
+          }
+          // Adjust outlier scores to end of scoring range
+          if (newScore > 1) {
+            newScore = 1;
+          } else if (newScore < -1) {
+            newScore = -1;
+          }
+          // Update tag score for this user in user_tags table
+          await pool.query(`UPDATE "user_tags" SET "score" = $1 WHERE "user_id" = $2 AND "tag_name" = $3;`,[newScore, userID, tag]);
+        }
+      }
+    }
 
 
     res.sendStatus(200);
