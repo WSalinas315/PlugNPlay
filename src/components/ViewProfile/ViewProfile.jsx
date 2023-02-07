@@ -106,5 +106,5 @@ function ViewProfile() {
       </Card>
     </div>
   )
-}
+}}
 export default ViewProfile;
