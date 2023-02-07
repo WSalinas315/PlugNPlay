@@ -12,7 +12,7 @@ router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - GET');
   try {
     const userID = req.user.id
-    const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
+    const { rows: wishlistResult } = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
     res.send(wishlistResult);
   } catch (err) {
     console.log('Game Router Wishlist GET by ID error:', err);
@@ -56,7 +56,7 @@ router.get('/ignorelist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - GET');
   try {
     const userID = req.user.id;
-    const ignorelistResult = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
+    const { rows: ignorelistResult } = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
     res.send(ignorelistResult);
   } catch (err) {
     console.log('Game Router Ignore List GET by ID error:', err);
@@ -100,7 +100,7 @@ router.get('/played', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - GET');
   try {
     const userID = req.user.id;
-    const playedResult = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
+    const { rows: playedResult } = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
     res.send(playedResult);
   } catch (err) {
     console.log('Game Router Played List GET by ID error:', err);
@@ -158,7 +158,7 @@ router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Glossary - GET by ID');
   try {
     const termID = req.params.id;
-    const glossaryResult = await pool.query(`SELECT * FROM "glossary" WHERE "id" = $1;`, [termID]);
+    const { rows: glossaryResult } = await pool.query(`SELECT * FROM "glossary" WHERE "id" = $1;`, [termID]);
     res.send(glossaryResult);
   } catch (err) {
     console.log('Game Router Glossary GET by ID error:', err);
@@ -170,7 +170,7 @@ router.get('/glossary/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/glossary', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Glossary - GET');
   try {
-    const glossaryResult = await pool.query(`SELECT "tag_id", "term" FROM "glossary";`);
+    const { rows: glossaryResult } = await pool.query(`SELECT "tag_id", "term" FROM "glossary";`);
     res.send(glossaryResult);
   } catch (err) {
     console.log('Game Router Glossary GET error:', err);
