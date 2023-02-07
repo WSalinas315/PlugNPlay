@@ -10,8 +10,8 @@ const router = express.Router();
 // Wishlist - GET
 router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - GET');
+  const userID = req.user.id
   try {
-    const userID = req.user.id
     const wishlistResult = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
     res.send(wishlistResult);
   } catch (err) {
@@ -23,10 +23,11 @@ router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
 // Wishlist - POST
 router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - POST');
+  const userID = req.user.id
+  const wishlistGame = req.body;
   try {
-    const wishlistGame = req.body;
     await pool.query(`INSERT INTO "wishlist" ("user_id", "game_id") 
-                      VALUES ($1, $2);`, [wishlistGame.user_id, wishlistGame.game_id]);
+                      VALUES ($1, $2);`, [userID, wishlistGame.game_id]);
     res.sendStatus(201);
   } catch (err) {
     console.log('Game Router Wishlist POST error:', err);
@@ -37,8 +38,8 @@ router.post('/wishlist', rejectUnauthenticated, async (req, res) => {
 // Wishlist - DELETE by game ID
 router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - DELETE by ID');
+  const wishlistID = req.params.id;
   try {
-    const wishlistID = req.params.id;
     await pool.query(`DELETE FROM "wishlist" WHERE "id" = $1;`, [wishlistID]);
     res.sendStatus(200);
   } catch (err) {
@@ -125,11 +126,18 @@ router.post('/played', rejectUnauthenticated, async (req, res) => {
 // Played List - PUT by game ID
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - PUT by ID');
+  const gameID = req.params.id;
+  const gameRating = req.body.liked;
+
+
+
   try {
-    const gameID = req.params.id;
-    const gameRating = req.body.liked;
     await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "id" = $2`, [gameRating, gameID]);
+
+
+
     res.sendStatus(200);
+
   } catch (err) {
     console.log('Game Router Played List PUT by ID error:', err);
     res.sendStatus(500);
