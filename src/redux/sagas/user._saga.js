@@ -59,7 +59,7 @@ function* fetchPlayedList() {
   try {
     const { data: playedList } = yield axios.get('/api/games/played/')
     yield put({
-      type: 'USER/SET_PLAYED',
+      type: 'USER/SET_PLAYED_LIST',
       payload: playedList
     })
   } catch (err) {
