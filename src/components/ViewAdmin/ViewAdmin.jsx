@@ -13,9 +13,15 @@ import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import CardMedia from '@mui/material/CardMedia';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Modal from '@mui/material/Modal';
+import IconButton from '@mui/material/IconButton';
 
 function AdminPage() {
 	const dispatch = useDispatch();
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 
 	useEffect(() => {
 		dispatch({ type: 'GLOSSARY/FETCH' });
@@ -77,7 +83,6 @@ function AdminPage() {
 				imagePath: imagePathInput,
 			},
 		});
-
 		setTermInput('');
 		setDefinitionInput('');
 		setImagePathInput('');
@@ -106,7 +111,17 @@ function AdminPage() {
 		setEditBoolean(false);
 		setViewBoolean(false);
 		setDeleteBoolean(true);
+		setOpen(true);
 	};
+
+	const handleDeleteConfirm = () => {
+		console.log('Clicked on the delete confirm button!');
+		dispatch({
+			type: 'GLOSSARY',
+		});
+		setOpen(false);
+	};
+
 	//! ADD TERM SECTION
 	if (
 		toggleAdd == true &&
@@ -170,10 +185,6 @@ function AdminPage() {
 							Submit
 						</Button>
 					</FormControl>
-
-					{/* <Typography>{JSON.stringify({ termInput })} </Typography>
-					<Typography>{JSON.stringify({ definitionInput })} </Typography>
-					<Typography> {JSON.stringify({ imagePathInput })}</Typography> */}
 				</Box>
 			</Box>
 		); //!END OF ADD TERM SECTION
@@ -339,6 +350,89 @@ function AdminPage() {
 			</Box>
 		);
 		//!END OF VIEW TERM SECTION
+		//! START OF DELETE TERM SECTION
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == false &&
+		toggleView == false &&
+		toggleDelete == true
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Modal
+					open={open}
+					onClose={handleClose}
+					aria-labelledby='modal-title'
+					aria-describeby='modal-description'
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						flexDirection: 'column',
+					}}>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							flexDirection: 'column',
+							position: 'fixed',
+							top: '40%',
+							border: '2px solid #000000',
+							bgcolor: '#ffffff',
+							padding: 2,
+						}}>
+						<Typography id='modal-title' variant='h5' component='h3'>
+							Confirm Delete
+						</Typography>
+						<Typography id='modal-description' sx={{ mt: 2 }}>
+							Are You sure you want to delete "{glossaryTerm[0].term}" from the
+							glossary?
+						</Typography>
+						<Button
+							onClick={handleDeleteConfirm}
+							size='Medium'
+							variant='contained'
+							sx={{ padding: 1 }}>
+							Delete
+						</Button>
+					</Box>
+				</Modal>
+			</Box>
+		); //!END OF DELETE TERM SECTION
 	}
 	//! DEFAULT SET UP ON INITIAL LOAD.
 	else {
