@@ -1,0 +1,66 @@
+import { useDispatch } from "react-redux";
+
+import { Button } from "@mui/material";
+
+import {
+  Block,
+  Star,
+  StarBorder,
+  PlaylistAdd,
+  PlaylistRemove,
+  PlaylistAddCheck,
+  ThumbUp,
+  ThumbDown,
+  ThumbDownOffAlt,
+  ThumbUpOffAlt,
+} from "@mui/icons-material";
+
+
+export const GameListButton = ({ gameID, list, action }) => {
+  
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch({ type: `USER/${list.toUpperCase()}/${action.toUpperCase()}`, payload: gameID });
+  };
+
+  const icon = {
+      'wishlist': {
+        'add': <StarBorder />,
+        'delete': <Star />
+      },
+      'played_list': {
+        'add': <PlaylistAdd />,
+        'delete': <PlaylistRemove />
+      },
+      'ignorelist': {
+        'add': <Block />,
+        'delete': <Block />
+      } 
+    }[list][action]
+
+  const text = {
+      'wishlist': {
+        'add': 'Add To Wishlist',
+        'delete': 'Remove from Wishlist'
+      },
+      'played_list': {
+        'add': 'Add to Played',
+        'delete': 'Remove from Played'
+      },
+      'ignorelist': {
+        'add': 'Ignore',
+        'delete': 'Remove from Ignored'
+      } 
+    }[list][action]
+
+  return (
+    <Button
+      onClick={handleClick}
+      startIcon={icon}
+    >
+      {text}
+    </Button>
+  )
+
+}
