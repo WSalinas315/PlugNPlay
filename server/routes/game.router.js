@@ -2,6 +2,11 @@ const express = require('express');
 const pool = require('../modules/pool');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const router = express.Router();
+const axios = require('axios');
+require('dotenv').config();
+
+const key = process.env.RAWG_API_KEY;
+const keyUrl = ("key=" + key);
 
 /* ----------------
   WISHLIST ROUTES 
@@ -125,15 +130,13 @@ router.post('/played', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Played List - PUT by game ID
+/* -------------------------------------------------------------
+// Played List - PUT by game ID and adjust user genre/tag scores
+---------------------------------------------------------------*/
 router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - PUT by ID');
   const gameID = req.params.id;
-  // -1,0,1
   const gameRating = req.body.liked;
-  // Should be possible to send tags/genres
-  const tagArray = req.body.tags;
-  const genreArray = req.body.genres;
   const userID = req.user.id;
 
   // userScores is a combination of genre and tag names & scores
@@ -142,7 +145,6 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
     UNION
     SELECT "tag_name" AS "name", "score" FROM "user_tags" WHERE "user_id" = $1;`, [userID]
   );
-  console.log('UserScores looks like:', userScores);
 
   // gets count of rated games for current user
   const { rows: gameCount } = await pool.query(
@@ -154,15 +156,19 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
     // Update liked status in played games table
     await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "game_id" = $2 AND "user_id" = $3`, [gameRating, gameID, userID]);
 
+    // Get game information from RAWG
+    const {data: ratedGame} = await axios.get(`https://api.rawg.io/api/games/${gameID}?${keyUrl}`,
+    { validateStatus: (status) => status < 500 });
+
     // tag matching for user score adjustments
-    for (let tag of tagArray) {
+    for (let tag of ratedGame.tags) {
       for (let userTag of userScores) {
-        if (tag == userTag.name) {
+        if (tag.slug == userTag.name) {
           let newScore = 0;
           // calculate score adjustment
           let scoreAdjustment = 0.05;
-          if(gameCount < 100){
-            scoreAdjustment += (0.05 * ((100 - gameCount) / 100));
+          if(gameCount[0].count < 100){
+            scoreAdjustment += (0.05 * ((100 - gameCount[0].count) / 100));
           }
           // apply score adjustment based on positive/negative rating
           if (gameRating > 0) {
@@ -177,20 +183,20 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
             newScore = -1;
           }
           // Update tag score for this user in user_tags table
-          await pool.query(`UPDATE "user_tags" SET "score" = $1 WHERE "user_id" = $2 AND "tag_name" = $3;`, [newScore, userID, tag]);
+          await pool.query(`UPDATE "user_tags" SET "score" = $1 WHERE "user_id" = $2 AND "tag_name" = $3;`, [newScore, userID, tag.slug]);
         }
       }
     }
 
     // genre matching for user score adjustments
-    for (let genre of genreArray) {
+    for (let genre of ratedGame.genres) {
       for (let userGenre of userScores) {
         if (genre.slug == userGenre.name) {
           let newScore = 0;
           // calculate score adjustment
           let scoreAdjustment = 0.05;
-          if(gameCount < 100){
-            scoreAdjustment += (0.05 * ((100 - gameCount) / 100));
+          if(gameCount[0].count < 100){
+            scoreAdjustment += (0.05 * ((100 - gameCount[0].count) / 100));
           }
           // apply score adjustment based on positive/negative rating
           if (gameRating > 0) {
@@ -209,9 +215,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
         }
       }
     }
-
     res.sendStatus(200);
-
   } catch (err) {
     console.log('Game Router Played List PUT by ID error:', err);
     res.sendStatus(500);
