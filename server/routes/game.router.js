@@ -160,7 +160,10 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
         if (tag == userTag.name) {
           let newScore = 0;
           // calculate score adjustment
-          let scoreAdjustment = 0.05 + (0.05 * ((100 - gameCount) / 100));
+          let scoreAdjustment = 0.05;
+          if(gameCount < 100){
+            scoreAdjustment += (0.05 * ((100 - gameCount) / 100));
+          }
           // apply score adjustment based on positive/negative rating
           if (gameRating > 0) {
             newScore = userTag.score + scoreAdjustment;
@@ -174,11 +177,38 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
             newScore = -1;
           }
           // Update tag score for this user in user_tags table
-          await pool.query(`UPDATE "user_tags" SET "score" = $1 WHERE "user_id" = $2 AND "tag_name" = $3;`,[newScore, userID, tag]);
+          await pool.query(`UPDATE "user_tags" SET "score" = $1 WHERE "user_id" = $2 AND "tag_name" = $3;`, [newScore, userID, tag]);
         }
       }
     }
 
+    // genre matching for user score adjustments
+    for (let genre of genreArray) {
+      for (let userGenre of userScores) {
+        if (genre.slug == userGenre.name) {
+          let newScore = 0;
+          // calculate score adjustment
+          let scoreAdjustment = 0.05;
+          if(gameCount < 100){
+            scoreAdjustment += (0.05 * ((100 - gameCount) / 100));
+          }
+          // apply score adjustment based on positive/negative rating
+          if (gameRating > 0) {
+            newScore = userGenre.score + scoreAdjustment;
+          } else if (gameRating < 0) {
+            newScore = userGenre.score - scoreAdjustment;
+          }
+          // Adjust outlier scores to end of scoring range
+          if (newScore > 1) {
+            newScore = 1;
+          } else if (newScore < -1) {
+            newScore = -1;
+          }
+          // Update genre score for this user in user_genres table
+          await pool.query(`UPDATE "user_genres" SET "score" = $1 WHERE "user_id" = $2 AND "genre_name" = $3;`, [newScore, userID, genre.slug]);
+        }
+      }
+    }
 
     res.sendStatus(200);
 
