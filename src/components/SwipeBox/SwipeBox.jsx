@@ -153,6 +153,7 @@ export default function SwipeBox(props) {
         backgroundImage: `url(${props.games[gameQueue].gameData.background_image})`,
         objectFit: 'cover',
         backgroundSize: 'auto 100%',
+        backgroundPosition: 'center center'
       }
 
       return (
