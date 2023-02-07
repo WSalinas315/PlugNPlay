@@ -47,7 +47,7 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - DELETE by ID');
   const wishlistID = req.params.id;
   try {
-    await pool.query(`DELETE FROM "wishlist" WHERE "id" = $1;`, [wishlistID]);
+    await pool.query(`DELETE FROM "wishlist" WHERE "game_id" = $1;`, [wishlistID]);
     res.sendStatus(200);
   } catch (err) {
     console.log('Game Router Wishlist DELETE by ID error:', err);
