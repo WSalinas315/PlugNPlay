@@ -17,3 +17,8 @@
   border-radius: 8px;
   padding: 10px;
 }
+
+.MuiDialog-root {
+  height: 80vh;
+  overflow-y: hidden;
+}

@@ -61,7 +61,7 @@ router.get('/byGenre/:genre', async (req, res) => {
 })
 
 // ==========================================================================================
-// GET BY GENRE - TEST FOR RECOMMENDATIONS
+// GET Game Recommendations from RAWG.IO based on User Preferences
 
 router.get('/byGenre', async (req, res) => {
 

@@ -54,10 +54,10 @@ router.post('/edit/:termId', rejectUnauthenticated, async (req, res) => {
 
 //DELETE A SELECTED TERM FROM THE GLOSSARY TABLE BY TERM ID.
 router.delete('/delete/:termId', rejectUnauthenticated, (req, res) => {
-	const glossaryTerm = req.params;
+	const glossaryTerm = req.params.termId;
 	console.log('Term being removed: ', glossaryTerm);
 
-	const sqlText = `DELETE FROM "glossary WHERE term = $1;`;
+	const sqlText = `DELETE FROM "glossary" WHERE "id" = $1;`;
 
 	try {
 		pool.query(sqlText, [glossaryTerm]).then(() => {

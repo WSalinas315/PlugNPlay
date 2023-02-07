@@ -14,7 +14,7 @@ export default function ViewRecommendation() {
   return (
     <>
       {/* Placeholder text */}
-      <h1>🎮 RECOMMENDATION 🕹 VIEW</h1>
+      {/*<h1>🎮 RECOMMENDATION 🕹 VIEW</h1>*/}
       <br />
 
       <RecommendedList />
