@@ -29,6 +29,14 @@ function AdminPage() {
 	const [toggleView, setViewBoolean] = useState(false);
 	const [toggleDelete, setDeleteBoolean] = useState(false);
 
+	const [termInput, setTermInput] = useState('');
+	const [definitionInput, setDefinitionInput] = useState('');
+	const [imagePathInput, setImagePathInput] = useState('');
+
+	const [term, setTerm] = useState(
+		glossary.filter(object => object.term == glossaryTerm)
+	);
+
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
 		dispatch({
@@ -43,6 +51,25 @@ function AdminPage() {
 		setEditBoolean(false);
 		setViewBoolean(false);
 		setDeleteBoolean(false);
+	};
+
+	const handleTermInput = event => {
+		setTermInput(event.target.value);
+	};
+	const handleDefinitionInput = event => {
+		setDefinitionInput(event.target.value);
+	};
+	const handleImagePathInput = event => {
+		setImagePathInput(event.target.value);
+	};
+
+	const handleTermSubmit = () => {
+		console.log(
+			'Term / definition / image path',
+			termInput,
+			definitionInput,
+			imagePathInput
+		);
 	};
 
 	const handleEdit = () => {
@@ -70,11 +97,10 @@ function AdminPage() {
 	};
 
 	if (
-		toggleAdd == true
-		//&&
-		// toggleEdit == false &&
-		// toggleView == false &&
-		// toggleDelete == false
+		toggleAdd == true &&
+		toggleEdit == false &&
+		toggleView == false &&
+		toggleDelete == false
 	) {
 		return (
 			<Box
@@ -113,18 +139,37 @@ function AdminPage() {
 
 				<Box>
 					<FormControl>
-						<TextField label='name'> Term Name: </TextField>
-						<TextField label='Definition'> Term Name: </TextField>
-						<TextField label='Image'> Term Name: </TextField>
+						<TextField
+							label='name'
+							value={termInput}
+							onChange={handleTermInput}
+						/>
+						<TextField
+							label='Definition'
+							value={definitionInput}
+							onChange={handleDefinitionInput}
+						/>
+						<TextField
+							label='Image'
+							value={imagePathInput}
+							onChange={handleImagePathInput}
+						/>
+						<Button variant='outlined' onClick={handleTermSubmit}>
+							Submit
+						</Button>
 					</FormControl>
+
+					{/* <Typography>{JSON.stringify({ termInput })} </Typography>
+					<Typography>{JSON.stringify({ definitionInput })} </Typography>
+					<Typography> {JSON.stringify({ imagePathInput })}</Typography> */}
 				</Box>
 			</Box>
 		);
 	} else if (
 		toggleAdd == false &&
-		// toggleEdit == false &&
-		toggleView == true
-		// toggleDelete == false
+		toggleEdit == false &&
+		toggleView == true &&
+		toggleDelete == false
 	) {
 		return (
 			<Box
@@ -163,8 +208,8 @@ function AdminPage() {
 
 				<Box>
 					<Card>
-						<Typography> {glossaryTerm}</Typography>
-						<Typography> {glossary.map()} </Typography>
+						<Typography> Term: {glossaryTerm}</Typography>
+						<Typography>{glossary.map({ description })}</Typography>
 					</Card>
 				</Box>
 			</Box>
