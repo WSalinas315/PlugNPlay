@@ -18,7 +18,7 @@
 }
 
 #plugnplay {
-
+    z-index: 1;
     height: 60px;
     width: 100vw;
     background-color: #C02222;
