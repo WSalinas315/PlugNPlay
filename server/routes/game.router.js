@@ -161,9 +161,29 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/played', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - GET');
   const userID = req.user.id;
+  let playedGames = [];
+
   try {
+    // Get a list of played games for the current user from the database
     const { rows: playedResult } = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
-    res.send(playedResult);
+
+    // Makes GET request to RAWG API for detailed game data for each game on the played games table
+    for (let game of playedResult) {
+      playedGames.push(axios.get(`https://api.rawg.io/api/games/${game.game_id}?${keyUrl}`,
+        { validateStatus: (status) => status < 500 })) // prevents request from throwing error if it returns a 404
+    }
+    const playedGamesObject = await Promise.all(playedGames);
+
+    // data cleanup
+    const playedList =
+      playedGamesObject
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
+        .map(obj => obj.data) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
+        .map(tagFilter); // remove non-english tags
+
+    // Send back detailed results
+    res.send(playedList);
   } catch (err) {
     console.log('Game Router Played List GET by ID error:', err);
     res.sendStatus(500);
