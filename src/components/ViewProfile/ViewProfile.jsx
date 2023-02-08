@@ -5,6 +5,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Card from '@mui/material/Card';
 import ProfileBartleType from '../ProfileBartleType/ProfileBartleType';
 import './ViewProfile.css';
+import { Link } from 'react-router-dom';
 
 function ViewProfile() {
 
@@ -14,7 +15,9 @@ function ViewProfile() {
   return (
     <div>
       {/* Settings Icon */}
+      <Link to="/settings">
       <SettingsIcon sx={{ color: '#C02222', border: 'solid 2px', borderRadius: '10px', marginRight: '10px', height:'36px', width:'36px' }} />
+      </Link>
       <br />
       <br />
 

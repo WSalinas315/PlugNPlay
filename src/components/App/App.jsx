@@ -28,6 +28,7 @@ import ViewRecommendation from '../ViewRecommended/ViewRecommended';
 
 import './App.css';
 import GameItem from '../GameItem/GameItem';
+import ViewSettings from '../ViewSettings/ViewSettings';
 
 function App() {
 	const dispatch = useDispatch();
@@ -63,6 +64,9 @@ function App() {
 
 					<ProtectedRoute exact path='/admin'>
 						<AdminPage />
+					</ProtectedRoute>
+					<ProtectedRoute exact path= '/settings'>
+						<ViewSettings /> 
 					</ProtectedRoute>
 
           <ProtectedRoute exact path='/games/:id'>
