@@ -35,16 +35,16 @@ router.get('/term/:stringTerm', rejectUnauthenticated, async (req, res) => {
 // POST AN UPDATE TO THE TERMS DESCRIPTION
 router.post('/edit/:termId', rejectUnauthenticated, async (req, res) => {
 	const termId = req.params.termId; //the term being changed
-	console.log('Term being edited: ', glossaryTerm);
-	const description = req.body;
+	const description = req.body.description;
+	const img_path = req.body.img_path;
+	console.log('Term being edited: ', req.params.id);
 
 	const sqlText = `UPDATE "glossary" 
-									SET "description" = $1
-									WHERE id = $2;`;
-
+									SET "description" = $1, "img_path" = $2
+									WHERE id = $3;`;
 	try {
-		pool.query(sqlText, [description, termId]);
-		console.log('Successfully Updated definition');
+		pool.query(sqlText, [description, img_path, termId]);
+		console.log('Successfully Updated ', req.body.term, ' from the database');
 		res.sendStatus(200);
 	} catch (error) {
 		console.log('Error in Glossary Router', error);

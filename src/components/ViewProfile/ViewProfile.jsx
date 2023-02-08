@@ -8,7 +8,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import './ViewProfile.css';
 
 import { Button, ButtonGroup, Link } from '@mui/material';
-import LogOutButton from '../LogOutButton/LogOutButton'
+import LogOutButton from '../LogOutButton/LogOutButton';
 
 function ViewProfile() {
 	// Pull user information from store
@@ -89,22 +89,27 @@ function ViewProfile() {
 				<br />
 				<br />
 
-      {/* Player Profile Card */}
-      <Card sx={{textAlign:'center', border: '1px solid #C02222'}}>
-        {/* Username */}
-        <h1>{user.username}</h1>
-        {/* Profile picture or default profile image */}
-        {user.profile_img_path ? <img className='profile_img' src={user.profile_img_path} /> : <img className='profile_img' src='images/default.png' />}
-        {/* Games played count */}
-        <h3>Played Games: 4 (Placeholder)</h3>
-        {/* Wishlisted games count */}
-        <h3>Games on Wishlist: 9 (Placeholder)</h3>
-        {/* Bartle Player Type */}
-        {/* <ProfileBartleType /> */}
-        <h3>Player Type: Killer (Placeholder)</h3>
-        <LogOutButton />
-      </Card>
-    </div>
-  )
-}}
+				{/* Player Profile Card */}
+				<Card sx={{ textAlign: 'center', border: '1px solid #C02222' }}>
+					{/* Username */}
+					<h1>{user.username}</h1>
+					{/* Profile picture or default profile image */}
+					{user.profile_img_path ? (
+						<img className='profile_img' src={user.profile_img_path} />
+					) : (
+						<img className='profile_img' src='images/default.png' />
+					)}
+					{/* Games played count */}
+					<h3>Played Games: 4 (Placeholder)</h3>
+					{/* Wishlisted games count */}
+					<h3>Games on Wishlist: 9 (Placeholder)</h3>
+					{/* Bartle Player Type */}
+					{/* <ProfileBartleType /> */}
+					<h3>Player Type: Killer (Placeholder)</h3>
+					<LogOutButton />
+				</Card>
+			</div>
+		);
+	}
+}
 export default ViewProfile;
