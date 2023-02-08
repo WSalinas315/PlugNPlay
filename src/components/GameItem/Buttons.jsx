@@ -37,12 +37,14 @@ export const GameListButton = ({ gameID, list, action }) => {
     dispatch({ type: `USER/${list.toUpperCase()}/${action.toUpperCase()}`, payload: gameID });
   };
 
+  console.log(action, typeof action)
+
   const icon = {
       'wishlist': {
         'add': <StarBorder />,
         'delete': <Star />
       },
-      'played_list': {
+      'playedlist': {
         'add': <PlaylistAdd />,
         'delete': <PlaylistRemove />
       },
@@ -57,7 +59,7 @@ export const GameListButton = ({ gameID, list, action }) => {
         'add': 'Add To Wishlist',
         'delete': 'Remove from Wishlist'
       },
-      'played_list': {
+      'playedlist': {
         'add': 'Add to Played',
         'delete': 'Remove from Played'
       },

@@ -29,7 +29,7 @@ export default function UserFunctions({ game }) {
       return (
         <div>
           <GameListButton gameID={game.id} list={"ignorelist"} action={"delete"} />
-          <GameListButton gameID={game.id} list={"played_list"} action={"add"} />
+          <GameListButton gameID={game.id} list={"playedlist"} action={"add"} />
           <GameListButton gameID={game.id} list={"wishlist"} action={"add"} />
         </div>
       );
@@ -42,7 +42,7 @@ export default function UserFunctions({ game }) {
         <div>
           <LikeDislikeButton gameID={game.id} action={"like"} />
           <LikeDislikeButton gameID={game.id} action={"dislike"} />
-          <GameListButton gameID={game.id} list={"played_list"} action={"delete"} />
+          <GameListButton gameID={game.id} list={"playedlist"} action={"delete"} />
         </div>
       );
     } else if (wishlistIDs?.includes(game.id)) {
@@ -50,7 +50,7 @@ export default function UserFunctions({ game }) {
       return (
         <div>
           <GameListButton gameID={game.id} list={"wishlist"} action={"delete"} />
-          <GameListButton gameID={game.id} list={"played_list"} action={"add"} />
+          <GameListButton gameID={game.id} list={"playedlist"} action={"add"} />
         </div>
       );
     } else {
@@ -58,7 +58,7 @@ export default function UserFunctions({ game }) {
       return (
         <div>
           <GameListButton gameID={game.id} list={"wishlist"} action={"add"} />
-          <GameListButton gameID={game.id} list={"played_list"} action={"add"} />
+          <GameListButton gameID={game.id} list={"playedlist"} action={"add"} />
           <GameListButton gameID={game.id} list={"ignorelist"} action={"add"} />
         </div>
       );

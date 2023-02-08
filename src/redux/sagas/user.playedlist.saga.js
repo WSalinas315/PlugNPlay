@@ -4,7 +4,8 @@ import { handleErrors } from "./user._saga";
 
 function* addToPlayedList({ payload }) {
   try {
-    yield axios.post('/api/games/played', payload)
+    
+    yield axios.post('/api/games/played', { gameID: payload })
     yield put({ type: 'USER/FETCH_PLAYED_LIST' })
   } catch (err) {
     handleErrors('Adding to played list failed', err)
