@@ -10,26 +10,6 @@ export default function Wishlist() {
 	//? Will contain data that can be used to render the information to the cards to appear on the tab section of the collections View.
 	const dummyData = [
 		{
-			name: 'Final Fantasy X',
-			year: 2001,
-			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-159-1556729295-Bba7-column-width-inline.jpg',
-		},
-		{
-			name: 'GTA: Vice City',
-			year: 2002,
-			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-160-1556729296-IDis-column-width-inline.jpg',
-		},
-		{
-			name: 'Street Fighter IV',
-			year: 2009,
-			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-167-1556729300-1edW-column-width-inline.jpg',
-		},
-		{
-			name: 'Halo 4',
-			year: 2012,
-			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-186-1556729312-ZIaP-column-width-inline.jpg',
-		},
-		{
 			name: 'Diablo',
 			year: 2012,
 			url: 'https://www.shortlist.com/media/images/2019/05/50-greatest-video-game-covers-188-1556729313-h0mJ-column-width-inline.jpg',
