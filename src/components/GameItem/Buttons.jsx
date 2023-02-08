@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 
 import {
   Block,
@@ -19,23 +19,26 @@ const buttonProps = {
   variant: 'outlined',
   color: 'primary',
   size: 'small',
-  sx: {
-    borderRadius: '10px'
-  }
 }
 
 export const LikeDislikeButton = ({ gameID, liked, action }) => {
   const dispatch = useDispatch();
 
-  const getIcon = () => {
+  const Icon = () => {
     if (liked === 1) {
-      return action === 'like' ? <ThumbUp /> : <ThumbDownOffAlt />
+      return action === 'like'
+        ? <ThumbUp color="success" sx={{ transform: 'scale(1.2)' }} />
+        : <ThumbDownOffAlt color="neutral" />
     } else
     if (liked === -1) {
-      return action === 'like' ? <ThumbUpOffAlt /> : <ThumbDown />
+      return action === 'like'
+        ? <ThumbUpOffAlt color="neutral" />
+        : <ThumbDown color="primary" sx={{ transform: 'scale(1.2)' }} />
     }
     else {
-      return action === 'like' ? <ThumbUpOffAlt /> : <ThumbDownOffAlt />
+      return action === 'like'
+      ? <ThumbUpOffAlt color="neutral" />
+      : <ThumbDownOffAlt color="neutral" />
     }
   }
 
@@ -56,7 +59,9 @@ export const LikeDislikeButton = ({ gameID, liked, action }) => {
 
   return (
     <>
-      <Button {...buttonProps} startIcon={getIcon()} onClick={handleClick} />
+      <IconButton {...buttonProps} variant="contained" onClick={handleClick}>
+        <Icon />
+      </IconButton>
     </>
   );
 };

@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useUserLists } from "../../hooks/storeHooks";
 import { LikeDislikeButton, GameListButton } from "./Buttons";
 
+import { Typography } from "@mui/material";
+
 export default function UserFunctions({ game }) {
   const dispatch = useDispatch();
   const { userIgnorelist, userPlayedList, userWishlist } = useUserLists();
@@ -27,10 +29,14 @@ export default function UserFunctions({ game }) {
       );
     } else if (playedIDs?.includes(game.id)) {
       // user has played this game - show options to like & dislike, and to remove from played
+      const likeText = { '1': 'Liked this one!', '-1': 'Didn\'t like this one.' }[liked] || '';
       return (
         <>
-          <LikeDislikeButton gameID={game.id} liked={liked} action={"like"} />
-          <LikeDislikeButton gameID={game.id} liked={liked} action={"dislike"} />
+          <div className="like-dislike-buttons">
+            <LikeDislikeButton gameID={game.id} liked={liked} action={"like"} />
+            <Typography variant="p">{likeText}</Typography>
+            <LikeDislikeButton gameID={game.id} liked={liked} action={"dislike"} />
+          </div>
           <GameListButton gameID={game.id} list={"playedlist"} action={"delete"} />
         </>
       );
