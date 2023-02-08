@@ -11,15 +11,15 @@ export default function Wishlist() {
 
 	// fetches user's wishlist from database
 	useEffect(() => {
-		dispatch({ type: 'USER/FETCH_WISHLIST' });
+		dispatch({ type: 'USER/FETCH_IGNORELIST' });
 	}, []);
 
 	// pull wishlist information from the store
-	const wishlist = useSelector((store) => store.userLists.userWishlist);
+	const ignoreList = useSelector((store) => store.userLists.userIgnorelist);
 
 	return (
 		<ImageList cols={1} rowHeight={250} gap={20}>
-			{wishlist?.map(item => (
+			{ignoreList?.map(item => (
 					<ImageListItem key={item.id}>
 						<img src={item.background_image} srcSet={item.background_image} loading='lazy' />
 						<ImageListItemBar
