@@ -16,9 +16,24 @@ import CardMedia from '@mui/material/CardMedia';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
+import CardHeader from '@mui/material/CardHeader';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+	root: {
+		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+		border: 0,
+		borderRadius: 3,
+		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+		color: 'white',
+		height: 48,
+		padding: '0 30px',
+	},
+});
 
 function AdminPage() {
 	const dispatch = useDispatch();
+	const styles = useStyles();
 
 	//*This helps the Modal decide the current state of Modal open/close.
 	const [open, setOpen] = useState(false);
@@ -134,6 +149,27 @@ function AdminPage() {
 		dispatch({ type: 'GLOSSARY/FETCH' });
 		//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
 		window.location.reload();
+	};
+
+	const handleCancel = () => {
+		console.log('Clicked on the cancel button');
+		setOpen(false);
+	};
+
+	const handleEditSubmit = () => {
+		console.log('Clicked on the submit button in the Edit View');
+
+		dispatch({
+			type: 'GLOSSARY/EDIT_TERM',
+			payload: {
+				id: glossaryTerm[0].id,
+				description: definitionInput,
+				img_path: imagePathInput,
+			},
+		});
+
+		setDefinitionInput('');
+		setImagePathInput('');
 	};
 
 	//! ADD TERM SECTION
@@ -360,10 +396,7 @@ function AdminPage() {
 					<Card>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
 						<Typography>Definition : {glossaryTerm[0].description}</Typography>
-						<CardMedia
-							image={`{glossaryTerm[0].img_path}`}
-							sx={{ maxHeight: 400, maxWidth: 300 }}
-						/>
+						<img src={glossaryTerm[0].img_path} />
 					</Card>
 				</Box>
 			</Box>
@@ -444,21 +477,39 @@ function AdminPage() {
 							Are you sure you want to delete "{glossaryTerm[0].term}" from the
 							glossary?
 						</Typography>
-						<Button
-							onClick={handleDeleteConfirm}
-							variant='contained'
-							sx={{ padding: 1 }}>
-							Delete
-						</Button>
+						<Grid>
+							<Button
+								onClick={handleCancel}
+								variant='contained'
+								sx={{
+									padding: 1,
+									bgcolor: '#bdbdbd',
+									height: '40px',
+									mr: 4,
+									borderRadius: 2,
+								}}>
+								Cancel
+							</Button>
+							<Button
+								onClick={handleDeleteConfirm}
+								variant='contained'
+								sx={{ padding: 1, height: '40px', borderRadius: 2 }}>
+								Delete
+							</Button>
+						</Grid>
 					</Box>
 				</Modal>
 			</Box>
 		); //!END OF DELETE TERM SECTION
+
+		//! START OF EDIT TERM SECTION
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == true &&
 		toggleView == false &&
-		toggleDelete == false
+		toggleDelete == false &&
+		glossaryTerm[0].img_path == null &&
+		glossaryTerm[0].description == null
 	) {
 		return (
 			<Box
@@ -496,23 +547,97 @@ function AdminPage() {
 
 				<Box>
 					<Card>
-						<Typography> Term : {glossaryTerm[0].term} </Typography>
-						<Typography>Definition : {glossaryTerm[0].description}</Typography>
-						<CardMedia
-							image={`{glossaryTerm[0].img_path}`}
-							sx={{ maxHeight: 400, maxWidth: 300 }}
-						/>
-						{/* <Typography>Image Path : {glossaryTerm[0].description}</Typography> */}
-
-						<TextField label='Term'></TextField>
-						<TextField label='Description'></TextField>
-						<TextField label='Image Path'></TextField>
-						<Button
-							onClick={handleDeleteConfirm}
-							variant='contained'
-							sx={{ padding: 1 }}>
+						<Typography>Term: {glossaryTerm[0].term}</Typography>
+						<Typography>
+							Description: No Description is Available at this time.
+						</Typography>
+						<Typography>Image: No Image Available</Typography>
+						<TextField
+							label='Description'
+							value={definitionInput}
+							onChange={handleDefinitionInput}></TextField>
+						<TextField
+							label='Image Path'
+							value={imagePathInput}
+							onChange={handleImagePathInput}></TextField>
+						<Box textAlign='center'>
+							<Button
+								onClick={handleEditSubmit}
+								variant='contained'
+								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+								Submit
+							</Button>
+						</Box>
+					</Card>
+				</Box>
+			</Box>
+		);
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == true &&
+		toggleView == false &&
+		toggleDelete == false &&
+		glossaryTerm[0].img_path != null
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} required label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
 							Delete
 						</Button>
+					</ButtonGroup>
+				</Card>
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Box>
+					<Card>
+						<Typography>Term: {glossaryTerm[0].term}</Typography>
+						<Typography>Description: {glossaryTerm[0].description}</Typography>
+						<CardMedia
+							component='img'
+							image={glossaryTerm[0].img_path}
+							sx={{ maxHeight: 400, maxWidth: 300 }}
+						/>
+						<TextField
+							label='Description'
+							value={definitionInput}
+							onChange={handleDefinitionInput}></TextField>
+						<TextField
+							label='Image Path'
+							value={imagePathInput}
+							onChange={handleImagePathInput}></TextField>
+						<Box textAlign='center'>
+							<Button
+								onClick={handleEditSubmit}
+								variant='contained'
+								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+								Submit
+							</Button>
+						</Box>
 					</Card>
 				</Box>
 			</Box>
@@ -559,3 +684,11 @@ function AdminPage() {
 }
 
 export default AdminPage;
+
+{
+	/* <CardMedia
+	component='img'
+	image={glossaryTerm[0].img_path}
+	sx={{ maxHeight: 400, maxWidth: 300 }}
+/>; */
+}

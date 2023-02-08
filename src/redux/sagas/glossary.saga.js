@@ -54,9 +54,19 @@ function* DeleteGlossaryTerm({ payload }) {
 	}
 }
 
+function* EditGlossaryTerm({ payload }) {
+	try {
+		console.log('Payload in EditGlossary Saga: ', payload);
+		yield axios.post('/api/glossary/edit/' + payload.id, payload);
+	} catch (error) {
+		handleErrors('Editing term from glossary failed', error);
+	}
+}
+
 export default function* glossarySaga() {
 	yield takeLatest('GLOSSARY/FETCH', fetchGlossary);
 	yield takeLatest('GLOSSARY/FETCH_TERM', fetchGlossaryTerm);
 	yield takeLatest('GLOSSARY/SET_NEW_TERM', PostGlossaryTerm);
 	yield takeLatest('GLOSSARY/DELETE_TERM', DeleteGlossaryTerm);
+	yield takeLatest('GLOSSARY/EDIT_TERM', EditGlossaryTerm);
 }
