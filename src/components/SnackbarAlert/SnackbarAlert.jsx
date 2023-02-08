@@ -20,13 +20,16 @@ export default function SnackbarAlert(props) {
   return (
     <Snackbar
       open={snackOpen}
-      autoHideDuration={6000}
+      autoHideDuration={1000}
       onClose={handleSnackClose}
+      anchorOrigin={{ vertical:'top', horizontal: props.anchor }}
+      sx={{ height: "60%" }}
     >
       <Alert
         onClose={handleSnackClose}
         severity={props.severity}
-        sx={{ width: '100%' }}
+        sx={{ maxWidth: '20%', display: 'flex', flexDirection:'column', justifyContent:'center', alignItems: 'center', textAlign:'center' }}
+        
       >
         {props.message}
       </Alert>
