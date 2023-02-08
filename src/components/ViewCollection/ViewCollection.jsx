@@ -19,7 +19,7 @@ export default function Collection() {
 	};
 
 	return (
-		<Box sx={{ m: -6}} position='static'>
+		<Box sx={{ m: -6 }} position='static'>
 			<TabContext value={value}>
 				<Box>
 					<TabList
@@ -28,15 +28,29 @@ export default function Collection() {
 							background: '#C02222',
 							indicatorColor: '#000000',
 							position: 'fixed',
+							top: 60,
 							left: 0,
 							right: 0,
-							width:'calc(100vw- 50px)',
-							justifyContent: 'space-around'
+							zIndex: 1,
+							width: 'calc(100vw- 50px)',
+							justifyContent: 'space-around',
 						}}
 						onChange={handleChange}>
-						<Tab sx={{padding: '0px 20px 0px'}} label='Wishlist' value='wishlist' />
-						<Tab sx={{padding: '0px 20px 0px'}} label='Played' value='played' />
-						<Tab sx={{padding: '0px 20px 0px'}} label='Glossary' value='glossary' />
+						<Tab
+							sx={{ padding: '0px 20px 0px' }}
+							label='Wishlist'
+							value='wishlist'
+						/>
+						<Tab
+							sx={{ padding: '0px 20px 0px' }}
+							label='Played'
+							value='played'
+						/>
+						<Tab
+							sx={{ padding: '0px 20px 0px' }}
+							label='Glossary'
+							value='glossary'
+						/>
 					</TabList>
 				</Box>
 				<TabPanel
@@ -67,7 +81,9 @@ export default function Collection() {
 					<Played />
 				</TabPanel>
 
-				<TabPanel value='glossary' sx={{
+				<TabPanel
+					value='glossary'
+					sx={{
 						height: 600,
 						position: 'fixed',
 						left: 20,
