@@ -4,7 +4,7 @@ import { handleErrors } from "./user._saga";
 
 function* addToIgnorelist({ payload }) {
   try {
-    yield axios.post('/api/games/ignorelist', payload)
+    yield axios.post('/api/games/ignorelist', { gameID: payload })
     yield put({ type: 'USER/FETCH_IGNORELIST' })
   } catch (err) {
     handleErrors('Adding to ignore list failed', err)

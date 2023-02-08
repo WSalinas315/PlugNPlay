@@ -27,9 +27,11 @@ export default function Collection() {
 						sx={{
 							background: '#C02222',
 							indicatorColor: '#000000',
-							position: 'fixed',
+							position: 'absolute',
+              top: 60,
 							left: 0,
 							right: 0,
+              zIndex: 1,
 							width:'calc(100vw- 50px)',
 							justifyContent: 'space-around'
 						}}

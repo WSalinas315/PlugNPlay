@@ -4,7 +4,8 @@ import { handleErrors } from "./user._saga";
 
 function* addToWishlist({ payload }) {
   try {
-    yield axios.post('/api/games/wishlist', payload);
+    console.log('in saga:', payload);
+    yield axios.post('/api/games/wishlist', { gameID: payload });
     yield put({ type: 'USER/FETCH_WISHLIST' })
   } catch (err) {
     handleErrors('Adding game to wishlist failed', err)

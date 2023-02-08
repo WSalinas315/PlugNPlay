@@ -33,7 +33,7 @@ function* fetchUser() {
 
 function* fetchWishlist() {
   try {
-    const { data: wishlist } = yield axios.get('/api/wishlist')
+    const { data: wishlist } = yield axios.get('/api/games/wishlist/')
     yield put({
       type: 'USER/SET_WISHLIST',
       payload: wishlist
@@ -45,7 +45,7 @@ function* fetchWishlist() {
 
 function* fetchIgnorelist() {
   try {
-    const { data: ignorelist } = yield axios.get('/api/ignorelist')
+    const { data: ignorelist } = yield axios.get('/api/games/ignorelist/')
     yield put({
       type: 'USER/SET_IGNORELIST',
       payload: ignorelist
@@ -57,13 +57,23 @@ function* fetchIgnorelist() {
 
 function* fetchPlayedList() {
   try {
-    const { data: playedList } = yield axios.get('/api/played')
+    const { data: playedList } = yield axios.get('/api/games/played/')
     yield put({
-      type: 'USER/SET_PLAYED',
+      type: 'USER/SET_PLAYED_LIST',
       payload: playedList
     })
   } catch (err) {
     handleErrors('Fetch played list failed', err)
+  }
+}
+
+function* fetchAllLists() {
+  try {
+    yield put({ type: 'USER/FETCH_WISHLIST' })
+    yield put({ type: 'USER/FETCH_IGNORELIST' })
+    yield put({ type: 'USER/FETCH_PLAYED_LIST' })
+  } catch (err) {
+    console.log('error fetching all lists');
   }
 }
 
@@ -72,6 +82,8 @@ function* userSaga() {
   yield takeLatest('USER/FETCH_WISHLIST', fetchWishlist);
   yield takeLatest('USER/FETCH_IGNORELIST', fetchIgnorelist);
   yield takeLatest('USER/FETCH_PLAYED_LIST', fetchPlayedList);
+  yield takeLatest('USER/FETCH_ALL_LISTS', fetchAllLists);
+  
 }
 
 export default userSaga;
