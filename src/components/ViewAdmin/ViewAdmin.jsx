@@ -16,39 +16,63 @@ import CardMedia from '@mui/material/CardMedia';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
+import CardHeader from '@mui/material/CardHeader';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+	root: {
+		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+		border: 0,
+		borderRadius: 3,
+		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+		color: 'white',
+		height: 48,
+		padding: '0 30px',
+	},
+});
 
 function AdminPage() {
 	const dispatch = useDispatch();
+	const styles = useStyles();
+
+	//*This helps the Modal decide the current state of Modal open/close.
 	const [open, setOpen] = useState(false);
+	//*This is used for the Modal to appear
 	const handleOpen = () => setOpen(true);
+	//*This is used for the Modal to disappear
 	const handleClose = () => setOpen(false);
 
+	//* Fetches the list of glossary to populate to the AutoComplete component upon load.
 	useEffect(() => {
 		dispatch({ type: 'GLOSSARY/FETCH' });
 	}, []);
 
 	const user = useSelector(store => store.user);
+	//* Holds an Array of objects from the Glossary Table in the Database.
 	const glossary = useSelector(store => store.glossary.glossary);
+	//* Holds an Array of 1 object that is replaced by the onChange of the AutoComplete component.
 	const glossaryTerm = useSelector(store => store.glossary.glossaryItem);
-
+	//* These are used to properly set the state of each toggle from the Admins button options. Only 1 will be set to TRUE while the rest are kept at FALSE.
 	const [toggleAdd, setAddBoolean] = useState(false);
 	const [toggleEdit, setEditBoolean] = useState(false);
 	const [toggleView, setViewBoolean] = useState(false);
 	const [toggleDelete, setDeleteBoolean] = useState(false);
 
+	//* These are set for the ADD TERM section when the user wants to input the new terms information to send to the database.
 	const [termInput, setTermInput] = useState('');
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
 
+	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
 		dispatch({
 			type: 'GLOSSARY/FETCH_TERM',
-			payload: value, //This is the term that is was clicked on from the drop down menu.
+			payload: value, //?This is the term that is was clicked on from the drop down menu.
 		});
 	};
 
-	//This section corresponds to the Adding of a new term to DB.
+	//*This section corresponds to the Adding of a new term to DB.
 	const handleAdd = () => {
 		console.log('Clicked on the Add Term Button');
 		setAddBoolean(true);
@@ -56,17 +80,19 @@ function AdminPage() {
 		setViewBoolean(false);
 		setDeleteBoolean(false);
 	};
-
+	//* Saving the name input to State.
 	const handleTermInput = event => {
 		setTermInput(event.target.value);
 	};
+	//* Saving the definition input to State.
 	const handleDefinitionInput = event => {
 		setDefinitionInput(event.target.value);
 	};
+	//* Saving the Image path input to State.
 	const handleImagePathInput = event => {
 		setImagePathInput(event.target.value);
 	};
-
+	//* This section corresponds to sending the saved state to dispatch to the database.
 	const handleTermSubmit = () => {
 		console.log(
 			'Term / definition / image path',
@@ -74,7 +100,6 @@ function AdminPage() {
 			definitionInput,
 			imagePathInput
 		);
-
 		dispatch({
 			type: 'GLOSSARY/SET_NEW_TERM',
 			payload: {
@@ -83,12 +108,12 @@ function AdminPage() {
 				imagePath: imagePathInput,
 			},
 		});
+		//* Clearing the state values after the Admin clicked on the submit button.
 		setTermInput('');
 		setDefinitionInput('');
 		setImagePathInput('');
 	};
-	//End of Adding New Term to DB.
-
+	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
 		console.log('Clicked on the Edit Button');
 		setAddBoolean(false);
@@ -96,7 +121,7 @@ function AdminPage() {
 		setViewBoolean(false);
 		setDeleteBoolean(false);
 	};
-
+	//* Handles the rendering of the View section upon clicking on the View Button.
 	const handleView = () => {
 		console.log('Clicked on the View Button');
 		setAddBoolean(false);
@@ -104,7 +129,7 @@ function AdminPage() {
 		setViewBoolean(true);
 		setDeleteBoolean(false);
 	};
-
+	//* Handles the rendering of the Delete section upon clicking on the Delete Button.
 	const handleDelete = () => {
 		console.log('Clicked on the Delete Button');
 		setAddBoolean(false);
@@ -113,7 +138,7 @@ function AdminPage() {
 		setDeleteBoolean(true);
 		setOpen(true);
 	};
-
+	//* This corresponds to the Modal, where the user confirms the deletion of the term from the database.
 	const handleDeleteConfirm = () => {
 		console.log('Clicked on the delete confirm button!');
 		dispatch({
@@ -122,6 +147,29 @@ function AdminPage() {
 		});
 		setOpen(false);
 		dispatch({ type: 'GLOSSARY/FETCH' });
+		//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
+		window.location.reload();
+	};
+
+	const handleCancel = () => {
+		console.log('Clicked on the cancel button');
+		setOpen(false);
+	};
+
+	const handleEditSubmit = () => {
+		console.log('Clicked on the submit button in the Edit View');
+
+		dispatch({
+			type: 'GLOSSARY/EDIT_TERM',
+			payload: {
+				id: glossaryTerm[0].id,
+				description: definitionInput,
+				img_path: imagePathInput,
+			},
+		});
+
+		setDefinitionInput('');
+		setImagePathInput('');
 	};
 
 	//! ADD TERM SECTION
@@ -143,7 +191,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -172,11 +220,13 @@ function AdminPage() {
 							label='name'
 							value={termInput}
 							onChange={handleTermInput}
+							required
 						/>
 						<TextField
 							label='Definition'
 							value={definitionInput}
 							onChange={handleDefinitionInput}
+							required
 						/>
 						<TextField
 							label='Image'
@@ -192,6 +242,7 @@ function AdminPage() {
 		); //!END OF ADD TERM SECTION
 	}
 	//! START OF VIEW TERM SECTION
+	//* DISPLAY THE TERM AND HIDING DESCRIPTION/IMAGE IF NOTHING TO SHOW.
 	else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -212,7 +263,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -244,6 +295,7 @@ function AdminPage() {
 				</Box>
 			</Box>
 		);
+		//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -264,7 +316,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -296,6 +348,7 @@ function AdminPage() {
 				</Box>
 			</Box>
 		);
+		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -316,7 +369,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -343,15 +396,13 @@ function AdminPage() {
 					<Card>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
 						<Typography>Definition : {glossaryTerm[0].description}</Typography>
-						<CardMedia
-							image={`{glossaryTerm[0].img_path}`}
-							sx={{ maxHeight: 400, maxWidth: 300 }}
-						/>
+						<img src={glossaryTerm[0].img_path} />
 					</Card>
 				</Box>
 			</Box>
 		);
 		//!END OF VIEW TERM SECTION
+		//*
 		//! START OF DELETE TERM SECTION
 	} else if (
 		toggleAdd == false &&
@@ -371,7 +422,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -426,16 +477,171 @@ function AdminPage() {
 							Are you sure you want to delete "{glossaryTerm[0].term}" from the
 							glossary?
 						</Typography>
-						<Button
-							onClick={handleDeleteConfirm}
-							variant='contained'
-							sx={{ padding: 1 }}>
-							Delete
-						</Button>
+						<Grid>
+							<Button
+								onClick={handleCancel}
+								variant='contained'
+								sx={{
+									padding: 1,
+									bgcolor: '#bdbdbd',
+									height: '40px',
+									mr: 4,
+									borderRadius: 2,
+								}}>
+								Cancel
+							</Button>
+							<Button
+								onClick={handleDeleteConfirm}
+								variant='contained'
+								sx={{ padding: 1, height: '40px', borderRadius: 2 }}>
+								Delete
+							</Button>
+						</Grid>
 					</Box>
 				</Modal>
 			</Box>
 		); //!END OF DELETE TERM SECTION
+
+		//! START OF EDIT TERM SECTION
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == true &&
+		toggleView == false &&
+		toggleDelete == false &&
+		glossaryTerm[0].img_path == null &&
+		glossaryTerm[0].description == null
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} required label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Box>
+					<Card>
+						<Typography>Term: {glossaryTerm[0].term}</Typography>
+						<Typography>
+							Description: No Description is Available at this time.
+						</Typography>
+						<Typography>Image: No Image Available</Typography>
+						<TextField
+							label='Description'
+							value={definitionInput}
+							onChange={handleDefinitionInput}></TextField>
+						<TextField
+							label='Image Path'
+							value={imagePathInput}
+							onChange={handleImagePathInput}></TextField>
+						<Box textAlign='center'>
+							<Button
+								onClick={handleEditSubmit}
+								variant='contained'
+								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+								Submit
+							</Button>
+						</Box>
+					</Card>
+				</Box>
+			</Box>
+		);
+	} else if (
+		toggleAdd == false &&
+		toggleEdit == true &&
+		toggleView == false &&
+		toggleDelete == false &&
+		glossaryTerm[0].img_path != null
+	) {
+		return (
+			<Box
+				sx={{
+					m: 3,
+					width: 'calc(100vw- 50px)',
+				}}>
+				<Card sx={{ mb: 3, border: 'solid' }}>
+					<Typography> Please select a term to Modify</Typography>
+					<Autocomplete
+						options={glossary.map(({ term }) => term)}
+						freeSolo //?This will allow suggestions based on input value.
+						renderInput={params => (
+							<TextField {...params} required label='Search Term' />
+						)}
+						onInputChange={handleChange}
+					/>
+					<ButtonGroup sx={{ m: 2 }}>
+						<Button variant='outlined' onClick={handleEdit}>
+							Edit
+						</Button>
+						<Button variant='outlined' onClick={handleView}>
+							View
+						</Button>
+						<Button variant='outlined' onClick={handleDelete}>
+							Delete
+						</Button>
+					</ButtonGroup>
+				</Card>
+				<Grid>
+					<Button variant='outlined' onClick={handleAdd}>
+						Add Term
+					</Button>
+				</Grid>
+
+				<Box>
+					<Card>
+						<Typography>Term: {glossaryTerm[0].term}</Typography>
+						<Typography>Description: {glossaryTerm[0].description}</Typography>
+						<CardMedia
+							component='img'
+							image={glossaryTerm[0].img_path}
+							sx={{ maxHeight: 400, maxWidth: 300 }}
+						/>
+						<TextField
+							label='Description'
+							value={definitionInput}
+							onChange={handleDefinitionInput}></TextField>
+						<TextField
+							label='Image Path'
+							value={imagePathInput}
+							onChange={handleImagePathInput}></TextField>
+						<Box textAlign='center'>
+							<Button
+								onClick={handleEditSubmit}
+								variant='contained'
+								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+								Submit
+							</Button>
+						</Box>
+					</Card>
+				</Box>
+			</Box>
+		);
 	}
 	//! DEFAULT SET UP ON INITIAL LOAD.
 	else {
@@ -451,7 +657,7 @@ function AdminPage() {
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
 						renderInput={params => (
-							<TextField {...params} label='Search Term' />
+							<TextField {...params} required label='Search Term' />
 						)}
 						onInputChange={handleChange}
 					/>
@@ -478,3 +684,11 @@ function AdminPage() {
 }
 
 export default AdminPage;
+
+{
+	/* <CardMedia
+	component='img'
+	image={glossaryTerm[0].img_path}
+	sx={{ maxHeight: 400, maxWidth: 300 }}
+/>; */
+}
