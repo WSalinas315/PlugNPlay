@@ -16,6 +16,9 @@ const theme = createTheme({
 		secondary: {
 			main: '#f44336',
 		},
+    neutral: {
+      main: '#999999'
+    },
 	},
 	typography: {
 		h1: {
@@ -27,7 +30,7 @@ const theme = createTheme({
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					fontSize: '16pt',
+					fontSize: '12pt',
 					fontWeight: '600',
 				},
 			},
