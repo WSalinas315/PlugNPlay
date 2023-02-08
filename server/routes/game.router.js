@@ -182,6 +182,15 @@ router.get('/played', rejectUnauthenticated, async (req, res) => {
         .flat() // flattens the results into a single one-dimensional array
         .map(tagFilter); // remove non-english tags
 
+    // Append game rating to detailed game info
+    for(let playedGame of playedList){
+      for(let dbGame of playedResult){
+        if(dbGame.game_id == playedGame.id){
+          playedGame.liked = dbGame.liked;
+        }
+      }
+    }
+
     // Send back detailed results
     res.send(playedList);
   } catch (err) {
