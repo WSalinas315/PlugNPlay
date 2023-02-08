@@ -57,7 +57,6 @@ export const LikeDislikeButton = ({ gameID, liked, action }) => {
   return (
     <>
       <Button {...buttonProps} startIcon={getIcon()} onClick={handleClick} />
-      {JSON.stringify(liked)}
     </>
   );
 };
