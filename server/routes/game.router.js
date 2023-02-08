@@ -8,6 +8,21 @@ require('dotenv').config();
 const key = process.env.RAWG_API_KEY;
 const keyUrl = ("key=" + key);
 
+// HELPER FUNCTION
+//* filters out non-english tags, isolates the tag name, and sorts alphabetically
+const tagFilter = (game) => {
+  const gameTags =
+    game.tags
+      .filter(tag => tag.language === "eng")
+      .map(tag => tag.name)
+      .sort()
+  //* returns game object, with tags filtered
+  return {
+    ...game,
+    tags: gameTags.map(tag => tag.toLowerCase())
+  }
+}
+
 /* ----------------
   WISHLIST ROUTES 
 ------------------*/
@@ -15,10 +30,30 @@ const keyUrl = ("key=" + key);
 // Wishlist - GET
 router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - GET');
+  let wishlistGames = [];
   const userID = req.user.id;
+
   try {
+    // Get a list of wishlisted games for the current user from the database
     const { rows: wishlistResult } = await pool.query(`SELECT * FROM "wishlist" WHERE "user_id" = $1;`, [userID]);
-    res.send(wishlistResult);
+
+    // Makes GET request to RAWG API for detailed game data for each game on the wishlist
+    for (let wish of wishlistResult) {
+      wishlistGames.push(axios.get(`https://api.rawg.io/api/games/${wish.game_id}?${keyUrl}`,
+        { validateStatus: (status) => status < 500 })) // prevents request from throwing error if it returns a 404
+    }
+    const wishlistGamesObjects = await Promise.all(wishlistGames);
+
+    // data cleanup
+    const wishedGames =
+      wishlistGamesObjects
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
+        .map(obj => obj.data) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
+        .map(tagFilter); // remove non-english tags
+
+    // Send back detailed results
+    res.send(wishedGames);
   } catch (err) {
     console.log('Game Router Wishlist GET by ID error:', err);
     res.sendStatus(500);
@@ -61,9 +96,29 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/ignorelist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - GET');
   const userID = req.user.id;
+  let ignoredGames = [];
+
   try {
+    // Get a list of ignored games for the current user from the database
     const { rows: ignorelistResult } = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
-    res.send(ignorelistResult);
+
+    // Makes GET request to RAWG API for detailed game data for each game on the ignorelist
+    for (let outcast of ignorelistResult) {
+      ignoredGames.push(axios.get(`https://api.rawg.io/api/games/${outcast.game_id}?${keyUrl}`,
+        { validateStatus: (status) => status < 500 })) // prevents request from throwing error if it returns a 404
+    }
+    const ignorelistGamesObjects = await Promise.all(ignoredGames);
+
+    // data cleanup
+    const ignoreList =
+      ignorelistGamesObjects
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
+        .map(obj => obj.data) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
+        .map(tagFilter); // remove non-english tags
+
+    // Send back detailed results
+    res.send(ignoreList);
   } catch (err) {
     console.log('Game Router Ignore List GET by ID error:', err);
     res.sendStatus(500);
@@ -106,9 +161,38 @@ router.delete('/ignorelist/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/played', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - GET');
   const userID = req.user.id;
+  let playedGames = [];
+
   try {
+    // Get a list of played games for the current user from the database
     const { rows: playedResult } = await pool.query(`SELECT * FROM "played" WHERE "user_id" = $1;`, [userID]);
-    res.send(playedResult);
+
+    // Makes GET request to RAWG API for detailed game data for each game on the played games table
+    for (let game of playedResult) {
+      playedGames.push(axios.get(`https://api.rawg.io/api/games/${game.game_id}?${keyUrl}`,
+        { validateStatus: (status) => status < 500 })) // prevents request from throwing error if it returns a 404
+    }
+    const playedGamesObject = await Promise.all(playedGames);
+
+    // data cleanup
+    const playedList =
+      playedGamesObject
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
+        .map(obj => obj.data) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
+        .map(tagFilter); // remove non-english tags
+
+    // Append game rating to detailed game info
+    for(let playedGame of playedList){
+      for(let dbGame of playedResult){
+        if(dbGame.game_id == playedGame.id){
+          playedGame.liked = dbGame.liked;
+        }
+      }
+    }
+
+    // Send back detailed results
+    res.send(playedList);
   } catch (err) {
     console.log('Game Router Played List GET by ID error:', err);
     res.sendStatus(500);
@@ -223,7 +307,7 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
 });
 
 // Played List - DELETE by game ID
-router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
+router.delete('/played/:id', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Played List - DELETE by ID');
   const gameID = req.params.id;
   try {
