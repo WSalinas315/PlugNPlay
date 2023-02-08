@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 //the container for the navbar for positioning.
 import Paper from '@mui/material/Paper';
@@ -16,7 +16,6 @@ import './Nav.css';
 
 function Nav() {
 	const user = useSelector(store => store.user);
-	const dispatch = useDispatch();
 
 	return (
 		<Paper
@@ -28,17 +27,6 @@ function Nav() {
 				zIndex: 1,
 				width: '100vw',
 			}}>
-			{!user.id && (
-				<BottomNavigation showLabels>
-					<BottomNavigationAction
-						label='Home'
-						value='Home'
-						icon={<HomeIcon />}
-						component={Link}
-						to='/login'
-					/>
-				</BottomNavigation>
-			)}
 			{user.id && (
 				<BottomNavigation showLabels>
 					<BottomNavigationAction
