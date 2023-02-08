@@ -12,9 +12,11 @@ import { useGameByID } from "../../hooks/storeHooks";
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+/*
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
+*/
 
 export default function SwipeBox(props) {
   const [open, setOpen] = useState(false)
@@ -39,6 +41,7 @@ export default function SwipeBox(props) {
 
   const handleClose = () => {
     setOpen(false)
+    dispatch({ type: "GAME/CLEAR_CURRENT" });
   }
 
   const handleSnackOpen = (severity, message) => {
@@ -79,18 +82,18 @@ export default function SwipeBox(props) {
       if (xPos > 0 && yPos > 0) {
         if (xPos > yPos) {
           swipe = 'Right Swipe'
-          handleSnackOpen('success', 'You swiped right!')
+          handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`)
           setGameQueue(gameQueue + 1);
-      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
           swipe = 'Down Swipe'
         }
       } else if (xPos > 0 && yPos < 0) {
         if (xPos > yPos * -1) {
           swipe = 'Right Swipe'
-          handleSnackOpen('success', 'You swiped right!')
+          handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`)
           setGameQueue(gameQueue + 1);
-      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
           swipe = 'Up Swipe'
           dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
@@ -99,9 +102,9 @@ export default function SwipeBox(props) {
       } else if (xPos < 0 && yPos > 0) {
         if (xPos * -1 > yPos) {
           swipe = 'Left Swipe'
-          handleSnackOpen('error', 'You swiped left!')
+          handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`)
           setGameQueue(gameQueue + 1);
-          dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
           swipe = 'Down Swipe'
         }
@@ -113,9 +116,9 @@ export default function SwipeBox(props) {
 
         } else {
           swipe = 'Left Swipe'
-          handleSnackOpen('error', 'You swiped left!')
+          handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`)
           setGameQueue(gameQueue + 1);
-        dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         }
       } else {
         console.log("didn't make it into an if/else")
@@ -162,19 +165,20 @@ export default function SwipeBox(props) {
             snackOpen={snackOpen}
             severity={severity}
             message={message}
+            anchor={severity === 'error' ? 'left' : 'right'}
           />
           <Dialog
             open={open}
-            TransitionComponent={Transition}
+            /*TransitionComponent={Transition}*/
             keepMounted
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
           >
-            <DialogTitle>{props.games[gameQueue]?.gameData.name}</DialogTitle>
+            {game.name && <DialogTitle>{props.games[gameQueue]?.gameData.name}</DialogTitle>}
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-              {game.description_raw?.length > 200 ? game.description_raw?.substring(0,199) + '...' : game.description_raw}
-              <button onClick={() => history.push(`/games/${props.games[gameQueue]?.gameData.id}`)} className='btn'>Details</button>
+              {game.name ? (game.description_raw?.length > 200 ? game.description_raw?.substring(0,199) + '...' : game.description_raw) : 'Loading...'}<br />
+              {game.name && <button onClick={() => history.push(`/games/${props.games[gameQueue]?.gameData.id}`)} className='btn'>Details</button>}
                 {/*
               Released on: {props.games[0]?.gameData.released}<br/>
               {game.publishers[0] && 'Published by: ' + game.publishers[0]?.name}<br />
