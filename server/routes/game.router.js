@@ -237,17 +237,4 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Played List - DELETE by game ID
-router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
-  // console.log('In game router: Played List - DELETE by ID');
-  const gameID = req.params.id;
-  try {
-    await pool.query(`DELETE FROM "played" WHERE "id" = $1;`, [gameID]);
-    res.sendStatus(200);
-  } catch (err) {
-    console.log('Game router Played List DELETE by ID error:', err);
-    res.sendStatus(500);
-  }
-});
-
 module.exports = router;

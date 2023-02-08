@@ -6,9 +6,10 @@ import { LikeDislikeButton, GameListButton } from "./Buttons";
 export default function UserFunctions({ game }) {
   const dispatch = useDispatch();
   const { userIgnorelist, userPlayedList, userWishlist } = useUserLists();
-  const playedIDs = userPlayedList?.map((item) => item.game_id);
   const ignoredIDs = userIgnorelist?.map((item) => item.game_id);
   const wishlistIDs = userWishlist?.map((item) => item.game_id);
+  const playedIDs = userPlayedList?.map((item) => item.game_id);
+  const liked = userPlayedList?.find((item) => item.game_id === game.id)?.liked
 
   const getLists = () => {
     dispatch({ type: "USER/FETCH_ALL_LISTS" });
@@ -33,8 +34,8 @@ export default function UserFunctions({ game }) {
       
       return (
         <div>
-          <LikeDislikeButton gameID={game.id} action={"like"} />
-          <LikeDislikeButton gameID={game.id} action={"dislike"} />
+          <LikeDislikeButton gameID={game.id} liked={liked} action={"like"} />
+          <LikeDislikeButton gameID={game.id} liked={liked} action={"dislike"} />
           <GameListButton gameID={game.id} list={"playedlist"} action={"delete"} />
         </div>
       );
@@ -61,6 +62,7 @@ export default function UserFunctions({ game }) {
   return (
     <div>
       <ButtonDisplay />
+
     </div>
   );
 }
