@@ -10,6 +10,7 @@ export default function RecommendedList() {
   const recommendations = useRecommendations();
 
   const checkForRecs = (refresh = false) => {
+    dispatch({ type: "GAME/CLEAR_CURRENT" });
     if (refresh || recommendations.length === 0) {
       dispatch({ type: "RAWG/FETCH_RECOMMENDATIONS" })
     } else return;

@@ -177,6 +177,7 @@ export default function SwipeBox(props) {
             {game.name && <DialogTitle>{props.games[gameQueue]?.gameData.name}</DialogTitle>}
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
+              {game.name && <div style={{fontWeight: 'bold', color: `${props.games[gameQueue]?.gameScore >= 0.7 ? 'green' : (props.games[gameQueue]?.gameScore >= 0.4 ? 'darkorange' : 'red')}`}}>{props.games[gameQueue]?.gameScore * 100 + '% Match'}</div>}
               {game.name ? (game.description_raw?.length > 200 ? game.description_raw?.substring(0,199) + '...' : game.description_raw) : 'Loading...'}<br />
               {game.name && <button onClick={() => history.push(`/games/${props.games[gameQueue]?.gameData.id}`)} className='btn'>Details</button>}
                 {/*
