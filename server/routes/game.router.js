@@ -8,6 +8,21 @@ require('dotenv').config();
 const key = process.env.RAWG_API_KEY;
 const keyUrl = ("key=" + key);
 
+// HELPER FUNCTION
+//* filters out non-english tags, isolates the tag name, and sorts alphabetically
+const tagFilter = (game) => {
+  const gameTags =
+    game.tags
+      .filter(tag => tag.language === "eng")
+      .map(tag => tag.name)
+      .sort()
+  //* returns game object, with tags filtered
+  return {
+    ...game,
+    tags: gameTags.map(tag => tag.toLowerCase())
+  }
+}
+
 /* ----------------
   WISHLIST ROUTES 
 ------------------*/
@@ -17,21 +32,6 @@ router.get('/wishlist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Wishlist - GET');
   let wishlistGames = [];
   const userID = req.user.id;
-
-  // HELPER FUNCTION
-  //* filters out non-english tags, isolates the tag name, and sorts alphabetically
-  const tagFilter = (game) => {
-    const gameTags =
-      game.tags
-        .filter(tag => tag.language === "eng")
-        .map(tag => tag.name)
-        .sort()
-    //* returns game object, with tags filtered
-    return {
-      ...game,
-      tags: gameTags.map(tag => tag.toLowerCase())
-    }
-  }
 
   try {
     // Get a list of wishlisted games for the current user from the database
@@ -96,9 +96,29 @@ router.delete('/wishlist/:id', rejectUnauthenticated, async (req, res) => {
 router.get('/ignorelist', rejectUnauthenticated, async (req, res) => {
   // console.log('In game router: Ignore List - GET');
   const userID = req.user.id;
+  let ignoredGames = [];
+
   try {
+    // Get a list of ignored games for the current user from the database
     const { rows: ignorelistResult } = await pool.query(`SELECT * FROM "ignorelist" WHERE "user_id" = $1;`, [userID]);
-    res.send(ignorelistResult);
+
+    // Makes GET request to RAWG API for detailed game data for each game on the ignorelist
+    for (let outcast of ignorelistResult) {
+      ignoredGames.push(axios.get(`https://api.rawg.io/api/games/${outcast.game_id}?${keyUrl}`,
+        { validateStatus: (status) => status < 500 })) // prevents request from throwing error if it returns a 404
+    }
+    const ignorelistGamesObjects = await Promise.all(ignoredGames);
+
+    // data cleanup
+    const ignoreList =
+      ignorelistGamesObjects
+        .filter(obj => obj.status < 300) // filters out any queries that returned a 404
+        .map(obj => obj.data) // isolates the actual API results
+        .flat() // flattens the results into a single one-dimensional array
+        .map(tagFilter); // remove non-english tags
+
+    // Send back detailed results
+    res.send(ignoreList);
   } catch (err) {
     console.log('Game Router Ignore List GET by ID error:', err);
     res.sendStatus(500);
