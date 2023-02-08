@@ -154,20 +154,20 @@ router.put('/played/:id', rejectUnauthenticated, async (req, res) => {
   const gameRating = req.body.liked;
   const userID = req.user.id;
 
-  // userScores is a combination of genre and tag names & scores
-  const { rows: userScores } = await pool.query(
-    `SELECT "genre_name" AS "name", "score" FROM "user_genres" WHERE "user_id" = $1
+  try {
+    // userScores is a combination of genre and tag names & scores
+    const { rows: userScores } = await pool.query(
+      `SELECT "genre_name" AS "name", "score" FROM "user_genres" WHERE "user_id" = $1
     UNION
     SELECT "tag_name" AS "name", "score" FROM "user_tags" WHERE "user_id" = $1;`, [userID]
-  );
+    );
 
-  // gets count of rated games for current user
-  const { rows: gameCount } = await pool.query(
-    `SELECT COUNT(*) AS "count" FROM "played" 
+    // gets count of rated games for current user
+    const { rows: gameCount } = await pool.query(
+      `SELECT COUNT(*) AS "count" FROM "played" 
     WHERE "user_id" = $1 AND "liked" = 1 OR "liked" = -1;`, [userID]
-  );
+    );
 
-  try {
     // Update liked status in played games table
     await pool.query(`UPDATE "played" SET "liked" = $1 WHERE "game_id" = $2 AND "user_id" = $3`, [gameRating, gameID, userID]);
 

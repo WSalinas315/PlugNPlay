@@ -30,9 +30,24 @@ export const LikeDislikeButton = ({ gameID, liked, action }) => {
     }
   }
 
+  const handleClick = () => {
+    let newLike;
+    if (action === 'like') {
+      newLike = liked === 1 ? 0 : 1
+    } else {
+      newLike = liked === -1 ? 0 : -1
+    }
+    dispatch({
+      type: 'USER/PLAYEDLIST/HANDLE_LIKE',
+      payload: {
+        liked: newLike,
+        gameID
+      } })
+  }
+
   return (
     <>
-      <Button startIcon={getIcon()} />
+      <Button startIcon={getIcon()} onClick={handleClick} />
       {JSON.stringify(liked)}
     </>
   );

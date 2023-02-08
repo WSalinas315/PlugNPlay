@@ -37,8 +37,14 @@ export default function () {
   };
 
   const MetacriticLink = () => {
+
+    const metacriticURL =
+      game.metacritic_url !== "" ?
+      game.metacritic_url :
+      `https://www.metacritic.com/search/all/${game.slug.replaceAll("-", "%20")}/results`
+
     return game.metacritic ? (
-      <a target="_blank" rel="noopener noreferrer" href={game.metacritic_url}>
+      <a target="_blank" rel="noopener noreferrer" href={metacriticURL}>
         Rated {game.metacritic} on Metacritic
       </a>
     ) : '';

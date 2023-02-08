@@ -23,7 +23,7 @@ function* deleteFromPlayedList({ payload }) {
 
 function* likeOnPlayedList({ payload }) {
   try {
-    yield axios.put('/api/games/played/' + payload, { liked: payload })
+    yield axios.put('/api/games/played/' + payload.gameID, { liked: payload.liked })
     yield put({ type: 'USER/FETCH_PLAYED_LIST' })
   } catch (err) {
     handleErrors('Liking/disliking game failed', err)

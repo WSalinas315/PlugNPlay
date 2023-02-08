@@ -23,8 +23,6 @@ export default function UserFunctions({ game }) {
       return (
         <div>
           <GameListButton gameID={game.id} list={"ignorelist"} action={"delete"} />
-          <GameListButton gameID={game.id} list={"playedlist"} action={"add"} />
-          <GameListButton gameID={game.id} list={"wishlist"} action={"add"} />
         </div>
       );
     } else if (playedIDs?.includes(game.id)) {
