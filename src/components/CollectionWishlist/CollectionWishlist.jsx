@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
