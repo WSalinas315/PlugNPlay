@@ -36,9 +36,7 @@ export const GameListButton = ({ gameID, list, action }) => {
     console.log('posting data for gameid', gameID)
     dispatch({ type: `USER/${list.toUpperCase()}/${action.toUpperCase()}`, payload: gameID });
   };
-
-  console.log(action, typeof action)
-
+  
   const icon = {
       'wishlist': {
         'add': <StarBorder />,

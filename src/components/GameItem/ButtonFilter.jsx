@@ -3,18 +3,11 @@ import { useDispatch } from "react-redux";
 import { useUserLists } from "../../hooks/storeHooks";
 import { LikeDislikeButton, GameListButton } from "./Buttons";
 
-import { Button } from "@mui/material";
-
-import {
-  ThumbUp,
-  ThumbDown,
-} from "@mui/icons-material";
-
 export default function UserFunctions({ game }) {
   const dispatch = useDispatch();
-  const { userIgnoreList, userPlayedList, userWishlist } = useUserLists();
+  const { userIgnorelist, userPlayedList, userWishlist } = useUserLists();
   const playedIDs = userPlayedList?.map((item) => item.game_id);
-  const ignoredIDs = userIgnoreList?.map((item) => item.game_id);
+  const ignoredIDs = userIgnorelist?.map((item) => item.game_id);
   const wishlistIDs = userWishlist?.map((item) => item.game_id);
 
   const getLists = () => {
