@@ -8,6 +8,8 @@ import { capitalizeFirst } from "../../helpers/words";
 import Loading from "../Loading/Loading";
 import UserButtons from './ButtonFilter'
 
+import { Typography } from "@mui/material";
+
 import './GameItem.css'
 
 export default function () {
@@ -73,7 +75,9 @@ export default function () {
         style={backgroundStyling}
         onClick={() => hideTitle(!titleHidden) }
         className={`game-splash-container ${titleClass}`}>
-        <h1>{game.name}</h1>
+        <Typography variant="h1">
+          {game.name}
+        </Typography>
       </div>
     );
   };

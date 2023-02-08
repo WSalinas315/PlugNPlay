@@ -21,46 +21,42 @@ export default function UserFunctions({ game }) {
     if (ignoredIDs?.includes(game.id)) {
       // user has ignored this game - show options to remove from ignore list, and add to played
       return (
-        <div>
+        <>
           <GameListButton gameID={game.id} list={"ignorelist"} action={"delete"} />
-        </div>
+        </>
       );
     } else if (playedIDs?.includes(game.id)) {
       // user has played this game - show options to like & dislike, and to remove from played
-      
-      // TODO: Like and Dislike functionality
-      
       return (
-        <div>
+        <>
           <LikeDislikeButton gameID={game.id} liked={liked} action={"like"} />
           <LikeDislikeButton gameID={game.id} liked={liked} action={"dislike"} />
           <GameListButton gameID={game.id} list={"playedlist"} action={"delete"} />
-        </div>
+        </>
       );
     } else if (wishlistIDs?.includes(game.id)) {
       // user has wishlisted this game - show options to remove from wishlist and add to played
       return (
-        <div>
+        <>
           <GameListButton gameID={game.id} list={"wishlist"} action={"delete"} />
           <GameListButton gameID={game.id} list={"playedlist"} action={"add"} />
-        </div>
+        </>
       );
     } else {
       // user has not interacted with this game - show all options
       return (
-        <div>
+        <>
           <GameListButton gameID={game.id} list={"wishlist"} action={"add"} />
           <GameListButton gameID={game.id} list={"playedlist"} action={"add"} />
           <GameListButton gameID={game.id} list={"ignorelist"} action={"add"} />
-        </div>
+        </>
       );
     }
   };
 
   return (
-    <div>
+    <div className="flex-buttons">
       <ButtonDisplay />
-
     </div>
   );
 }

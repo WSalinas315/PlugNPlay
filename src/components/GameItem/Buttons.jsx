@@ -15,6 +15,15 @@ import {
   ThumbUpOffAlt,
 } from "@mui/icons-material";
 
+const buttonProps = {
+  variant: 'outlined',
+  color: 'primary',
+  size: 'small',
+  sx: {
+    borderRadius: '10px'
+  }
+}
+
 export const LikeDislikeButton = ({ gameID, liked, action }) => {
   const dispatch = useDispatch();
 
@@ -47,7 +56,7 @@ export const LikeDislikeButton = ({ gameID, liked, action }) => {
 
   return (
     <>
-      <Button startIcon={getIcon()} onClick={handleClick} />
+      <Button {...buttonProps} startIcon={getIcon()} onClick={handleClick} />
       {JSON.stringify(liked)}
     </>
   );
@@ -96,7 +105,7 @@ export const GameListButton = ({ gameID, list, action }) => {
 
   return (
     <>
-      <Button onClick={handleClick} startIcon={icon}>
+      <Button {...buttonProps} onClick={handleClick} startIcon={icon}>
         {text}
       </Button>
     </>

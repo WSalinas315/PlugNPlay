@@ -27,3 +27,14 @@
 .game-splash-container.hidden-title ~ h1 {
   opacity: 0;
 }
+
+.flex-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-buttons > Button {
+  width: 70%;
+  margin: 0.3rem;
+}
