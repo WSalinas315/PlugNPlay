@@ -54,6 +54,6 @@ export default function Header() {
         ></path>
       </g>
     </svg>
-    <div id="rawg-credits">powered by <span id="rawg-logo">RAWG</span></div>
+    <div id="rawg-credits">powered by <a href="https://rawg.io/"><span id="rawg-logo">RAWG</span></a></div>
     </header>);
 }
