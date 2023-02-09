@@ -693,6 +693,8 @@ function AdminPage() {
 							<TextField
 								label='Description'
 								value={definitionInput}
+								multiline
+								maxRows={4}
 								onChange={handleDefinitionInput}
 								sx={{ width: '100%', mb: 2 }}
 							/>
@@ -799,6 +801,8 @@ function AdminPage() {
 								label='Description'
 								value={definitionInput}
 								onChange={handleDefinitionInput}
+								multiline
+								maxRows={4}
 								sx={{ width: '100%', mb: 2 }}
 							/>
 							<TextField
