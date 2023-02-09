@@ -5,7 +5,7 @@ body,
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Open Sans', '-apple-system', 'Roboto', 'Helvetica Neue', 'sans-serif';
   margin-top: 70px;
   overflow-x: hidden;
 }
@@ -13,6 +13,27 @@ body {
 img {
   display: inline-block;
   max-width: 100%;
+}
+
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  align-items: center;
+  margin: 0.5rem;
+  gap: 0.6rem;
+}
+
+.two-column-grid .grid-left {
+  margin-right: auto;
+  text-align: left;
+}
+.two-column-grid .grid-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.foot-spacer {
+  height: 100px;
 }
 
 /* --------------------------------------------------------------------------------

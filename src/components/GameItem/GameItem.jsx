@@ -7,11 +7,14 @@ import { useGameByID } from "../../hooks/storeHooks";
 import { capitalizeFirst } from "../../helpers/words";
 import Loading from "../Loading/Loading";
 import UserButtons from "./ButtonFilter";
+import MetacriticBadge from "../MetacriticBadge/MetacriticBadge";
+import ParagraphText from "../ParagraphText/ParagraphText";
 
-import { IconButton, Typography } from "@mui/material";
+import { Card, IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 
 import "./GameItem.css";
+import Heading2 from "../Headings/Heading2";
 
 export default function () {
   const dispatch = useDispatch();
@@ -24,21 +27,25 @@ export default function () {
     dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: id });
   }, []);
 
+  // SEARCH YOUTUBE FOR TRAILERS
   const YoutubeLink = () => {
     return (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href={`https://www.youtube.com/results?search_query=${game.slug.replaceAll(
-          "-",
-          "+"
-        )}+game+trailer`}
-      >
-        Check out some trailers
-      </a>
+      <div>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://www.youtube.com/results?search_query=${game.slug.replaceAll(
+            "-",
+            "+"
+          )}+game+trailer`}
+        >
+          Check out some trailers
+        </a>
+      </div>
     );
   };
 
+  // METACRITIC BADGE & LINK
   const MetacriticLink = () => {
     const metacriticURL =
       game.metacritic_url !== ""
@@ -49,26 +56,47 @@ export default function () {
           )}/results`;
 
     return game.metacritic ? (
-      <a target="_blank" rel="noopener noreferrer" href={metacriticURL}>
-        Rated {game.metacritic} on Metacritic
-      </a>
+      <MetacriticBadge score={game.metacritic} link={metacriticURL} />
     ) : (
       ""
     );
   };
 
-  const GenreUL = () => {
+  // LIST GENRES
+  const Genres = (props) => {
     return (
-      <ul>
-        {game.genres.map((genre) => (
-          <li>{genre.name}</li>
-        ))}
-      </ul>
+      <Typography variant="h3" {...props}>
+        {game.genres.map((genre) => genre.name).join(", ")}
+      </Typography>
     );
   };
 
-  const GameSplashTitle = () => {
+  // LIST TAGS
+  const Tags = (props) => {
+    return (
+      <ParagraphText newVariant="detail">
+        {"Tags: "}
+        {game.tags.map((tag) => capitalizeFirst(tag.name)).join(", ")}
+      </ParagraphText>
+    );
+  };
 
+  // LIST PLATFORMS
+  const Platforms = (props) => {
+    return (
+      <ParagraphText>
+        {"Platforms: "}
+        <ul>
+          {game.platforms.map(({ platform }) => (
+            <li>{platform.name}</li>
+          ))}
+        </ul>
+      </ParagraphText>
+    );
+  };
+
+  // SPLASH PAGE, TITLE, CLOSE BUTTON
+  const GameSplashTitle = () => {
     const history = useHistory();
 
     const backgroundStyling = {
@@ -79,56 +107,46 @@ export default function () {
 
     return (
       <>
-      <div
-        style={backgroundStyling}
-        onClick={() => hideTitle(!titleHidden)}
-        className={`game-splash-container ${titleClass}`}
+        <div
+          style={backgroundStyling}
+          onClick={() => hideTitle(!titleHidden)}
+          className={`game-splash-container ${titleClass}`}
         >
-        <Typography variant="h1">{game.name}</Typography>
-      <div className="close-button">
-        <IconButton onClick={() => history.goBack()} sx={{ color: '#ffffff', p: 0.5 }}>
-          <Close />
-        </IconButton>
-      </div>
-      </div>
+          <Heading2 className="title">{game.name}</Heading2>
+          <div className="close-button">
+            <IconButton
+              onClick={() => history.goBack()}
+              sx={{ color: "#ffffff", p: 0.5 }}
+            >
+              <Close />
+            </IconButton>
+          </div>
+        </div>
       </>
     );
   };
 
+  /*
+    COMPONENT EXPORT
+  */
   return game.name ? (
     <>
-      <div>
+      <Card sx={{ border: "1px solid", borderColor: "#dddddd" }}>
         <GameSplashTitle />
+        <div className="two-column-grid">
+          <Genres className="grid-left" />
+          <div className="grid-right">
+            <MetacriticLink />
+          </div>
+        </div>
         <UserButtons game={game} />
-        <p>
-          <MetacriticLink />
-        </p>
-        <p>
-          <YoutubeLink />
-        </p>
-        <p>Genres:</p>
-        <GenreUL />
-        <p>Tags:</p>
-        <ul>
-          {game.tags.map((tag) => (
-            <li>{capitalizeFirst(tag.name)}</li>
-          ))}
-        </ul>
-        <p>Available for:</p>
-        <ul>
-          {game.platforms.map(({ platform }) => (
-            <li>{platform.name}</li>
-          ))}
-        </ul>
-        <div>
-          <Typography variant="p">
-            Released {formatDate(game.released)}
-          </Typography>
-        </div>
-        <div>
-          <Typography variant="p">{game.description_raw}</Typography>
-        </div>
-      </div>
+        <YoutubeLink />
+        <Tags />
+        <Platforms />
+        <ParagraphText children={`Released ${formatDate(game.released)}`} />
+        <ParagraphText children={game.description_raw} />
+      </Card>
+      <div className="foot-spacer" />
     </>
   ) : (
     <Loading />

@@ -5,4 +5,11 @@
   border-radius: 50%;
   max-width: 250px;
   max-height: 250px;
+  padding: 15px;
+}
+
+.corner-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
