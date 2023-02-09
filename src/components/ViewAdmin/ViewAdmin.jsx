@@ -48,6 +48,13 @@ const ButtonStyle = makeStyles({
 		backgroundColor: '#c02222',
 		color: '#ffffff',
 	},
+	submitButton: {
+		borderRadius: 5,
+		height: 35,
+		padding: '0 15px',
+		backgroundColor: '#c02222',
+		color: '#ffffff',
+	},
 });
 
 function AdminPage() {
@@ -217,9 +224,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -306,9 +313,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -376,9 +383,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -516,9 +523,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -616,8 +623,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Grid>
+						<Typography> Please select a term to Modify</Typography>
+					</Grid>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -628,9 +637,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -653,16 +662,26 @@ function AdminPage() {
 					</Grid>
 				</Card>
 				<Grid>
-					<Button
+					{/* <Button
 						variant='outlined'
 						onClick={handleAdd}
 						className={buttonStyle.addButton}>
 						Add Term
-					</Button>
+					</Button> */}
 				</Grid>
 
 				<Box>
-					<Card>
+					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+						<Typography
+							variant='h5'
+							backgroundColor='primary.main'
+							borderRadius={2}
+							color='#ffffff'
+							align='center'
+							mb={2}
+							border='solid 1px #000000'>
+							EDITING
+						</Typography>
 						<Typography>Term: {glossaryTerm[0].term}</Typography>
 						<Typography>
 							Description: No Description is Available at this time.
@@ -702,7 +721,7 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography>Please select a term to Modify </Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -713,9 +732,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -747,7 +766,17 @@ function AdminPage() {
 				</Grid>
 
 				<Box>
-					<Card>
+					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+						<Typography
+							variant='h5'
+							backgroundColor='primary.main'
+							borderRadius={2}
+							color='#ffffff'
+							align='center'
+							mb={2}
+							border='solid 1px #000000'>
+							EDITING
+						</Typography>
 						<Typography>Term: {glossaryTerm[0].term}</Typography>
 						<Typography>Description: {glossaryTerm[0].description}</Typography>
 						<CardMedia
