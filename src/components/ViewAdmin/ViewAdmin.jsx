@@ -18,22 +18,53 @@ import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import HttpIcon from '@mui/icons-material/Http';
+import DescriptionIcon from '@mui/icons-material/Description';
 
-const useStyles = makeStyles({
-	root: {
-		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-		border: 0,
-		borderRadius: 3,
-		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-		color: 'white',
-		height: 48,
-		padding: '0 30px',
+const ButtonStyle = makeStyles({
+	viewButton: {
+		borderRadius: 5,
+		height: 35,
+		padding: '0 15px',
+		backgroundColor: '#999999',
+		color: '#ffffff',
+	},
+	deleteButton: {
+		borderRadius: 5,
+		height: 35,
+		padding: '0 15px',
+		backgroundColor: '#c02222',
+		color: '#ffffff',
+	},
+	editButton: {
+		borderRadius: 5,
+		height: 35,
+		padding: '0 15px',
+		backgroundColor: '#c02222',
+		color: '#ffffff',
+	},
+	addButton: {
+		borderRadius: 5,
+		height: 35,
+		padding: '0 15px',
+		backgroundColor: '#c02222',
+		color: '#ffffff',
+	},
+	submitButton: {
+		borderRadius: 5,
+		height: 35,
+		padding: '0 15px',
+		backgroundColor: '#c02222',
+		color: '#ffffff',
+		marginTop: 20,
 	},
 });
 
 function AdminPage() {
 	const dispatch = useDispatch();
-	const styles = useStyles();
+
+	const buttonStyle = ButtonStyle();
 
 	//*This helps the Modal decide the current state of Modal open/close.
 	const [open, setOpen] = useState(false);
@@ -66,6 +97,7 @@ function AdminPage() {
 	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
+		setTermInput(value);
 		dispatch({
 			type: 'GLOSSARY/FETCH_TERM',
 			payload: value, //?This is the term that is was clicked on from the drop down menu.
@@ -185,8 +217,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -195,21 +229,38 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
 				</Grid>
@@ -257,8 +308,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -267,32 +320,49 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 
-				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+				{/* <Grid>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
-				</Grid>
+				</Grid> */}
 
-				<Box>
-					<Card>
+				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Box sx={{ margin: 2 }}>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
 						<Typography>Definition : No Definition Available</Typography>
 						<Typography>Image : No Image Available</Typography>
-					</Card>
-				</Box>
+					</Box>
+				</Card>
 			</Box>
 		);
 		//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
@@ -310,8 +380,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -320,32 +392,49 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
 				</Grid>
 
-				<Box>
-					<Card>
+				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Box>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
 						<Typography>Definition : {glossaryTerm[0].description}</Typography>
 						<Typography>Image : No Image Available</Typography>
-					</Card>
-				</Box>
+					</Box>
+				</Card>
 			</Box>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
@@ -363,8 +452,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -373,32 +464,50 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
 				</Grid>
 
-				<Box>
-					<Card>
-						<Typography> Term : {glossaryTerm[0].term} </Typography>
-						<Typography>Definition : {glossaryTerm[0].description}</Typography>
+				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Box sx={{ marginBottom: -1 }}>
+						<Typography> Term: {glossaryTerm[0].term} </Typography>
+						<Typography>Definition: {glossaryTerm[0].description}</Typography>
+
 						<img src={glossaryTerm[0].img_path} />
-					</Card>
-				</Box>
+					</Box>
+				</Card>
 			</Box>
 		);
 		//!END OF VIEW TERM SECTION
@@ -416,8 +525,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -426,21 +537,38 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
 				</Grid>
@@ -477,23 +605,17 @@ function AdminPage() {
 							Are you sure you want to delete "{glossaryTerm[0].term}" from the
 							glossary?
 						</Typography>
-						<Grid>
+						<Grid container gap={4} alignItems='center' justifyContent='center'>
 							<Button
 								onClick={handleCancel}
 								variant='contained'
-								sx={{
-									padding: 1,
-									bgcolor: '#bdbdbd',
-									height: '40px',
-									mr: 4,
-									borderRadius: 2,
-								}}>
+								className={buttonStyle.viewButton}>
 								Cancel
 							</Button>
 							<Button
 								onClick={handleDeleteConfirm}
 								variant='contained'
-								sx={{ padding: 1, height: '40px', borderRadius: 2 }}>
+								className={buttonStyle.deleteButton}>
 								Delete
 							</Button>
 						</Grid>
@@ -517,8 +639,12 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Grid>
+						<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+							Please select a term to Modify
+						</Typography>
+					</Grid>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -527,44 +653,94 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					{/* <Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
-					</Button>
+					</Button> */}
 				</Grid>
 
 				<Box>
-					<Card>
+					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+						<Typography
+							variant='h5'
+							backgroundColor='primary.main'
+							borderRadius={2}
+							color='#ffffff'
+							align='center'
+							mb={2}
+							border='solid 1px #000000'>
+							EDITING
+						</Typography>
 						<Typography>Term: {glossaryTerm[0].term}</Typography>
 						<Typography>
 							Description: No Description is Available at this time.
 						</Typography>
 						<Typography>Image: No Image Available</Typography>
-						<TextField
-							label='Description'
-							value={definitionInput}
-							onChange={handleDefinitionInput}></TextField>
-						<TextField
-							label='Image Path'
-							value={imagePathInput}
-							onChange={handleImagePathInput}></TextField>
+						<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
+							<TextField
+								label='Description'
+								value={definitionInput}
+								multiline
+								maxRows={4}
+								onChange={handleDefinitionInput}
+								sx={{ width: '100%', mb: 2 }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<DescriptionIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+							<TextField
+								label='Image Url'
+								value={imagePathInput}
+								onChange={handleImagePathInput}
+								sx={{ width: '100%' }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<HttpIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Box>
+
 						<Box textAlign='center'>
 							<Button
 								onClick={handleEditSubmit}
 								variant='contained'
-								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+								className={buttonStyle.submitButton}>
 								Submit
 							</Button>
 						</Box>
@@ -584,9 +760,12 @@ function AdminPage() {
 				sx={{
 					m: 3,
 					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				}}
+				scrollable>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -595,26 +774,53 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
 				</Grid>
 
 				<Box>
-					<Card>
+					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+						<Typography
+							variant='h5'
+							backgroundColor='primary.main'
+							borderRadius={2}
+							color='#ffffff'
+							align='center'
+							mb={2}
+							border='solid 1px #000000'>
+							EDITING
+						</Typography>
 						<Typography>Term: {glossaryTerm[0].term}</Typography>
 						<Typography>Description: {glossaryTerm[0].description}</Typography>
 						<CardMedia
@@ -622,14 +828,38 @@ function AdminPage() {
 							image={glossaryTerm[0].img_path}
 							sx={{ maxHeight: 400, maxWidth: 300 }}
 						/>
-						<TextField
-							label='Description'
-							value={definitionInput}
-							onChange={handleDefinitionInput}></TextField>
-						<TextField
-							label='Image Path'
-							value={imagePathInput}
-							onChange={handleImagePathInput}></TextField>
+
+						<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
+							<TextField
+								label='Description'
+								value={definitionInput}
+								multiline
+								maxRows={4}
+								onChange={handleDefinitionInput}
+								sx={{ width: '100%', mb: 2 }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<DescriptionIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+							<TextField
+								label='Image Url'
+								value={imagePathInput}
+								onChange={handleImagePathInput}
+								sx={{ width: '100%' }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<HttpIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Box>
+
 						<Box textAlign='center'>
 							<Button
 								onClick={handleEditSubmit}
@@ -651,8 +881,10 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
-					<Typography> Please select a term to Modify</Typography>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -661,20 +893,37 @@ function AdminPage() {
 						)}
 						onInputChange={handleChange}
 					/>
-					<ButtonGroup sx={{ m: 2 }}>
-						<Button variant='outlined' onClick={handleEdit}>
+					<Grid
+						container
+						gap={3}
+						alignItems='center'
+						justify-content='space-around'
+						margin={2}>
+						<Button
+							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
 							Edit
 						</Button>
-						<Button variant='outlined' onClick={handleView}>
+						<Button
+							variant='outlined'
+							onClick={handleView}
+							className={buttonStyle.viewButton}>
 							View
 						</Button>
-						<Button variant='outlined' onClick={handleDelete}>
+						<Button
+							variant='outlined'
+							onClick={handleDelete}
+							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-					</ButtonGroup>
+					</Grid>
 				</Card>
 				<Grid>
-					<Button variant='outlined' onClick={handleAdd}>
+					<Button
+						variant='outlined'
+						onClick={handleAdd}
+						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
 				</Grid>
@@ -684,11 +933,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-
-{
-	/* <CardMedia
-	component='img'
-	image={glossaryTerm[0].img_path}
-	sx={{ maxHeight: 400, maxWidth: 300 }}
-/>; */
-}

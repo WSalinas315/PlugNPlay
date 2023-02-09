@@ -16,9 +16,9 @@ const theme = createTheme({
 		secondary: {
 			main: '#f44336',
 		},
-    neutral: {
-      main: '#999999'
-    },
+		neutral: {
+			main: '#999999',
+		},
 	},
 	typography: {
 		h1: {
@@ -31,7 +31,7 @@ const theme = createTheme({
 			styleOverrides: {
 				root: {
 					fontSize: '12pt',
-					fontWeight: '600',
+					fontWeight: '350',
 				},
 			},
 		},
@@ -43,13 +43,17 @@ const theme = createTheme({
 				},
 			},
 		},
-		// MuiSvgIcon: {
-		// 	styleOverrides: {
-		// 		root: {
-		// 			color: '#C02222',
-		// 		},
-		// 	},
-		// },
+		MuiAutocomplete: {
+			styleOverrides: {
+				root: {
+					margin: 15,
+				},
+				input: {
+					margin: 1,
+					padding: 2,
+				},
+			},
+		},
 		MuiBottomNavigationAction: {
 			styleOverrides: {
 				label: {
