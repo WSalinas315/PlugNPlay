@@ -18,6 +18,9 @@ import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import HttpIcon from '@mui/icons-material/Http';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const ButtonStyle = makeStyles({
 	viewButton: {
@@ -697,12 +700,26 @@ function AdminPage() {
 								maxRows={4}
 								onChange={handleDefinitionInput}
 								sx={{ width: '100%', mb: 2 }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<DescriptionIcon />
+										</InputAdornment>
+									),
+								}}
 							/>
 							<TextField
-								label='Image Path'
+								label='Image Url'
 								value={imagePathInput}
 								onChange={handleImagePathInput}
 								sx={{ width: '100%' }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<HttpIcon />
+										</InputAdornment>
+									),
+								}}
 							/>
 						</Box>
 
@@ -730,7 +747,8 @@ function AdminPage() {
 				sx={{
 					m: 3,
 					width: 'calc(100vw- 50px)',
-				}}>
+				}}
+				scrollable>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography>Please select a term to Modify </Typography>
 					<Autocomplete
@@ -800,16 +818,30 @@ function AdminPage() {
 							<TextField
 								label='Description'
 								value={definitionInput}
-								onChange={handleDefinitionInput}
 								multiline
 								maxRows={4}
+								onChange={handleDefinitionInput}
 								sx={{ width: '100%', mb: 2 }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<DescriptionIcon />
+										</InputAdornment>
+									),
+								}}
 							/>
 							<TextField
-								label='Image Path'
+								label='Image Url'
 								value={imagePathInput}
 								onChange={handleImagePathInput}
 								sx={{ width: '100%' }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<HttpIcon />
+										</InputAdornment>
+									),
+								}}
 							/>
 						</Box>
 
