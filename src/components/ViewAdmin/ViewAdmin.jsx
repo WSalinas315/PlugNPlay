@@ -54,6 +54,7 @@ const ButtonStyle = makeStyles({
 		padding: '0 15px',
 		backgroundColor: '#c02222',
 		color: '#ffffff',
+		marginTop: 20,
 	},
 });
 
@@ -212,7 +213,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography> Please select a term to Modify</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -301,7 +302,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography> Please select a term to Modify</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -371,7 +372,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography> Please select a term to Modify</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -441,7 +442,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography> Please select a term to Modify</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -511,7 +512,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography> Please select a term to Modify</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -699,7 +700,7 @@ function AdminPage() {
 							<Button
 								onClick={handleEditSubmit}
 								variant='contained'
-								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+								className={buttonStyle.submitButton}>
 								Submit
 							</Button>
 						</Box>
@@ -720,7 +721,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 3, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography>Please select a term to Modify </Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -813,7 +814,7 @@ function AdminPage() {
 					m: 3,
 					width: 'calc(100vw- 50px)',
 				}}>
-				<Card sx={{ mb: 4, border: 'solid' }}>
+				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography> Please select a term to Modify</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
