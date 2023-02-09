@@ -54,6 +54,7 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
+          position: 'relative',
           padding: '10px',
           margin: '5px'
         }
@@ -64,6 +65,8 @@ const theme = createTheme({
 				root: {
 					fontSize: '12pt',
 					fontWeight: '350',
+          margin: '5px',
+          padding: '2px',
 				},
 			},
 		},
