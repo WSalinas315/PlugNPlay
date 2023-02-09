@@ -218,7 +218,9 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -307,7 +309,9 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -343,22 +347,22 @@ function AdminPage() {
 					</Grid>
 				</Card>
 
-				<Grid>
+				{/* <Grid>
 					<Button
 						variant='outlined'
 						onClick={handleAdd}
 						className={buttonStyle.addButton}>
 						Add Term
 					</Button>
-				</Grid>
+				</Grid> */}
 
-				<Box>
-					<Card>
+				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Box sx={{ margin: 2 }}>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
 						<Typography>Definition : No Definition Available</Typography>
 						<Typography>Image : No Image Available</Typography>
-					</Card>
-				</Box>
+					</Box>
+				</Card>
 			</Box>
 		);
 		//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
@@ -377,7 +381,9 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -422,13 +428,13 @@ function AdminPage() {
 					</Button>
 				</Grid>
 
-				<Box>
-					<Card>
+				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Box>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
 						<Typography>Definition : {glossaryTerm[0].description}</Typography>
 						<Typography>Image : No Image Available</Typography>
-					</Card>
-				</Box>
+					</Box>
+				</Card>
 			</Box>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
@@ -447,7 +453,9 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -458,9 +466,9 @@ function AdminPage() {
 					/>
 					<Grid
 						container
-						gap={4}
+						gap={3}
 						alignItems='center'
-						justifyContent='center'
+						justify-content='space-around'
 						margin={2}>
 						<Button
 							variant='outlined'
@@ -492,13 +500,14 @@ function AdminPage() {
 					</Button>
 				</Grid>
 
-				<Box>
-					<Card>
-						<Typography> Term : {glossaryTerm[0].term} </Typography>
-						<Typography>Definition : {glossaryTerm[0].description}</Typography>
+				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
+					<Box sx={{ marginBottom: -1 }}>
+						<Typography> Term: {glossaryTerm[0].term} </Typography>
+						<Typography>Definition: {glossaryTerm[0].description}</Typography>
+
 						<img src={glossaryTerm[0].img_path} />
-					</Card>
-				</Box>
+					</Box>
+				</Card>
 			</Box>
 		);
 		//!END OF VIEW TERM SECTION
@@ -517,7 +526,9 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -630,7 +641,9 @@ function AdminPage() {
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Grid>
-						<Typography> Please select a term to Modify</Typography>
+						<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+							Please select a term to Modify
+						</Typography>
 					</Grid>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
@@ -750,7 +763,9 @@ function AdminPage() {
 				}}
 				scrollable>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography>Please select a term to Modify </Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
@@ -867,7 +882,9 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography> Please select a term to Modify</Typography>
+					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
+						Please select a term to Modify
+					</Typography>
 					<Autocomplete
 						options={glossary.map(({ term }) => term)}
 						freeSolo //?This will allow suggestions based on input value.
