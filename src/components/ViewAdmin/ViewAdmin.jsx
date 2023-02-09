@@ -94,6 +94,7 @@ function AdminPage() {
 	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
 	const handleChange = (event, value) => {
 		console.log('Value is: ', value);
+		setTermInput(value);
 		dispatch({
 			type: 'GLOSSARY/FETCH_TERM',
 			payload: value, //?This is the term that is was clicked on from the drop down menu.
@@ -688,14 +689,21 @@ function AdminPage() {
 							Description: No Description is Available at this time.
 						</Typography>
 						<Typography>Image: No Image Available</Typography>
-						<TextField
-							label='Description'
-							value={definitionInput}
-							onChange={handleDefinitionInput}></TextField>
-						<TextField
-							label='Image Path'
-							value={imagePathInput}
-							onChange={handleImagePathInput}></TextField>
+						<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
+							<TextField
+								label='Description'
+								value={definitionInput}
+								onChange={handleDefinitionInput}
+								sx={{ width: '100%', mb: 2 }}
+							/>
+							<TextField
+								label='Image Path'
+								value={imagePathInput}
+								onChange={handleImagePathInput}
+								sx={{ width: '100%' }}
+							/>
+						</Box>
+
 						<Box textAlign='center'>
 							<Button
 								onClick={handleEditSubmit}
@@ -785,14 +793,22 @@ function AdminPage() {
 							image={glossaryTerm[0].img_path}
 							sx={{ maxHeight: 400, maxWidth: 300 }}
 						/>
-						<TextField
-							label='Description'
-							value={definitionInput}
-							onChange={handleDefinitionInput}></TextField>
-						<TextField
-							label='Image Path'
-							value={imagePathInput}
-							onChange={handleImagePathInput}></TextField>
+
+						<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
+							<TextField
+								label='Description'
+								value={definitionInput}
+								onChange={handleDefinitionInput}
+								sx={{ width: '100%', mb: 2 }}
+							/>
+							<TextField
+								label='Image Path'
+								value={imagePathInput}
+								onChange={handleImagePathInput}
+								sx={{ width: '100%' }}
+							/>
+						</Box>
+
 						<Box textAlign='center'>
 							<Button
 								onClick={handleEditSubmit}
