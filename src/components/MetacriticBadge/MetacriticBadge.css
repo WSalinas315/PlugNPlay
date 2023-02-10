@@ -1,0 +1,36 @@
+.badge {
+  display: grid;
+  place-items: center;
+  border: 3px solid;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 600;
+  width: fit-content;
+  aspect-ratio: 1/1;
+}
+
+.badge a {
+  text-decoration: none;
+}
+
+._90 {
+  color: green;
+  border-color: green;
+}
+
+._75 {
+  color: yellowgreen;
+  border-color: yellowgreen;
+}
+
+._60 {
+  color: orange;
+  border-color: orange;
+}
+
+.red {
+  color: red;
+  border-color: red;
+}

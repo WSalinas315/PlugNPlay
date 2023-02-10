@@ -19,6 +19,8 @@ const searchResults = (state = [], { type, payload }) => {
 const recommendations = (state = [], { type, payload }) => {
   return {
     'GAME/SET_RECOMMENDATIONS': payload,
+    'GAME/SWIPE_WISHLIST': payload,
+    'GAME/SWIPE_SKIP': payload,
     'GAME/CLEAR_RECOMMENDATIONS': [],
     'GAME/CLEAR_ALL': []
   }[type] || state;
