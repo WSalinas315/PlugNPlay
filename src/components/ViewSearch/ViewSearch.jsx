@@ -31,9 +31,16 @@ export default function ViewSearch() {
     dispatch({ type: 'RAWG/SEARCH_BY_NAME', payload: gameTitle });
   }
 
+  const searchByGenre = () => {
+    // Clear current search results
+    dispatch({ type: 'GAME/CLEAR_SEARCH_RESULTS' });
+    // Query RAWG by Genre
+    dispatch({ type: 'RAWG/SEARCH_BY_GENRE', payload: gameGenre });
+  }
+
   return (
     <>
-      {/* <h1>Search Games</h1> */}
+      <h1>Search Games</h1>
 
       {/* Search By Name */}
       <h3>Search By Game Title</h3>
@@ -65,12 +72,17 @@ export default function ViewSearch() {
           onChange={(event) => setGameGenre(event.target.value)}
           
         >
-          {genreList.map((genre, i) => {
-            return(<MenuItem key={i} value={genre.name}>{genre.name}</MenuItem>)
+          {genreList?.map((genre, i) => {
+            return(<MenuItem key={i} value={genre.slug}>{genre.name}</MenuItem>)
           })}
         </Select>
       </FormControl>
-      {gameGenre ? <Button variant="outlined">Search</Button> : <Button variant="outlined" disabled>Search</Button>}
+      {gameGenre
+        ?
+        <Button variant="outlined" onClick={() => searchByGenre()}>Search</Button>
+        :
+        <Button variant="outlined" disabled>Search</Button>
+      }
 
 
     </>

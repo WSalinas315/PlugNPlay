@@ -52,6 +52,7 @@ router.get('/byGenre/:genre', async (req, res) => {
   console.log('searching for genre', genre, '...');
   try {
     const { data: games } = await axios.get(`https://api.rawg.io/api/games?genres=${genre}&${keyUrl}&page_size=40`)
+    console.log('RAWG GENRE SEARCH RESULTS', games);
     res.send(games)
   } catch (err) {
     console.log(err)
