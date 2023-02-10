@@ -4,7 +4,7 @@ import { put, takeLatest } from "redux-saga/effects";
 // HELPER FUNCTIONS
 const setSearchResults = (results) => {
   put({ type: 'GAME/SET_SEARCH_RESULTS', payload: results })
-  put({ type: 'GAME/SET_RECOMMENDATIONS', payload: results })
+  //put({ type: 'GAME/SET_RECOMMENDATIONS', payload: results })
 }
 
 const handleErrors = (msg, err) => {

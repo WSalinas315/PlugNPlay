@@ -19,6 +19,10 @@ export default function ViewSearch() {
   const [gameTitle, setGameTitle] = useState('');
   const [gameGenre, setGameGenre] = useState('');
 
+  const searchByName = () => {
+    dispatch({ type: 'RAWG/SEARCH_BY_NAME', payload: gameGenre });
+  }
+
   return (
     <>
       <h1>SEARCH THE STUFF</h1>
@@ -35,7 +39,12 @@ export default function ViewSearch() {
           size="small"
         />
       </FormControl>
-      {gameTitle ? <Button variant="outlined">Search</Button> : <Button variant="outlined" disabled>Search</Button>}
+      {gameTitle
+        ?
+        <Button variant="outlined" onClick={() => searchByName()}>Search</Button>
+        :
+        <Button variant="outlined" disabled>Search</Button>
+      }
 
       {/* Search By Genre */}
       {/* <h3>Search By Genre</h3>
