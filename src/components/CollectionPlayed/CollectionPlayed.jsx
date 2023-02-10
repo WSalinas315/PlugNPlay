@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -11,6 +12,9 @@ export default function Played() {
 
 	// initialize dispatch
 	const dispatch = useDispatch();
+	
+	// Initialize history
+	const history = useHistory();
 
 	// fetches user's played games from database
 	useEffect(() => {
@@ -19,6 +23,13 @@ export default function Played() {
 
 	// pull played games information from the store
 	const playedList = useSelector((store) => store.userLists.userPlayedList);
+
+	// Set current game and go to detailed page
+	const viewDetailed = (game) => {
+		dispatch({ type: 'GAME/CLEAR_CURRENT' });
+		dispatch({ type: 'GAME/FETCH_CURRENT_GAME', payload: game.id });
+		history.push(`/games/${game.id}`);
+	};
 
 	return (
 		<ImageList cols={1} rowHeight={250} gap={20}>
@@ -31,7 +42,7 @@ export default function Played() {
 						position='top'
 						sx={{ margin: '10px 10px 0px 10px' }}
 						actionIcon={
-							<IconButton sx={{color:'#ffffff'}}>
+							<IconButton sx={{ color: '#ffffff' }}>
 								{item.liked == 1 ? <ThumbUpIcon /> : item.liked == -1 ? <ThumbDownIcon /> : <></>}
 							</IconButton>
 						}

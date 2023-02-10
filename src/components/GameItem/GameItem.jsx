@@ -73,6 +73,7 @@ export default function () {
 
   // LIST TAGS
   const Tags = (props) => {
+    console.log('TAGS: game.tags = ', game.tags);
     return (
       <ParagraphText newVariant="detail">
         {"Tags: "}
