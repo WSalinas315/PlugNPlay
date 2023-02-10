@@ -25,16 +25,25 @@ import DescriptionIcon from '@mui/icons-material/Description';
 const ButtonStyle = makeStyles({
 	viewButton: {
 		borderRadius: 5,
+		border: '#999999',
 		height: 35,
+		color: '#ffffff',
 		padding: '0 15px',
 		backgroundColor: '#999999',
-		color: '#ffffff',
+		'&:hover': {
+			//you want this to be the same as the backgroundColor above
+			background: '#999999',
+			border: '#999999',
+		},
 	},
 	deleteButton: {
 		borderRadius: 5,
 		height: 35,
 		padding: '0 15px',
 		backgroundColor: '#c02222',
+		'&:hover': {
+			background: '#C02222',
+		},
 		color: '#ffffff',
 	},
 	editButton: {
@@ -42,6 +51,9 @@ const ButtonStyle = makeStyles({
 		height: 35,
 		padding: '0 15px',
 		backgroundColor: '#c02222',
+		'&:hover': {
+			background: '#C02222',
+		},
 		color: '#ffffff',
 	},
 	addButton: {
@@ -49,6 +61,9 @@ const ButtonStyle = makeStyles({
 		height: 35,
 		padding: '0 15px',
 		backgroundColor: '#c02222',
+		'&:hover': {
+			background: '#C02222',
+		},
 		color: '#ffffff',
 	},
 	submitButton: {
@@ -56,6 +71,9 @@ const ButtonStyle = makeStyles({
 		height: 35,
 		padding: '0 15px',
 		backgroundColor: '#c02222',
+		'&:hover': {
+			background: '#C02222',
+		},
 		color: '#ffffff',
 		marginTop: 20,
 	},
