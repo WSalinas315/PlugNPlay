@@ -17,7 +17,7 @@ export default function Glossary() {
   const [selectedTerm, setSelectedTerm] = useState("");
 
   const glossary = useSelector((store) => store.glossary.glossary);
-  const terms = [];
+  const terms = glossary.map(item => item.term);
 
   useEffect(() => {
     dispatch({ type: "GLOSSARY/FETCH" });
@@ -29,12 +29,13 @@ export default function Glossary() {
    * @param {string} value This is the glossary term from the drop down menu.
    */
   const handleChange = (event, value) => {
-    console.log("Value is: ", value);
-    setSelectedTerm(value);
-    dispatch({
-      type: "GLOSSARY/SET_ITEM",
-      payload: value, //This is the term that is was clicked on from the drop down menu.
-    });
+    if (terms.includes(value)) {
+      setSelectedTerm(value);
+      dispatch({
+        type: "GLOSSARY/SET_ITEM",
+        payload: value, //This is the term that is was clicked on from the drop down menu.
+      });
+    }
   };
 
   return (
@@ -52,7 +53,8 @@ export default function Glossary() {
           onInputChange={handleChange}
         />
       </Box>
-      <Box>{selectedTerm !== "" && <GlossaryItem term={selectedTerm} />}</Box>
+      <Box>{selectedTerm !== "" &&
+        <GlossaryItem term={selectedTerm} />}</Box>
     </Card>
   );
 }
