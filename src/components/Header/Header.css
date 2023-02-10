@@ -18,7 +18,7 @@
 }
 
 #plugnplay {
-
+    z-index: 1;
     height: 60px;
     width: 100vw;
     background-color: #C02222;
@@ -30,4 +30,24 @@
 
 .plugnplaypath:hover {
     animation-play-state: paused; 
+}
+
+#rawg-credits {
+    z-index: 1;
+    color: white;
+    position: fixed;
+    top: 40px;
+    right: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+}
+
+#rawg-logo {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 5px;
+    color: #fff;
+
 }

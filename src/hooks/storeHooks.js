@@ -15,3 +15,9 @@ export const useRecommendations = () => {
 export const useGameByID = () => {
   return useSelector(store => store.games.currentlyViewedGame)
 }
+
+// USER LIST HOOKS
+
+export const useUserLists = () => {
+  return useSelector(store => store.userLists)
+}

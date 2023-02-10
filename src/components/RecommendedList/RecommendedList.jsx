@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRecommendations } from "../../hooks/storeHooks";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import SwipeBox from "../SwipeBox/SwipeBox";
 
 export default function RecommendedList() {
   const dispatch = useDispatch();
   const recommendations = useRecommendations();
 
   const checkForRecs = (refresh = false) => {
+    dispatch({ type: "GAME/CLEAR_CURRENT" });
     if (refresh || recommendations.length === 0) {
       dispatch({ type: "RAWG/FETCH_RECOMMENDATIONS" })
     } else return;
@@ -33,11 +35,14 @@ export default function RecommendedList() {
 
   return recommendations.length > 0 ? (
     <>
+      <SwipeBox games={recommendations} />
+      {/*
       {recommendations
         .map((game) => {
           return <ListItem gameData={game.gameData} />;
         })
         .sort((a, b) => a.gameScore - b.gameScore)}
+      */}
     </>
   ) : (
     <Loading />
