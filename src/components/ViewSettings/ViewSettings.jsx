@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { Card, Button, TextField } from "@mui/material";
 
@@ -7,12 +8,15 @@ import Heading1 from "../Headings/Heading1";
 import Heading3 from "../Headings/Heading3";
 
 export default function ViewSettings() {
-  const [newItem, setNewItem] = useState("");
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [ imgUrlIn, setImgUrl ] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // write reducer, saga, and PUT route to db
+    dispatch({ type: 'USER/EDIT_PROFILE_PICTURE', payload: { imgPath: imgUrlIn } })
+    history.push('/profile');
   };
 
   return (
@@ -26,8 +30,8 @@ export default function ViewSettings() {
           <TextField
             sx={{ width: "100%", mb: "1rem" }}
             className="grid-right"
-            value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
+            value={imgUrlIn}
+            onChange={(e) => setImgUrl(e.target.value)}
             label="Profile Picture URL"
           />
           <div align="center">

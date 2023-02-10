@@ -77,6 +77,15 @@ function* fetchAllLists() {
   }
 }
 
+function* editProfilePicture({ payload }) {
+  try {
+    yield axios.put('/api/user/profilePicture', payload)
+  } catch (err) {
+    handleErrors('Changing profile picture failed', err)
+  }
+
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('USER/FETCH_WISHLIST', fetchWishlist);
@@ -84,6 +93,7 @@ function* userSaga() {
   yield takeLatest('USER/FETCH_PLAYED_LIST', fetchPlayedList);
   yield takeLatest('USER/FETCH_ALL_LISTS', fetchAllLists);
   
+  yield takeLatest('USER/EDIT_PROFILE_PICTURE', editProfilePicture);
 }
 
 export default userSaga;

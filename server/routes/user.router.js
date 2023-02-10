@@ -61,4 +61,23 @@ router.get('/scores', rejectUnauthenticated, async (req, res) => {
 
 })
 
+// EDIT user profile pic
+router.put('/profilePicture', rejectUnauthenticated, async (req, res) => {
+
+  try {
+    const { imgPath } = req.body;
+    const userID = req.user.id;
+    const queryText = 'UPDATE "user" SET profile_img_path = $1 WHERE id = $2';
+
+    console.log('changing user', userID, 'profile picture to', imgPath);
+
+    await pool.query(queryText, [imgPath, userID])
+
+    res.sendStatus(201)
+  } catch (err) {
+    console.log('api/user/profilePicture ', err);
+    res.sendStatus(500)
+  }
+})
+
 module.exports = router;
