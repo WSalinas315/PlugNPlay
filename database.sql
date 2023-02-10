@@ -379,8 +379,6 @@ UPDATE "glossary"
 SET "description" = '3D gaming refers to interactive computer entertainment games with characteristics of three-dimensional graphics: height, width, and depth. 3D gaming is believed to create immersive experience in a virtual worlds with realistic representations.', "img_path" = 'https://meliorgames.com/wp-content/uploads/2019/11/3-d-games.jpg'
 WHERE "term" = '3D';
 
-
-
 UPDATE "glossary" 
-SET "description" = '2D games use flat graphics, called sprites, and don't have three-dimensional geometry. They're drawn to the screen as flat images, and the camera (orthographic camera) has no perspective.', "img_path" = 'https://i.ytimg.com/vi/9RMvuYre7KI/maxresdefault.jpg'
+SET "description" = '2D games use flat graphics, called sprites, and dont have three-dimensional geometry. Theyre drawn to the screen as flat images, and the camera (orthographic camera) has no perspective.', "img_path" = 'https://i.ytimg.com/vi/9RMvuYre7KI/maxresdefault.jpg'
 WHERE "term" = '2D';
