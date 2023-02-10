@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Grid, MenuItem } from '@mui/material';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import CardMedia from '@mui/material/CardMedia';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Modal from '@mui/material/Modal';
-import IconButton from '@mui/material/IconButton';
-import CardHeader from '@mui/material/CardHeader';
 import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import HttpIcon from '@mui/icons-material/Http';
@@ -95,21 +89,21 @@ function AdminPage() {
 	//* Fetches the list of glossary to populate to the AutoComplete component upon load.
 	useEffect(() => {
 		dispatch({ type: 'GLOSSARY/FETCH' });
-		options();
 	}, []);
 
 	const user = useSelector(store => store.user);
+
 	//* Holds an Array of objects from the Glossary Table in the Database.
 	const glossary = useSelector(store => store.glossary.glossary);
+
 	//* Holds an Array of 1 object that is replaced by the onChange of the AutoComplete component.
 	const glossaryTerm = useSelector(store => store.glossary.glossaryItem);
+
 	//* These are used to properly set the state of each toggle from the Admins button options. Only 1 will be set to TRUE while the rest are kept at FALSE.
 	const [toggleAdd, setAddBoolean] = useState(false);
 	const [toggleEdit, setEditBoolean] = useState(false);
 	const [toggleView, setViewBoolean] = useState(false);
 	const [toggleDelete, setDeleteBoolean] = useState(false);
-
-	const [termOptions, setTermOptions] = useState([]);
 
 	const [selectedTerm, setSelectedTerm] = useState('');
 
@@ -118,23 +112,15 @@ function AdminPage() {
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
 
-	const options = () => {
-		setTermOptions(
-			glossary.map(({ term }) => {
-				[term];
-			})
-		);
-	};
-
 	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
-	const handleChange = (event, value) => {
-		console.log('Value is: ', value);
-		setTermInput(value);
+	const handleChange = event => {
+		console.log('Value is: ', event.target.value);
+		setTermInput(event.target.value);
 		dispatch({
 			type: 'GLOSSARY/FETCH_TERM',
-			payload: value, //?This is the term that is was clicked on from the drop down menu.
+			payload: event.target.value, //?This is the term that is was clicked on from the drop down menu.
 		});
-		setSelectedTerm(value);
+		setSelectedTerm(event.target.value);
 	};
 
 	//*This section corresponds to the Adding of a new term to DB.
@@ -254,14 +240,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -345,14 +344,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -417,14 +429,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -489,14 +514,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -562,14 +600,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -678,14 +729,27 @@ function AdminPage() {
 							Please select a term to Modify
 						</Typography>
 					</Grid>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -793,20 +857,32 @@ function AdminPage() {
 				sx={{
 					m: 3,
 					width: 'calc(100vw- 50px)',
-				}}
-				scrollable>
+				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -917,17 +993,27 @@ function AdminPage() {
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
-						{JSON.stringify({ termOptions })}
 					</Typography>
-					<Box>
-						<Autocomplete
-							options={glossary.map(({ term }) => term)}
-							freeSolo //?This will allow suggestions based on input value.
-							renderInput={params => (
-								<TextField {...params} required label='Search Term' />
-							)}
-							onInputChange={handleChange}
-						/>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
 					</Box>
 
 					<Grid
