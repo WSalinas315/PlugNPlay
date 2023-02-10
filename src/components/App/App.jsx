@@ -19,7 +19,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
 import AdminPage from '../ViewAdmin/ViewAdmin';
-
+import ViewSearch from '../ViewSearch/ViewSearch';
 import CollectionPage from '../ViewCollection/ViewCollection';
 import ViewProfile from '../ViewProfile/ViewProfile';
 
@@ -63,6 +63,10 @@ function App() {
 
 					<ProtectedRoute exact path='/admin'>
 						<AdminPage />
+					</ProtectedRoute>
+					
+					<ProtectedRoute exact path='/search'>
+						<ViewSearch />
 					</ProtectedRoute>
 
           <ProtectedRoute exact path='/games/:id'>
