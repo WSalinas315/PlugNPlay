@@ -34,7 +34,7 @@ export default function Played() {
 	return (
 		<ImageList cols={1} rowHeight={250} gap={20}>
 			{playedList?.map(item => (
-				<ImageListItem key={item.id}>
+				<ImageListItem key={item.id} onClick={() => viewDetailed(item)}>
 					<img src={item.background_image} srcSet={item.background_image} loading='lazy' />
 					<ImageListItemBar
 						title={item.name}
