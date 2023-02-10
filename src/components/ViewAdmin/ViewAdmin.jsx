@@ -189,17 +189,17 @@ function AdminPage() {
 		setOpen(true);
 	};
 	//* This corresponds to the Modal, where the user confirms the deletion of the term from the database.
-	// const handleDeleteConfirm = () => {
-	// 	console.log('Clicked on the delete confirm button!');
-	// 	dispatch({
-	// 		type: 'GLOSSARY/DELETE_TERM',
-	// 		payload: { id: glossaryTerm[0].id },
-	// 	});
-	// 	setOpen(false);
-	// 	dispatch({ type: 'GLOSSARY/FETCH' });
-	// 	//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
-	// 	window.location.reload();
-	// };
+	const handleDeleteConfirm = () => {
+		console.log('Clicked on the delete confirm button!');
+		dispatch({
+			type: 'GLOSSARY/DELETE_TERM',
+			payload: { id: glossaryTerm[0].id },
+		});
+		setOpen(false);
+		dispatch({ type: 'GLOSSARY/FETCH' });
+		//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
+		window.location.reload();
+	};
 
 	const handleCancel = () => {
 		console.log('Clicked on the cancel button');
@@ -216,10 +216,10 @@ function AdminPage() {
 				img_path: imagePathInput,
 			},
 		});
-
 		setDefinitionInput('');
 		setImagePathInput('');
 	};
+
 	const SearchTermDefault = () => {
 		return (
 			<Box
@@ -282,6 +282,7 @@ function AdminPage() {
 			</Box>
 		);
 	};
+
 	const AddingFields = () => {
 		return (
 			<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
@@ -337,6 +338,69 @@ function AdminPage() {
 		);
 	};
 
+	const EditSection = () => {
+		return (
+			<Box>
+				<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+					<Typography
+						variant='h5'
+						backgroundColor='primary.main'
+						borderRadius={2}
+						color='#ffffff'
+						align='center'
+						mb={2}
+						border='solid 1px #000000'>
+						EDITING
+					</Typography>
+					<Typography>Term: {glossaryTerm[0].term}</Typography>
+					<Typography>Description: {glossaryTerm[0].description}</Typography>
+					<CardMedia
+						component='img'
+						image={glossaryTerm[0].img_path}
+						sx={{ maxHeight: 400, maxWidth: 300 }}
+					/>
+					<EditInputField />
+					<EditSubmitBtn />
+				</Card>
+			</Box>
+		);
+	};
+
+	const EditInputField = () => {
+		return (
+			<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
+				<TextField
+					label='Description'
+					value={definitionInput}
+					multiline
+					maxRows={4}
+					onChange={handleDefinitionInput}
+					sx={{ width: '100%', mb: 2 }}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position='start'>
+								<DescriptionIcon />
+							</InputAdornment>
+						),
+					}}
+				/>
+				<TextField
+					label='Image Url'
+					value={imagePathInput}
+					onChange={handleImagePathInput}
+					sx={{ width: '100%' }}
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position='start'>
+								<HttpIcon />
+							</InputAdornment>
+						),
+					}}
+				/>
+			</Box>
+		);
+	};
+
 	//! ADD TERM SECTION
 	if (
 		toggleAdd == true &&
@@ -364,72 +428,8 @@ function AdminPage() {
 		glossaryTerm[0].img_path == null
 	) {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
-
-				{/* <Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid> */}
-
+			<>
+				<SearchTermDefault />
 				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Box sx={{ margin: 2 }}>
 						<Typography> Term : {glossaryTerm[0].term} </Typography>
@@ -437,7 +437,7 @@ function AdminPage() {
 						<Typography>Image : No Image Available</Typography>
 					</Box>
 				</Card>
-			</Box>
+			</>
 		);
 		//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
 	} else if (
@@ -449,71 +449,10 @@ function AdminPage() {
 		glossaryTerm[0].img_path == null
 	) {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
+			<>
+				<SearchTermDefault />
 
-				<Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid>
+				<AddButton />
 
 				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Box>
@@ -522,7 +461,7 @@ function AdminPage() {
 						<Typography>Image : No Image Available</Typography>
 					</Box>
 				</Card>
-			</Box>
+			</>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
 	} else if (
@@ -534,72 +473,8 @@ function AdminPage() {
 		glossaryTerm[0].img_path != null
 	) {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
-
-				<Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid>
-
+			<>
+				<SearchTermDefault />
 				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Box sx={{ marginBottom: -1 }}>
 						<Typography> Term: {glossaryTerm[0].term} </Typography>
@@ -608,7 +483,7 @@ function AdminPage() {
 						<img src={glossaryTerm[0].img_path} />
 					</Box>
 				</Card>
-			</Box>
+			</>
 		);
 		//!END OF VIEW TERM SECTION
 		//*
@@ -620,72 +495,9 @@ function AdminPage() {
 		toggleDelete == true
 	) {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
-
-				<Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid>
-
+			<>
+				<SearchTermDefault />
+				<AddButton />
 				<Modal
 					open={open}
 					onClose={handleClose}
@@ -734,7 +546,7 @@ function AdminPage() {
 						</Grid>
 					</Box>
 				</Modal>
-			</Box>
+			</>
 		); //!END OF DELETE TERM SECTION
 
 		//! START OF EDIT TERM SECTION
@@ -747,72 +559,8 @@ function AdminPage() {
 		glossaryTerm[0].description == null
 	) {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Grid>
-						<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-							Please select a term to Modify
-						</Typography>
-					</Grid>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
-				<Grid>
-					{/* <Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button> */}
-				</Grid>
+			<>
+				<SearchTermDefault />
 
 				<Box>
 					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
@@ -831,37 +579,7 @@ function AdminPage() {
 							Description: No Description is Available at this time.
 						</Typography>
 						<Typography>Image: No Image Available</Typography>
-						<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
-							<TextField
-								label='Description'
-								value={definitionInput}
-								multiline
-								maxRows={4}
-								onChange={handleDefinitionInput}
-								sx={{ width: '100%', mb: 2 }}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position='start'>
-											<DescriptionIcon />
-										</InputAdornment>
-									),
-								}}
-							/>
-							<TextField
-								label='Image Url'
-								value={imagePathInput}
-								onChange={handleImagePathInput}
-								sx={{ width: '100%' }}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position='start'>
-											<HttpIcon />
-										</InputAdornment>
-									),
-								}}
-							/>
-						</Box>
-
+						<EditInputField />
 						<Box textAlign='center'>
 							<Button
 								onClick={handleEditSubmit}
@@ -872,7 +590,7 @@ function AdminPage() {
 						</Box>
 					</Card>
 				</Box>
-			</Box>
+			</>
 		);
 	} else if (
 		toggleAdd == false &&
@@ -882,72 +600,10 @@ function AdminPage() {
 		glossaryTerm[0].img_path != null
 	) {
 		return (
-<Box>
-
-<SearchTermDefault/>
-<AddButton/>
-
-
-
-
-</Box>
-			
-					
-				
-				<Box>
-					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
-						<Typography
-							variant='h5'
-							backgroundColor='primary.main'
-							borderRadius={2}
-							color='#ffffff'
-							align='center'
-							mb={2}
-							border='solid 1px #000000'>
-							EDITING
-						</Typography>
-						<Typography>Term: {glossaryTerm[0].term}</Typography>
-						<Typography>Description: {glossaryTerm[0].description}</Typography>
-						<CardMedia
-							component='img'
-							image={glossaryTerm[0].img_path}
-							sx={{ maxHeight: 400, maxWidth: 300 }}
-						/>
-
-						<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
-							<TextField
-								label='Description'
-								value={definitionInput}
-								multiline
-								maxRows={4}
-								onChange={handleDefinitionInput}
-								sx={{ width: '100%', mb: 2 }}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position='start'>
-											<DescriptionIcon />
-										</InputAdornment>
-									),
-								}}
-							/>
-							<TextField
-								label='Image Url'
-								value={imagePathInput}
-								onChange={handleImagePathInput}
-								sx={{ width: '100%' }}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position='start'>
-											<HttpIcon />
-										</InputAdornment>
-									),
-								}}
-							/>
-						</Box>
-
-						<EditSubmitBtn />
-					</Card>
-				</Box>
+			<Box>
+				<SearchTermDefault />
+				<AddButton />
+				<EditSection />
 			</Box>
 		);
 	}
