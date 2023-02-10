@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Grid, MenuItem } from '@mui/material';
@@ -190,17 +189,17 @@ function AdminPage() {
 		setOpen(true);
 	};
 	//* This corresponds to the Modal, where the user confirms the deletion of the term from the database.
-	const handleDeleteConfirm = () => {
-		console.log('Clicked on the delete confirm button!');
-		dispatch({
-			type: 'GLOSSARY/DELETE_TERM',
-			payload: { id: glossaryTerm[0].id },
-		});
-		setOpen(false);
-		dispatch({ type: 'GLOSSARY/FETCH' });
-		//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
-		window.location.reload();
-	};
+	// const handleDeleteConfirm = () => {
+	// 	console.log('Clicked on the delete confirm button!');
+	// 	dispatch({
+	// 		type: 'GLOSSARY/DELETE_TERM',
+	// 		payload: { id: glossaryTerm[0].id },
+	// 	});
+	// 	setOpen(false);
+	// 	dispatch({ type: 'GLOSSARY/FETCH' });
+	// 	//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
+	// 	window.location.reload();
+	// };
 
 	const handleCancel = () => {
 		console.log('Clicked on the cancel button');
@@ -223,13 +222,7 @@ function AdminPage() {
 		setImagePathInput('');
 	};
 
-	//! ADD TERM SECTION
-	if (
-		toggleAdd == true &&
-		toggleEdit == false &&
-		toggleView == false &&
-		toggleDelete == false
-	) {
+	const SearchTermDefault = () => {
 		return (
 			<Box
 				sx={{
@@ -240,6 +233,7 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
+
 					<Box sx={{ margin: 2 }}>
 						<Select
 							onChange={handleChange}
@@ -287,7 +281,62 @@ function AdminPage() {
 						</Button>
 					</Grid>
 				</Card>
+			</Box>
+		);
+	};
 
+	const AddingFields = () => {
+		return (
+			<Box>
+				<FormControl>
+					<TextField
+						label='name'
+						value={termInput}
+						onChange={handleTermInput}
+						required
+					/>
+					<TextField
+						label='Definition'
+						value={definitionInput}
+						onChange={handleDefinitionInput}
+						required
+					/>
+					<TextField
+						label='Image'
+						value={imagePathInput}
+						onChange={handleImagePathInput}
+					/>
+					<Button variant='outlined' onClick={handleTermSubmit}>
+						Submit
+					</Button>
+				</FormControl>
+			</Box>
+		);
+	};
+
+	const AddButton = () => {
+		return (
+			<Grid>
+				<Button
+					variant='outlined'
+					onClick={handleAdd}
+					className={buttonStyle.addButton}>
+					Add Term
+				</Button>
+			</Grid>
+		);
+	};
+
+	//! ADD TERM SECTION
+	if (
+		toggleAdd == true &&
+		toggleEdit == false &&
+		toggleView == false &&
+		toggleDelete == false
+	) {
+		return (
+			<>
+				<SearchTermDefault />
 				<Grid>
 					<Button
 						variant='outlined'
@@ -296,32 +345,9 @@ function AdminPage() {
 						Add Term
 					</Button>
 				</Grid>
-
-				<Box>
-					<FormControl>
-						<TextField
-							label='name'
-							value={termInput}
-							onChange={handleTermInput}
-							required
-						/>
-						<TextField
-							label='Definition'
-							value={definitionInput}
-							onChange={handleDefinitionInput}
-							required
-						/>
-						<TextField
-							label='Image'
-							value={imagePathInput}
-							onChange={handleImagePathInput}
-						/>
-						<Button variant='outlined' onClick={handleTermSubmit}>
-							Submit
-						</Button>
-					</FormControl>
-				</Box>
-			</Box>
+				<AddingFields />
+				<AddButton />
+			</>
 		); //!END OF ADD TERM SECTION
 	}
 	//! START OF VIEW TERM SECTION
@@ -985,74 +1011,12 @@ function AdminPage() {
 	//! DEFAULT SET UP ON INITIAL LOAD.
 	else {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
-				<Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid>
+			<Box>
+				<SearchTermDefault />
+				<AddButton />
 			</Box>
 		);
-	} //! END OF DEFAULT SETUP.
+	}
 }
 
 export default AdminPage;
