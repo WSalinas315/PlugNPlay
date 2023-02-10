@@ -240,16 +240,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -333,16 +344,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -407,16 +429,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -481,16 +514,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -556,16 +600,27 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -674,16 +729,27 @@ function AdminPage() {
 							Please select a term to Modify
 						</Typography>
 					</Grid>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -791,22 +857,32 @@ function AdminPage() {
 				sx={{
 					m: 3,
 					width: 'calc(100vw- 50px)',
-				}}
-				scrollable>
+				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Select onChange={handleChange} value={selectedTerm}>
-						{glossary.map((obj, index) => {
-							<MenuItem value='Select from List'>Select from List</MenuItem>;
-							return (
-								<MenuItem key={index} value={obj.term}>
-									{obj.term}
-								</MenuItem>
-							);
-						})}
-					</Select>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
+							{glossary.map((obj, index) => {
+								<MenuItem value='Select from List'>Select from List</MenuItem>;
+								return (
+									<MenuItem key={index} value={obj.term}>
+										{obj.term}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</Box>
 					<Grid
 						container
 						gap={3}
@@ -918,8 +994,17 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-					<Box>
-						<Select onChange={handleChange} value={selectedTerm}>
+					<Box sx={{ margin: 2 }}>
+						<Select
+							onChange={handleChange}
+							value={selectedTerm}
+							autoWidth={true}
+							sx={{ width: 200, height: 40 }}
+							MenuProps={{
+								style: {
+									maxHeight: 400,
+								},
+							}}>
 							{glossary.map((obj, index) => {
 								<MenuItem value='Select from List'>Select from List</MenuItem>;
 								return (
