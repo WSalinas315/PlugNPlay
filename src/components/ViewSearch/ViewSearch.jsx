@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Box from '@mui/material/Box';
 import { Button, FormControl, TextField } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
@@ -10,17 +9,16 @@ export default function ViewSearch() {
   // initialize dispatch
   const dispatch = useDispatch();
 
-  // 
-  useEffect(() => {
-    //dispatch({ type: 'USER/FETCH_PLAYED_LIST' });
-  }, []);
-
-  // Initialize local state
+  // Initialize local states for search criteria
   const [gameTitle, setGameTitle] = useState('');
   const [gameGenre, setGameGenre] = useState('');
 
   const searchByName = () => {
-    dispatch({ type: 'RAWG/SEARCH_BY_NAME', payload: gameGenre });
+    console.log('Search Criteria:', gameTitle);
+    // Clear current search results
+    dispatch({ type: 'GAME/CLEAR_SEARCH_RESULTS' });
+    // Query RAWG for titles using current input
+    dispatch({ type: 'RAWG/SEARCH_BY_NAME', payload: gameTitle });
   }
 
   return (
