@@ -80,6 +80,7 @@ function* fetchAllLists() {
 function* editProfilePicture({ payload }) {
   try {
     yield axios.put('/api/user/profilePicture', payload)
+    yield put({ type: 'FETCH_USER' })
   } catch (err) {
     handleErrors('Changing profile picture failed', err)
   }

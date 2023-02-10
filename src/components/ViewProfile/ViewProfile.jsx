@@ -79,7 +79,7 @@ function ViewProfile() {
         {/* Username */}
         <Typography variant="h1">{user.username}</Typography>
         {/* Profile picture or default profile image */}
-        <img className="profile_img" src={user.profile_img_path ?? 'images/default.png'} />
+        <img className="profile_img" src={user.profile_img_path || 'images/default.png'} />
         <div className="two-column-grid">
           {/* Games played count */}
           <Typography className="grid-left" variant="h3">
