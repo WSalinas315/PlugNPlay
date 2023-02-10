@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-
+import { useRecommendations } from "../../hooks/storeHooks";
 import { Button, IconButton } from "@mui/material";
 
 import {
@@ -68,6 +68,7 @@ export const LikeDislikeButton = ({ gameID, liked, action }) => {
 
 export const GameListButton = ({ gameID, list, action }) => {
   const dispatch = useDispatch();
+  const recommendations = useRecommendations();
 
   const handleClick = () => {
     console.log("posting data for gameid", gameID);
@@ -75,6 +76,10 @@ export const GameListButton = ({ gameID, list, action }) => {
       type: `USER/${list.toUpperCase()}/${action.toUpperCase()}`,
       payload: gameID,
     });
+    if(gameID == recommendations[0].gameData.id){
+      recommendations.shift();
+      dispatch({ type: 'GAME/SWIPE_SKIP', payload: recommendations });
+    }
   };
 
   const icon = {

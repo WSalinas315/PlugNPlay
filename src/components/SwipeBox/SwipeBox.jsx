@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { useEffect } from "react";
-import Swipe from 'react-easy-swipe'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import Slide from '@mui/material/Slide'
-import { useState } from 'react'
-import SnackbarAlert from '../SnackbarAlert/SnackbarAlert'
+import Swipe from 'react-easy-swipe';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import { useState } from 'react';
+import SnackbarAlert from '../SnackbarAlert/SnackbarAlert';
 import { useGameByID } from "../../hooks/storeHooks";
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -19,10 +19,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 */
 
 export default function SwipeBox(props) {
-  const [open, setOpen] = useState(false)
-  const [snackOpen, setSnackOpen] = useState(false)
-  const [severity, setSeverity] = useState('')
-  const [message, setMessage] = useState('')
+  const [open, setOpen] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [severity, setSeverity] = useState('');
+  const [message, setMessage] = useState('');
   const game = useGameByID();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -53,95 +53,86 @@ export default function SwipeBox(props) {
 
   // X and Y position variables initialized to 0.
   // Note: useStates break the swipe functionality
-  let xPos = 0
-  let yPos = 0
+  let xPos = 0;
+  let yPos = 0;
 
   // String for console logging swipe direction. Not needed for app functionality
-  let swipe = ''
+  let swipe = '';
 
   // SwipeContainer Class for creating the SwipeBox
   class SwipeContainer extends Component {
     // onSwipeStart function
-    
+
     onSwipeStart(event) {
-      console.log('Start swiping...', event)
+      console.log('Start swiping...', event);
     }
 
     // onSwipeMove logs the positional changes from the starting point and sets the X/Y position variables
     onSwipeMove(position, event) {
       // console.log(`Moved ${position.x} pixels horizontally`, event);
       // console.log(`Moved ${position.y} pixels vertically`, event);
-      xPos = position.x
-      yPos = position.y
+      xPos = position.x;
+      yPos = position.y;
     }
 
     // onSwipeEnd function calculates swipe direction and console logs the result
     // prop functions being passed into SwipeBox will be called at the appropriate points here
     onSwipeEnd(event) {
-      console.log('End swiping...', event)
+      console.log('End swiping...', event);
       if (xPos > 0 && yPos > 0) {
         if (xPos > yPos) {
-          swipe = 'Right Swipe'
-          handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`)
-          setGameQueue(gameQueue + 1);
+          swipe = 'Right Swipe';
+          dispatch({type:'USER/WISHLIST/ADD', payload: props.games[gameQueue].gameData.id});
+          handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`);
+          props.games.shift();
+          dispatch({ type: 'GAME/SWIPE_WISHLIST', payload: props.games });
+          // setGameQueue(gameQueue + 1);
           //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
-          swipe = 'Down Swipe'
+          swipe = 'Down Swipe';
         }
       } else if (xPos > 0 && yPos < 0) {
         if (xPos > yPos * -1) {
-          swipe = 'Right Swipe'
-          handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`)
-          setGameQueue(gameQueue + 1);
+          swipe = 'Right Swipe';
+          dispatch({type:'USER/WISHLIST/ADD', payload: props.games[gameQueue].gameData.id});
+          handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`);
+          props.games.shift();
+          dispatch({ type: 'GAME/SWIPE_WISHLIST', payload: props.games });
+          // setGameQueue(gameQueue + 1);
           //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
-          swipe = 'Up Swipe'
+          swipe = 'Up Swipe';
           dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
           handleOpen()
         }
       } else if (xPos < 0 && yPos > 0) {
         if (xPos * -1 > yPos) {
-          swipe = 'Left Swipe'
-          handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`)
-          setGameQueue(gameQueue + 1);
+          swipe = 'Left Swipe';
+          handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`);
+          props.games.shift();
+          dispatch({ type: 'GAME/SWIPE_SKIP', payload: props.games });
           //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         } else {
-          swipe = 'Down Swipe'
+          swipe = 'Down Swipe';
         }
       } else if (xPos < 0 && yPos < 0) {
         if (xPos > yPos) {
-          swipe = 'Up Swipe'
+          swipe = 'Up Swipe';
           dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
           handleOpen()
 
         } else {
-          swipe = 'Left Swipe'
-          handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`)
-          setGameQueue(gameQueue + 1);
+          swipe = 'Left Swipe';
+          handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`);
+          props.games.shift();
+          dispatch({ type: 'GAME/SWIPE_SKIP', payload: props.games });
           //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
         }
       } else {
-        console.log("didn't make it into an if/else")
+        console.log("didn't make it into an if/else");
       }
-      console.log('Swipe Direction:', swipe)
+      console.log('Swipe Direction:', swipe);
     }
-    
-   /*
-    onSwipeLeft() {
-      handleSnackOpen('error', 'You swiped left!')
-      setGameQueue(gameQueue + 1);
-      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
-
-    }
-    onSwipeRight() {
-      handleSnackOpen('success', 'You swiped right!')
-      setGameQueue(gameQueue + 1);
-      dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
-    }
-    onSwipeUp() {
-      handleOpen()
-    }
-    */
 
     render() {
       // Styles the box to be rendered
@@ -177,9 +168,9 @@ export default function SwipeBox(props) {
             {game.name && <DialogTitle>{props.games[gameQueue]?.gameData.name}</DialogTitle>}
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-              {game.name && <div style={{fontWeight: 'bold', color: `${props.games[gameQueue]?.gameScore >= 0.7 ? 'green' : (props.games[gameQueue]?.gameScore >= 0.4 ? 'darkorange' : 'red')}`}}>{Number((props.games[gameQueue]?.gameScore * 100).toFixed(1)) + '% Match'}</div>}
-              {game.name ? (game.description_raw?.length > 200 ? game.description_raw?.substring(0,199) + '...' : game.description_raw) : 'Loading...'}<br />
-              {game.name && <button onClick={() => history.push(`/games/${props.games[gameQueue]?.gameData.id}`)} className='btn'>Details</button>}
+                {game.name && <div style={{ fontWeight: 'bold', color: `${props.games[gameQueue]?.gameScore >= 0.7 ? 'green' : (props.games[gameQueue]?.gameScore >= 0.4 ? 'darkorange' : 'red')}` }}>{Number((props.games[gameQueue]?.gameScore * 100).toFixed(1)) + '% Match'}</div>}
+                {game.name ? (game.description_raw?.length > 200 ? game.description_raw?.substring(0, 199) + '...' : game.description_raw) : 'Loading...'}<br />
+                {game.name && <button onClick={() => history.push(`/games/${props.games[gameQueue]?.gameData.id}`)} className='btn'>Details</button>}
                 {/*
               Released on: {props.games[0]?.gameData.released}<br/>
               {game.publishers[0] && 'Published by: ' + game.publishers[0]?.name}<br />
@@ -192,7 +183,7 @@ export default function SwipeBox(props) {
             onSwipeMove={this.onSwipeMove}
             onSwipeEnd={this.onSwipeEnd}
           >
-            <div draggable="true" style={boxStyle}><span style={{backgroundColor: 'white'}}>{props.games[gameQueue].gameData.name}</span></div>
+            <div draggable="true" style={boxStyle}><span style={{ backgroundColor: 'white' }}>{props.games[gameQueue].gameData.name}</span></div>
           </Swipe>
         </div>
       )
