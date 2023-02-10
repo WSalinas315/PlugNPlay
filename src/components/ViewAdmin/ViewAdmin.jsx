@@ -208,7 +208,6 @@ function AdminPage() {
 
 	const handleEditSubmit = () => {
 		console.log('Clicked on the submit button in the Edit View');
-
 		dispatch({
 			type: 'GLOSSARY/EDIT_TERM',
 			payload: {
@@ -221,7 +220,6 @@ function AdminPage() {
 		setDefinitionInput('');
 		setImagePathInput('');
 	};
-
 	const SearchTermDefault = () => {
 		return (
 			<Box
@@ -284,36 +282,48 @@ function AdminPage() {
 			</Box>
 		);
 	};
-
 	const AddingFields = () => {
 		return (
-			<Box>
-				<FormControl>
-					<TextField
-						label='name'
-						value={termInput}
-						onChange={handleTermInput}
-						required
-					/>
-					<TextField
-						label='Definition'
-						value={definitionInput}
-						onChange={handleDefinitionInput}
-						required
-					/>
-					<TextField
-						label='Image'
-						value={imagePathInput}
-						onChange={handleImagePathInput}
-					/>
-					<Button variant='outlined' onClick={handleTermSubmit}>
-						Submit
-					</Button>
-				</FormControl>
+			<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+				<Box>
+					<FormControl>
+						<TextField
+							label='name'
+							value={termInput}
+							onChange={handleTermInput}
+							required
+						/>
+						<TextField
+							label='Definition'
+							value={definitionInput}
+							onChange={handleDefinitionInput}
+							required
+						/>
+						<TextField
+							label='Image'
+							value={imagePathInput}
+							onChange={handleImagePathInput}
+						/>
+						<Button variant='outlined' onClick={handleTermSubmit}>
+							Submit
+						</Button>
+					</FormControl>
+				</Box>
+			</Card>
+		);
+	};
+	const EditSubmitBtn = () => {
+		return (
+			<Box textAlign='center'>
+				<Button
+					onClick={handleEditSubmit}
+					variant='contained'
+					sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+					Submit
+				</Button>
 			</Box>
 		);
 	};
-
 	const AddButton = () => {
 		return (
 			<Grid>
@@ -337,14 +347,7 @@ function AdminPage() {
 		return (
 			<>
 				<SearchTermDefault />
-				<Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid>
+				<AddButton />
 				<AddingFields />
 				<AddButton />
 			</>
@@ -879,71 +882,18 @@ function AdminPage() {
 		glossaryTerm[0].img_path != null
 	) {
 		return (
-			<Box
-				sx={{
-					m: 3,
-					width: 'calc(100vw- 50px)',
-				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
-						<Select
-							onChange={handleChange}
-							value={selectedTerm}
-							autoWidth={true}
-							sx={{ width: 200, height: 40 }}
-							MenuProps={{
-								style: {
-									maxHeight: 400,
-								},
-							}}>
-							{glossary.map((obj, index) => {
-								<MenuItem value='Select from List'>Select from List</MenuItem>;
-								return (
-									<MenuItem key={index} value={obj.term}>
-										{obj.term}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleView}
-							className={buttonStyle.viewButton}>
-							View
-						</Button>
-						<Button
-							variant='outlined'
-							onClick={handleDelete}
-							className={buttonStyle.deleteButton}>
-							Delete
-						</Button>
-					</Grid>
-				</Card>
-				<Grid>
-					<Button
-						variant='outlined'
-						onClick={handleAdd}
-						className={buttonStyle.addButton}>
-						Add Term
-					</Button>
-				</Grid>
+<Box>
 
+<SearchTermDefault/>
+<AddButton/>
+
+
+
+
+</Box>
+			
+					
+				
 				<Box>
 					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
 						<Typography
@@ -995,14 +945,7 @@ function AdminPage() {
 							/>
 						</Box>
 
-						<Box textAlign='center'>
-							<Button
-								onClick={handleEditSubmit}
-								variant='contained'
-								sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
-								Submit
-							</Button>
-						</Box>
+						<EditSubmitBtn />
 					</Card>
 				</Box>
 			</Box>
