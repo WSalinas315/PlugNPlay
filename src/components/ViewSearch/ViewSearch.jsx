@@ -1,30 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import Box from '@mui/material/Box';
+import { Button, FormControl, TextField } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function ViewSearch() {
 
-	// initialize dispatch
-	const dispatch = useDispatch();
-	
-	// Initialize history
-	const history = useHistory();
+  // initialize dispatch
+  const dispatch = useDispatch();
 
-	// fetches user's played games from database
-	useEffect(() => {
-		dispatch({ type: 'USER/FETCH_PLAYED_LIST' });
-	}, []);
+  // 
+  useEffect(() => {
+    //dispatch({ type: 'USER/FETCH_PLAYED_LIST' });
+  }, []);
 
-	// pull played games information from the store
-	const playedList = useSelector((store) => store.userLists.userPlayedList);
+  // Initialize local state
+  const [gameTitle, setGameTitle] = useState('');
+  const [gameGenre, setGameGenre] = useState('');
 
-	return (
-		<h1>SEARCH THE STUFF</h1>
-	);
+  return (
+    <>
+      <h1>SEARCH THE STUFF</h1>
+
+      {/* Search By Name */}
+      <h3>Search By Game Title</h3>
+      <FormControl>
+        <TextField
+          required
+          value={gameTitle}
+          label="Title"
+          variant="outlined"
+          onChange={(event) => setGameTitle(event.target.value)}
+          size="small"
+        />
+      </FormControl>
+      {gameTitle ? <Button variant="outlined">Search</Button> : <Button variant="outlined" disabled>Search</Button>}
+
+      {/* Search By Genre */}
+      {/* <h3>Search By Genre</h3>
+      <FormControl>
+        <TextField
+          required
+          value={gameGenre}
+          label="Genre"
+          variant="outlined"
+          onChange={(event) => setGameGenre(event.target.value)}
+          size="small"
+        />
+      </FormControl>
+      {gameGenre ? <Button variant="outlined">Search</Button> : <Button variant="outlined" disabled>Search</Button>} */}
+
+
+    </>
+  );
 }
