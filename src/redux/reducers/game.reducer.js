@@ -16,6 +16,13 @@ const searchResults = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+const genreList = (state = [], { type, payload }) => {
+  return {
+    'GAME/SET_GENRE_LIST': payload,
+    'GAME/CLEAR_GENRE_LIST': []
+  }[type] || state;
+}
+
 const recommendations = (state = [], { type, payload }) => {
   return {
     'GAME/SET_RECOMMENDATIONS': payload,
@@ -30,4 +37,5 @@ export default combineReducers({
   currentlyViewedGame,
   searchResults,
   recommendations,
+  genreList,
 })

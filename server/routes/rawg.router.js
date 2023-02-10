@@ -60,6 +60,21 @@ router.get('/byGenre/:genre', async (req, res) => {
 })
 
 // ==========================================================================================
+// GET GENRE LIST
+
+router.get('/genreList', async (req, res) => {
+
+  try {
+    const { data: games } = await axios.get(`https://api.rawg.io/api/genres?${keyUrl}`);
+    console.log('genres results from RAWG', games);
+    res.send(games);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+})
+
+// ==========================================================================================
 // GET Game Recommendations from RAWG.IO based on User Preferences
 
 router.get('/byGenre', async (req, res) => {

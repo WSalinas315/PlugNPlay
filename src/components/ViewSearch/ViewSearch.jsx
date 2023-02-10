@@ -3,15 +3,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, FormControl, TextField } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function ViewSearch() {
 
   // initialize dispatch
   const dispatch = useDispatch();
 
+  // fetches subtypes from database
+  useEffect(() => {
+    dispatch({ type: 'RAWG/FETCH_GENRE_LIST' });
+  }, []);
+
   // Initialize local states for search criteria
   const [gameTitle, setGameTitle] = useState('');
   const [gameGenre, setGameGenre] = useState('');
+
+  // initialize variables from store
+  const genreList = useSelector(store => store.games.genreList.results);
 
   const searchByName = () => {
     // Clear current search results
@@ -22,18 +33,17 @@ export default function ViewSearch() {
 
   return (
     <>
-      <h1>SEARCH THE STUFF</h1>
+      {/* <h1>Search Games</h1> */}
 
       {/* Search By Name */}
       <h3>Search By Game Title</h3>
-      <FormControl>
+      <FormControl fullWidth>
         <TextField
           required
           value={gameTitle}
           label="Title"
           variant="outlined"
           onChange={(event) => setGameTitle(event.target.value)}
-          size="small"
         />
       </FormControl>
       {gameTitle
@@ -44,18 +54,23 @@ export default function ViewSearch() {
       }
 
       {/* Search By Genre */}
-      {/* <h3>Search By Genre</h3>
-      <FormControl>
-        <TextField
+      <h3>Search By Genre</h3>
+      <FormControl fullWidth>
+        <InputLabel id="genre">Genre</InputLabel>
+        <Select
           required
-          value={gameGenre}
+          id="genre"
           label="Genre"
-          variant="outlined"
+          value={gameGenre}
           onChange={(event) => setGameGenre(event.target.value)}
-          size="small"
-        />
+          
+        >
+          {genreList.map((genre, i) => {
+            return(<MenuItem key={i} value={genre.name}>{genre.name}</MenuItem>)
+          })}
+        </Select>
       </FormControl>
-      {gameGenre ? <Button variant="outlined">Search</Button> : <Button variant="outlined" disabled>Search</Button>} */}
+      {gameGenre ? <Button variant="outlined">Search</Button> : <Button variant="outlined" disabled>Search</Button>}
 
 
     </>

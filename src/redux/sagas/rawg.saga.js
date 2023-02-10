@@ -1,12 +1,6 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 
-// HELPER FUNCTIONS
-// const setSearchResults = (results) => {
-//   put({ type: 'GAME/SET_SEARCH_RESULTS', payload: results });
-//   //put({ type: 'GAME/SET_RECOMMENDATIONS', payload: results })
-// }
-
 const handleErrors = (msg, err) => {
   console.log(msg, err);
   alert('Error fetching data.');
@@ -39,7 +33,6 @@ function* searchByName({ payload }) {
 function* searchByTags({ payload }) {
   try {
     const { data: results } = yield axios.get('api/rawg/byTags');
-
     yield setSearchResults(results);
   } catch (err) {
     handleErrors('Searching RAWG by tags failed', err);
@@ -51,7 +44,17 @@ function* searchByGenre({ payload }) {
   try {
     const { data: results } = yield axios.get('api/rawg/byGenre');
     yield put({ type: 'GAME/SET_RECOMMENDATIONS', payload: results });
-    // yield setSearchResults(results)
+  } catch (err) {
+    handleErrors('Searching RAWG by Genre failed', err);
+  }
+}
+
+// FETCH GENRE LIST FROM RAWG
+function* fetchGenreList({ payload }) {
+  try {
+    const { data: results } = yield axios.get('api/rawg/genreList');
+    console.log('INFO ON GENRE LIST BACK FROM RAWG:', results);
+    yield put({ type: 'GAME/SET_GENRE_LIST', payload: results });
   } catch (err) {
     handleErrors('Searching RAWG by Genre failed', err);
   }
@@ -62,4 +65,5 @@ export default function* rawgSaga() {
   yield takeLatest('RAWG/SEARCH_BY_NAME', searchByName);
   yield takeLatest('RAWG/SEARCH_BY_TAGS', searchByTags);
   yield takeLatest('RAWG/FETCH_RECOMMENDATIONS', searchByGenre);
+  yield takeLatest('RAWG/FETCH_GENRE_LIST', fetchGenreList);
 }
