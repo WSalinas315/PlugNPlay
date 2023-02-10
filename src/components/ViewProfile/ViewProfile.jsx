@@ -40,7 +40,9 @@ function ViewProfile() {
 
   const SettingsButton = () => {
     return (
-      <Button sx={{ border: "transparent" }}>
+      <Button
+        onClick={() => history.push('/settings')}
+        sx={{ border: "transparent" }}>
         <SettingsIcon
           sx={buttonStyling}
         />
