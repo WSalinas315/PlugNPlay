@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import HttpIcon from '@mui/icons-material/Http';
 import DescriptionIcon from '@mui/icons-material/Description';
+import Select from '@mui/material/Select';
 
 const ButtonStyle = makeStyles({
 	viewButton: {
@@ -94,6 +95,7 @@ function AdminPage() {
 	//* Fetches the list of glossary to populate to the AutoComplete component upon load.
 	useEffect(() => {
 		dispatch({ type: 'GLOSSARY/FETCH' });
+		options();
 	}, []);
 
 	const user = useSelector(store => store.user);
@@ -107,10 +109,22 @@ function AdminPage() {
 	const [toggleView, setViewBoolean] = useState(false);
 	const [toggleDelete, setDeleteBoolean] = useState(false);
 
+	const [termOptions, setTermOptions] = useState([]);
+
+	const [selectedTerm, setSelectedTerm] = useState('');
+
 	//* These are set for the ADD TERM section when the user wants to input the new terms information to send to the database.
 	const [termInput, setTermInput] = useState('');
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
+
+	const options = () => {
+		setTermOptions(
+			glossary.map(({ term }) => {
+				[term];
+			})
+		);
+	};
 
 	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
 	const handleChange = (event, value) => {
@@ -120,6 +134,7 @@ function AdminPage() {
 			type: 'GLOSSARY/FETCH_TERM',
 			payload: value, //?This is the term that is was clicked on from the drop down menu.
 		});
+		setSelectedTerm(value);
 	};
 
 	//*This section corresponds to the Adding of a new term to DB.
@@ -902,15 +917,19 @@ function AdminPage() {
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
+						{JSON.stringify({ termOptions })}
 					</Typography>
-					<Autocomplete
-						options={glossary.map(({ term }) => term)}
-						freeSolo //?This will allow suggestions based on input value.
-						renderInput={params => (
-							<TextField {...params} required label='Search Term' />
-						)}
-						onInputChange={handleChange}
-					/>
+					<Box>
+						<Autocomplete
+							options={glossary.map(({ term }) => term)}
+							freeSolo //?This will allow suggestions based on input value.
+							renderInput={params => (
+								<TextField {...params} required label='Search Term' />
+							)}
+							onInputChange={handleChange}
+						/>
+					</Box>
+
 					<Grid
 						container
 						gap={3}
