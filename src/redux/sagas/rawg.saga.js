@@ -27,7 +27,6 @@ function* fetchByID({ payload }) {
 
 // SEARCH RAWG BY NAME
 function* searchByName({ payload }) {
-  console.log('Entered RAWG SAGA SEARCH BY NAME with payload:', payload);
   try {
     const { data: results } = yield axios.get('api/rawg/byName/' + payload);
     yield put({ type: 'GAME/SET_SEARCH_RESULTS', payload: results });

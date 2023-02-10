@@ -14,7 +14,6 @@ export default function ViewSearch() {
   const [gameGenre, setGameGenre] = useState('');
 
   const searchByName = () => {
-    console.log('Search Criteria:', gameTitle);
     // Clear current search results
     dispatch({ type: 'GAME/CLEAR_SEARCH_RESULTS' });
     // Query RAWG for titles using current input

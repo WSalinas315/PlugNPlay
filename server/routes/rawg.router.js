@@ -13,12 +13,10 @@ const keyUrl = ("key=" + key);
 // GET BY NAME
 
 router.get('/byName/:name', async (req, res) => {
-  console.log('Entered RAWG ROUTER JS');
   const { name } = req.params;
 
   try {
     const { data: games } = await axios.get(`https://api.rawg.io/api/games?${keyUrl}&search=${name}&page_size=40`)
-    console.log('Attempting to get search data from RAWG...');
     res.send(games)
   } catch (err) {
     console.log(err)
