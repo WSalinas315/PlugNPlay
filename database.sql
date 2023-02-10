@@ -315,3 +315,72 @@ INSERT INTO "survey_questions"
 	array[]::text[],
 	array['nsfw', 'nudity', 'erotic', 'sexual-content', 'dating-sim'])
 ;
+
+
+--Initial glossary terminology (term , description, img_path)
+UPDATE "glossary" 
+SET "description" = '4X is a subgenre of strategy-based computer and board games, and include both turn-based and real-time strategy titles. The gameplay involves building an empire. Emphasis is placed upon economic and technological development, as well as a range of military and non-military routes to supremacy.', "img_path" = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Freeciv-net-screenshot-2011-06-23.png/700px-Freeciv-net-screenshot-2011-06-23.png'
+WHERE 'term' = '4X';
+
+UPDATE "glossary" 
+SET "description" = 'A platformer, or platform video game, is one that traditionally features two-dimensional graphics in which players control characters who jump or climb between different platforms on the screen. Its a subgenre of the Action category, which is one of the many different types of video games.', "img_path" = 'https://upload.wikimedia.org/wikipedia/commons/3/38/Supertux010.jpg'
+WHERE "term" = '2D Platformer';
+
+UPDATE "glossary" 
+SET "description" = 'is a subgenre of role-playing computer games traditionally characterized by a dungeon crawl through procedurally generated levels, turn-based gameplay, grid-based movement, and permanent death of the player character. Most roguelikes are based on a high fantasy narrative, reflecting their influence from tabletop role playing games such as Dungeons & Dragons.
+', "img_path" = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Rogue_Screenshot.png/440px-Rogue_Screenshot.png'
+WHERE "term" = 'Action Roguelike';
+
+UPDATE "glossary" 
+SET "description" = ' The true definition of the descriptor “8-bit” refers to the processors that powered consoles like the NES and Atari 7800 and has nothing to do with the graphics of the games they ran.', "img_path" = 'http://www.heypoorplayer.com/wp-content/uploads/2016/07/nesgraphics.png'
+WHERE "term" = '8-Bit';
+
+UPDATE "glossary" 
+SET "description" = 'A battle royale game is an online multiplayer video game genre that blends last-man-standing gameplay with the survival, exploration and scavenging elements of a survival game. Battle royale games involve dozens to hundreds of players, who start with minimal equipment and then must eliminate all other opponents while avoiding being trapped outside of a shrinking "safe area", with the winner being the last player or team alive.', "img_path" = 'https://www.pcgamesn.com/wp-content/sites/pcgamesn/legacy/Games_Like_Fortnite_The_Best_Battle_Royale_Games.jpg'
+WHERE "term" = 'Battle Royale';
+
+UPDATE "glossary" 
+SET "description" = 'the process of defining a game character or other character. Typically, a characters individual strengths and weaknesses are represented by a set of statistics. Games with a fictional setting may include traits such as race, class, or species. Games with a more contemporary or narrower setting may limit customization to physical and personality traits. This is usually used in role-playing games.', "img_path" = 'https://guides.gamepressure.com/baldurs-gate-iii/gfx/word/553624078.jpg'
+WHERE "term" = 'Character Customization';
+
+UPDATE "glossary" 
+SET "description" = 'games put fun and a fast-paced experience above all else, as cars usually compete in unique ways. A key feature of arcade-style racers that specifically distinguishes them from simulation racers is their far more liberal physics.', "img_path" = 'https://www.pcgamesn.com/wp-content/sites/pcgamesn/2022/10/best-racing-games-driver-san-fransisco.jpg'
+WHERE "term" = 'Driving';
+
+UPDATE "glossary" 
+SET "description" = 'informal. a computer roleplaying game in which the player controls the destiny of one or more avatars within a large virtual environment.', "img_path" = 'https://imgix.ranker.com/list_img_v2/2245/282245/original/282245-u4'
+WHERE "term" = 'God Game';
+
+UPDATE "glossary" 
+SET "description" = 'Magic or mana is an attribute assigned to characters within a role-playing or video game that indicates their power to use special magical abilities or "spells". Magic is usually measured in magic points or mana points, shortened as MP. Different abilities will use up different amounts of MP.[1] When the MP of a character reaches zero, the character will not be able to use special abilities until some of their MP is recovered', "img_path" = 'https://images.gog-statics.com/a57acb0aeaed488082b245102ec7732200d9336e47be6ff91f7cde1b7464c9d9_product_card_v2_mobile_slider_639.jpg'
+WHERE "term" = 'Magic';
+
+UPDATE "glossary" 
+SET "description" = 'A city-building game, or town-building game, is a genre of simulation video game where players act as the overall planner and leader of a city or town,', "img_path" = 'http://game-wisdom.com/wp-content/uploads/2012/10/Simcity.jpg'
+WHERE "term" = 'City Builder';
+
+UPDATE "glossary" 
+SET "description" = 'a fast-paced game is when opposing players are constantly in active combat interaction, where things can change quickly', "img_path" = 'https://qph.cf2.quoracdn.net/main-qimg-764b543d7049128d37543940e3e4a6e1-lq'
+WHERE "term" = 'Fast-Paced';
+
+UPDATE "glossary" 
+SET "description" = 'gambling game - a game that involves gambling. game of chance. gambling, gaming, play - the act of playing for stakes in the hope of winning (including the payment of a price for a chance to win a prize); "his gambling cost him a fortune"; "there was heavy play at the blackjack table', "img_path" = 'https://www.gamblingsites.org/app/uploads/2019/09/9-online-casino-games-1280x720.jpg'
+WHERE "term" = 'Gambling';
+
+UPDATE "glossary" 
+SET "description" = 'Online multiplayer games connect players over a wide area network (a common example being the Internet). Unlike local multiplayer, players playing online multiplayer are not restricted to the same local network. This allows players to interact with others from a much greater distance.', "img_path" = 'https://i0.wp.com/www.pretoria.co.za/wp-content/uploads/2020/03/league-of-legends-wild-rift-e1584447048465.jpg?fit=660%2C370&ssl=1'
+WHERE "term" = 'Online multiplayer';
+
+UPDATE "glossary" 
+SET "description" = '3D gaming refers to interactive computer entertainment games with characteristics of three-dimensional graphics: height, width, and depth. 3D gaming is believed to create immersive experience in a virtual worlds with realistic representations.', "img_path" = 'https://meliorgames.com/wp-content/uploads/2019/11/3-d-games.jpg'
+WHERE "term" = '3D';
+
+UPDATE "glossary" 
+SET "description" = '3D gaming refers to interactive computer entertainment games with characteristics of three-dimensional graphics: height, width, and depth. 3D gaming is believed to create immersive experience in a virtual worlds with realistic representations.', "img_path" = 'https://meliorgames.com/wp-content/uploads/2019/11/3-d-games.jpg'
+WHERE "term" = '3D';
+
+
+
+UPDATE "glossary" 
+SET "description" = '2D games use flat graphics, called sprites, and don't have three-dimensional geometry. They're drawn to the screen as flat images, and the camera (orthographic camera) has no perspective.', "img_path" = 'https://i.ytimg.com/vi/9RMvuYre7KI/maxresdefault.jpg'
+WHERE "term" = '2D';
