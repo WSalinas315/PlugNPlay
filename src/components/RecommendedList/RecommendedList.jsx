@@ -4,6 +4,9 @@ import { useRecommendations } from "../../hooks/storeHooks";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import SwipeBox from "../SwipeBox/SwipeBox";
+import { Card } from "@material-ui/core";
+import Heading1 from "../Headings/Heading1";
+import ParagraphText from "../ParagraphText/ParagraphText";
 
 export default function RecommendedList() {
   const dispatch = useDispatch();
@@ -33,17 +36,24 @@ export default function RecommendedList() {
     );
   };
 
+  const Bold = ({children}) => {
+    return <span style={{ fontWeight: 800 }}>{children}</span>
+  }
+
   return recommendations.length > 0 ? (
-    <>
-      <SwipeBox games={recommendations} />
-      {/*
-      {recommendations
-        .map((game) => {
-          return <ListItem gameData={game.gameData} />;
-        })
-        .sort((a, b) => a.gameScore - b.gameScore)}
-      */}
-    </>
+      <Card sx={{ textAlign: 'center', px: '10px' }}>
+        <Heading1>Your Recommendations</Heading1>
+        <SwipeBox games={recommendations} />
+        <ParagraphText>
+          Swipe <Bold>right</Bold> to add a game to your wishlist.
+        </ParagraphText>
+        <ParagraphText>
+          Swipe <Bold>up</Bold> to view more details.
+        </ParagraphText>
+        <ParagraphText>
+          Swipe <Bold>left</Bold> to skip a game.
+        </ParagraphText>
+      </Card>
   ) : (
     <Loading />
   );
