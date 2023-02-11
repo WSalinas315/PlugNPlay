@@ -1,0 +1,13 @@
+.game-splash-title {
+  position: absolute;
+  bottom: 9px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 70%;
+  font-size: 20px;
+  text-align: center;
+  padding: 0.5rem;
+  margin: 0;
+  background-color: rgb(255, 255, 255, 0.8);
+  border-radius: 6px;
+}

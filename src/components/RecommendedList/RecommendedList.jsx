@@ -27,8 +27,6 @@ export default function RecommendedList() {
       <Card sx={{ border: "1px solid", borderColor: "#dddddd", py: "1.5rem" }}>
         <Heading1 sx={{ textAlign: "center" }}>Recommended for You</Heading1>
         <SwipeBox games={recommendations} />
-
-        {JSON.stringify(recommendations[0].gameData.id)}
       </Card>
     </div>
   ) : (
