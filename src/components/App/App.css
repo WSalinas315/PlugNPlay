@@ -15,6 +15,12 @@ img {
   max-width: 100%;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .center-on-page {
   height: 80vh;
   display: grid;
