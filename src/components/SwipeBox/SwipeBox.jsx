@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
-import { useEffect } from "react";
+
 import Swipe from 'react-easy-swipe';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+
+import { Close, OpenInBrowser, StarBorder } from '@mui/icons-material';
+import { IconButton, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+
 import { useState } from 'react';
 import SnackbarAlert from '../SnackbarAlert/SnackbarAlert';
 import { useGameByID } from "../../hooks/storeHooks";
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-/*
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
-*/
 
 export default function SwipeBox(props) {
   const [open, setOpen] = useState(false);
@@ -27,11 +21,6 @@ export default function SwipeBox(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [gameQueue, setGameQueue] = useState(0);
-  /*
-  useEffect(() => {
-    dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[0]?.gameData.id });
-  }, []);
-  */
 
   // for dialog box
   const handleOpen = () => {
@@ -86,8 +75,7 @@ export default function SwipeBox(props) {
           handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`);
           props.games.shift();
           dispatch({ type: 'GAME/SWIPE_WISHLIST', payload: props.games });
-          // setGameQueue(gameQueue + 1);
-          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+         
         } else {
           swipe = 'Down Swipe';
         }
@@ -98,8 +86,7 @@ export default function SwipeBox(props) {
           handleSnackOpen('success', `You swiped right on ${props.games[gameQueue].gameData.name}!`);
           props.games.shift();
           dispatch({ type: 'GAME/SWIPE_WISHLIST', payload: props.games });
-          // setGameQueue(gameQueue + 1);
-          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+         
         } else {
           swipe = 'Up Swipe';
           dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
@@ -111,7 +98,7 @@ export default function SwipeBox(props) {
           handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`);
           props.games.shift();
           dispatch({ type: 'GAME/SWIPE_SKIP', payload: props.games });
-          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+         
         } else {
           swipe = 'Down Swipe';
         }
@@ -126,7 +113,7 @@ export default function SwipeBox(props) {
           handleSnackOpen('error', `You swiped left on ${props.games[gameQueue].gameData.name}!`);
           props.games.shift();
           dispatch({ type: 'GAME/SWIPE_SKIP', payload: props.games });
-          //dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: props.games[gameQueue].gameData.id });
+          
         }
       } else {
         console.log("didn't make it into an if/else");
@@ -185,6 +172,26 @@ export default function SwipeBox(props) {
           >
             <div draggable="true" style={boxStyle}><span style={{ backgroundColor: 'white' }}>{props.games[gameQueue].gameData.name}</span></div>
           </Swipe>
+
+          <div className="flex-row">
+            {/* left swipe to skip */}
+            <IconButton
+              color="primary">
+              <Close />
+            </IconButton>
+
+            {/* up swipe to see more details */}
+            <IconButton
+              color="primary">
+              <OpenInBrowser />
+            </IconButton>
+
+            {/* right swipe to wishlist */}
+            <IconButton
+              color="primary">
+              <StarBorder />
+            </IconButton>
+          </div>
         </div>
       )
     }
