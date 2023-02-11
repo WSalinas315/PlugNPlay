@@ -96,7 +96,7 @@ function AdminPage() {
 	const glossary = useSelector(store => store.glossary.glossary);
 
 	//* Holds an Array of 1 object that is replaced by the onChange of the AutoComplete component.
-	const glossaryTerm = useSelector(store => store.glossary.glossaryItem);
+	const glossaryTerm = useSelector(store => store.glossary.glossaryItem[0]);
 
 	//* These are used to properly set the state of each toggle from the Admins button options. Only 1 will be set to TRUE while the rest are kept at FALSE.
 	const [toggleAdd, setAddBoolean] = useState(false);
@@ -135,9 +135,7 @@ function AdminPage() {
 		setTermInput(event.target.value);
 	};
 	//* Saving the definition input to State.
-	const handleDefinitionInput = event => {
-		setDefinitionInput(event.target.value);
-	};
+	const handleDefinitionInput = event => setDefinitionInput(event.target.value);
 	//* Saving the Image path input to State.
 	const handleImagePathInput = event => {
 		setImagePathInput(event.target.value);
@@ -165,40 +163,48 @@ function AdminPage() {
 	};
 	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
-		console.log('Clicked on the Edit Button');
-		setAddBoolean(false);
-		setEditBoolean(true);
-		setViewBoolean(false);
-		setDeleteBoolean(false);
+		if (glossary.some(obj => obj.term == termInput)) {
+			console.log('Clicked on the Edit Button');
+			setAddBoolean(false);
+			setEditBoolean(true);
+			setViewBoolean(false);
+			setDeleteBoolean(false);
+		}
 	};
 	//* Handles the rendering of the View section upon clicking on the View Button.
 	const handleView = () => {
-		console.log('Clicked on the View Button');
-		setAddBoolean(false);
-		setEditBoolean(false);
-		setViewBoolean(true);
-		setDeleteBoolean(false);
+		if (glossary.some(obj => obj.term == termInput)) {
+			console.log('Clicked on the View Button');
+			setAddBoolean(false);
+			setEditBoolean(false);
+			setViewBoolean(true);
+			setDeleteBoolean(false);
+		}
 	};
 	//* Handles the rendering of the Delete section upon clicking on the Delete Button.
 	const handleDelete = () => {
-		console.log('Clicked on the Delete Button');
-		setAddBoolean(false);
-		setEditBoolean(false);
-		setViewBoolean(false);
-		setDeleteBoolean(true);
-		setOpen(true);
+		if (glossary.some(obj => obj.term == termInput)) {
+			console.log('Clicked on the Delete Button');
+			setAddBoolean(false);
+			setEditBoolean(false);
+			setViewBoolean(false);
+			setDeleteBoolean(true);
+			setOpen(true);
+		}
 	};
 	//* This corresponds to the Modal, where the user confirms the deletion of the term from the database.
 	const handleDeleteConfirm = () => {
-		console.log('Clicked on the delete confirm button!');
-		dispatch({
-			type: 'GLOSSARY/DELETE_TERM',
-			payload: { id: glossaryTerm[0].id },
-		});
-		setOpen(false);
-		dispatch({ type: 'GLOSSARY/FETCH' });
-		//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
-		window.location.reload();
+		if (glossary.some(obj => obj.term == termInput)) {
+			console.log('Clicked on the delete confirm button!');
+			dispatch({
+				type: 'GLOSSARY/DELETE_TERM',
+				payload: { id: glossaryTerm[0].id },
+			});
+			setOpen(false);
+			dispatch({ type: 'GLOSSARY/FETCH' });
+			//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
+			window.location.reload();
+		}
 	};
 
 	const handleCancel = () => {
@@ -207,19 +213,20 @@ function AdminPage() {
 	};
 
 	const handleEditSubmit = () => {
-		console.log('Clicked on the submit button in the Edit View');
-		dispatch({
-			type: 'GLOSSARY/EDIT_TERM',
-			payload: {
-				id: glossaryTerm[0].id,
-				description: definitionInput,
-				img_path: imagePathInput,
-			},
-		});
-		setDefinitionInput('');
-		setImagePathInput('');
+		if (glossary.some(obj => obj.term == termInput)) {
+			console.log('Clicked on the submit button in the Edit View');
+			dispatch({
+				type: 'GLOSSARY/EDIT_TERM',
+				payload: {
+					id: glossaryTerm[0].id,
+					description: definitionInput,
+					img_path: imagePathInput,
+				},
+			});
+			setDefinitionInput('');
+			setImagePathInput('');
+		}
 	};
-
 	const SearchTermDefault = () => {
 		return (
 			<Box
@@ -291,14 +298,11 @@ function AdminPage() {
 						<TextField
 							label='name'
 							value={termInput}
-							onChange={handleTermInput}
-							required
-						/>
+							onChange={handleTermInput}></TextField>
 						<TextField
 							label='Definition'
 							value={definitionInput}
 							onChange={handleDefinitionInput}
-							required
 						/>
 						<TextField
 							label='Image'
@@ -339,65 +343,85 @@ function AdminPage() {
 	};
 
 	const EditSection = () => {
-		return (
-			<Box>
-				<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
-					<Typography
-						variant='h5'
-						backgroundColor='primary.main'
-						borderRadius={2}
-						color='#ffffff'
-						align='center'
-						mb={2}
-						border='solid 1px #000000'>
-						EDITING
-					</Typography>
-					<Typography>Term: {glossaryTerm[0].term}</Typography>
-					<Typography>Description: {glossaryTerm[0].description}</Typography>
-					<CardMedia
-						component='img'
-						image={glossaryTerm[0].img_path}
-						sx={{ maxHeight: 400, maxWidth: 300 }}
-					/>
-					<EditInputField />
-					<EditSubmitBtn />
-				</Card>
-			</Box>
-		);
+		if (termInput != '')
+			return (
+				<Box key={4}>
+					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+						<Typography
+							variant='h5'
+							backgroundColor='primary.main'
+							borderRadius={2}
+							color='#ffffff'
+							align='center'
+							mb={2}
+							border='solid 1px #000000'>
+							EDITING
+						</Typography>
+						<Typography>Term: {glossaryTerm[0].term}</Typography>
+						<Typography>Description: {glossaryTerm[0].description}</Typography>
+						<CardMedia
+							component='img'
+							image={glossaryTerm[0].img_path}
+							sx={{ maxHeight: 400, maxWidth: 300 }}
+						/>
+						<EditInputField />
+						<EditSubmitBtn />
+					</Card>
+				</Box>
+			);
 	};
 
-	const EditInputField = () => {
+	const EditInputField = ({ definitionInput }) => (
+		<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center' key={3}>
+			<h1>test</h1>
+			<TextField
+				key={1}
+				label='Description'
+				value={definitionInput}
+				multiline
+				maxRows={4}
+				onChange={handleDefinitionInput}
+				sx={{ width: '100%', mb: 2 }}
+				InputProps={{
+					startAdornment: (
+						<InputAdornment position='start'>
+							<DescriptionIcon />
+						</InputAdornment>
+					),
+				}}
+			/>
+			<TextField
+				key={2}
+				label='Image Url'
+				value={imagePathInput}
+				onChange={handleImagePathInput}
+				sx={{ width: '100%' }}
+				InputProps={{
+					startAdornment: (
+						<InputAdornment position='start'>
+							<HttpIcon />
+						</InputAdornment>
+					),
+				}}
+			/>
+		</Box>
+	);
+
+	const TermLogic = () => {
 		return (
-			<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center'>
-				<TextField
-					label='Description'
-					value={definitionInput}
-					multiline
-					maxRows={4}
-					onChange={handleDefinitionInput}
-					sx={{ width: '100%', mb: 2 }}
-					InputProps={{
-						startAdornment: (
-							<InputAdornment position='start'>
-								<DescriptionIcon />
-							</InputAdornment>
-						),
-					}}
-				/>
-				<TextField
-					label='Image Url'
-					value={imagePathInput}
-					onChange={handleImagePathInput}
-					sx={{ width: '100%' }}
-					InputProps={{
-						startAdornment: (
-							<InputAdornment position='start'>
-								<HttpIcon />
-							</InputAdornment>
-						),
-					}}
-				/>
-			</Box>
+			<>
+				<Typography>Term: {glossaryTerm.term}</Typography>
+				{glossaryTerm.description ? (
+					<Typography> Description: {glossaryTerm.description} </Typography>
+				) : (
+					<Typography>Description: No Description is Available.</Typography>
+				)}
+				{glossaryTerm.img_path ? (
+					<img src={glossaryTerm.img_path} />
+				) : (
+					<Typography>NO IMAGE AVAILABLE</Typography>
+				)}
+			</>
 		);
 	};
 
@@ -418,35 +442,13 @@ function AdminPage() {
 		); //!END OF ADD TERM SECTION
 	}
 	//! START OF VIEW TERM SECTION
-	//* DISPLAY THE TERM AND HIDING DESCRIPTION/IMAGE IF NOTHING TO SHOW.
+
+	//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
 	else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
 		toggleView == true &&
-		toggleDelete == false &&
-		glossaryTerm[0].description == null &&
-		glossaryTerm[0].img_path == null
-	) {
-		return (
-			<>
-				<SearchTermDefault />
-				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Box sx={{ margin: 2 }}>
-						<Typography> Term : {glossaryTerm[0].term} </Typography>
-						<Typography>Definition : No Definition Available</Typography>
-						<Typography>Image : No Image Available</Typography>
-					</Box>
-				</Card>
-			</>
-		);
-		//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
-	} else if (
-		toggleAdd == false &&
-		toggleEdit == false &&
-		toggleView == true &&
-		toggleDelete == false &&
-		glossaryTerm[0].description != null &&
-		glossaryTerm[0].img_path == null
+		toggleDelete == false
 	) {
 		return (
 			<>
@@ -464,27 +466,7 @@ function AdminPage() {
 			</>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
-	} else if (
-		toggleAdd == false &&
-		toggleEdit == false &&
-		toggleView == true &&
-		toggleDelete == false &&
-		glossaryTerm[0].description != null &&
-		glossaryTerm[0].img_path != null
-	) {
-		return (
-			<>
-				<SearchTermDefault />
-				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Box sx={{ marginBottom: -1 }}>
-						<Typography> Term: {glossaryTerm[0].term} </Typography>
-						<Typography>Definition: {glossaryTerm[0].description}</Typography>
 
-						<img src={glossaryTerm[0].img_path} />
-					</Box>
-				</Card>
-			</>
-		);
 		//!END OF VIEW TERM SECTION
 		//*
 		//! START OF DELETE TERM SECTION
@@ -554,9 +536,7 @@ function AdminPage() {
 		toggleAdd == false &&
 		toggleEdit == true &&
 		toggleView == false &&
-		toggleDelete == false &&
-		glossaryTerm[0].img_path == null &&
-		glossaryTerm[0].description == null
+		toggleDelete == false
 	) {
 		return (
 			<>
@@ -574,12 +554,8 @@ function AdminPage() {
 							border='solid 1px #000000'>
 							EDITING
 						</Typography>
-						<Typography>Term: {glossaryTerm[0].term}</Typography>
-						<Typography>
-							Description: No Description is Available at this time.
-						</Typography>
-						<Typography>Image: No Image Available</Typography>
-						<EditInputField />
+						<TermLogic />
+						<EditInputField definitionInput={definitionInput} />
 						<Box textAlign='center'>
 							<Button
 								onClick={handleEditSubmit}
@@ -596,16 +572,17 @@ function AdminPage() {
 		toggleAdd == false &&
 		toggleEdit == true &&
 		toggleView == false &&
-		toggleDelete == false &&
-		glossaryTerm[0].img_path != null
+		toggleDelete == false
 	) {
-		return (
-			<Box>
-				<SearchTermDefault />
-				<AddButton />
-				<EditSection />
-			</Box>
-		);
+		if (termInput == '') {
+			return (
+				<Box>
+					<SearchTermDefault />
+					<AddButton />
+					<EditSection />
+				</Box>
+			);
+		}
 	}
 	//! DEFAULT SET UP ON INITIAL LOAD.
 	else {
