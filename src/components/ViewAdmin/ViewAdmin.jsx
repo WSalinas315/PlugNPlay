@@ -211,7 +211,6 @@ function AdminPage() {
 		console.log('Clicked on the cancel button');
 		setOpen(false);
 	};
-
 	const handleEditSubmit = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
 			console.log('Clicked on the submit button in the Edit View');
@@ -238,7 +237,6 @@ function AdminPage() {
 					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
 						Please select a term to Modify
 					</Typography>
-
 					<Box sx={{ margin: 2 }}>
 						<Select
 							onChange={handleChange}
@@ -439,12 +437,8 @@ function AdminPage() {
 				<AddingFields />
 				<AddButton />
 			</>
-		); //!END OF ADD TERM SECTION
-	}
-	//! START OF VIEW TERM SECTION
-
-	//* DISPLAY THE TERM AND DESCRIPTION, HIDING IMAGE IF NOTHING TO SHOW.
-	else if (
+		);
+	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
 		toggleView == true &&
@@ -453,23 +447,15 @@ function AdminPage() {
 		return (
 			<>
 				<SearchTermDefault />
-
 				<AddButton />
-
 				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Box>
-						<Typography> Term : {glossaryTerm[0].term} </Typography>
-						<Typography>Definition : {glossaryTerm[0].description}</Typography>
-						<Typography>Image : No Image Available</Typography>
+						<TermLogic />
 					</Box>
 				</Card>
 			</>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
-
-		//!END OF VIEW TERM SECTION
-		//*
-		//! START OF DELETE TERM SECTION
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -529,9 +515,7 @@ function AdminPage() {
 					</Box>
 				</Modal>
 			</>
-		); //!END OF DELETE TERM SECTION
-
-		//! START OF EDIT TERM SECTION
+		);
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == true &&
@@ -539,9 +523,9 @@ function AdminPage() {
 		toggleDelete == false
 	) {
 		return (
-			<>
+			<Box>
 				<SearchTermDefault />
-
+				<AddButton /> //! move this into the SearchTermDefault.
 				<Box>
 					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
 						<Typography
@@ -556,33 +540,11 @@ function AdminPage() {
 						</Typography>
 						<TermLogic />
 						<EditInputField definitionInput={definitionInput} />
-						<Box textAlign='center'>
-							<Button
-								onClick={handleEditSubmit}
-								variant='contained'
-								className={buttonStyle.submitButton}>
-								Submit
-							</Button>
-						</Box>
+						<EditSubmitBtn />
 					</Card>
 				</Box>
-			</>
+			</Box>
 		);
-	} else if (
-		toggleAdd == false &&
-		toggleEdit == true &&
-		toggleView == false &&
-		toggleDelete == false
-	) {
-		if (termInput == '') {
-			return (
-				<Box>
-					<SearchTermDefault />
-					<AddButton />
-					<EditSection />
-				</Box>
-			);
-		}
 	}
 	//! DEFAULT SET UP ON INITIAL LOAD.
 	else {
