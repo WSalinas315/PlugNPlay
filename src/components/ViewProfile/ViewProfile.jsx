@@ -21,9 +21,10 @@ function ViewProfile() {
   // initialize dispatch
   const dispatch = useDispatch();
 
-  // fetches user's wishlist from database
+  // fetches user's wishlist from database and genre scores
   useEffect(() => {
     dispatch({ type: "USER/FETCH_ALL_LISTS" });
+    dispatch({type: 'USER/FETCH_SCORES'});
   }, []);
 
   const handleAdminClick = () => {
