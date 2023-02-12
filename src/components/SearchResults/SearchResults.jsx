@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Card, Typography } from '@mui/material';
-
+import Loading from "../Loading/Loading";
 
 export default function SearchResults() {
 
@@ -27,7 +27,7 @@ export default function SearchResults() {
       {/* Page Label */}
       <Typography variant="h4" sx={{ textAlign: "center", marginBottom: "15px", fontWeight: "bold" }}>Search Results</Typography>
 
-      {searchResults?.map(result => (
+      {searchResults ? searchResults.map(result => (
         // Results Card
         <Card onClick={() => viewDetails(result)} sx={{ border: 'solid 1px', marginTop: '10px' }}>
           <div className="two-column-grid">
@@ -41,7 +41,10 @@ export default function SearchResults() {
             <img className="grid-right" src={result.background_image} height='65px' />
           </div>
         </Card>
-      ))}
+      ))
+        :
+        <Loading />
+      }
       <div className='foot-spacer'></div>
     </div>
   );
