@@ -23,6 +23,7 @@ img {
 
 .center-on-page {
   height: 80vh;
+  max-width: 95vw;
   display: grid;
   place-items: center;
 }
@@ -44,16 +45,25 @@ img {
 }
 
 .two-column-grid .grid-left {
+  width: 100%;
   margin-right: auto;
   text-align: left;
 }
 .two-column-grid .grid-right {
+  width: 100%;
   margin-left: auto;
   text-align: right;
 }
 
 .foot-spacer {
+  z-index: -1;
   height: 100px;
+}
+
+.corner-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* --------------------------------------------------------------------------------
