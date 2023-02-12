@@ -47,18 +47,18 @@ router.post('/logout', (req, res) => {
 router.get('/scores', rejectUnauthenticated, async (req, res) => {
 
   try {
-    const genreQuery = 'SELECT * FROM user_genres WHERE user_id = $1'
-    const tagQuery = 'SELECT * FROM user_tags WHERE user_id = $1'
+    const genreQuery = 'SELECT * FROM user_genres WHERE user_id = $1;';
+    //const tagQuery = 'SELECT * FROM user_tags WHERE user_id = $1'
 
-    const {rows: userGenreScores} = await pool.query(genreQuery, [req.user.id])
-    const {rows: userTagScores} = await pool.query(tagQuery, [req.user.id])
+    const {rows: userGenreScores} = await pool.query(genreQuery, [req.user.id]);
+    //const {rows: userTagScores} = await pool.query(tagQuery, [req.user.id])
 
-    res.send({userGenreScores, userTagScores})
+    //res.send({userGenreScores, userTagScores})
+    res.send({userGenreScores});
   } catch (err) {
     console.log('Failed to get user scores', err);
-    res.sendStatus(500)
+    res.sendStatus(500);
   }
-
 })
 
 // EDIT user profile pic
@@ -71,12 +71,12 @@ router.put('/profilePicture', rejectUnauthenticated, async (req, res) => {
 
     console.log('changing user', userID, 'profile picture to', imgPath);
 
-    await pool.query(queryText, [imgPath, userID])
+    await pool.query(queryText, [imgPath, userID]);
 
-    res.sendStatus(201)
+    res.sendStatus(201);
   } catch (err) {
     console.log('api/user/profilePicture ', err);
-    res.sendStatus(500)
+    res.sendStatus(500);
   }
 })
 

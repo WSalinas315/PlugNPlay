@@ -19,10 +19,10 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
 import AdminPage from '../ViewAdmin/ViewAdmin';
-
+import ViewSearch from '../ViewSearch/ViewSearch';
 import CollectionPage from '../ViewCollection/ViewCollection';
 import ViewProfile from '../ViewProfile/ViewProfile';
-
+import SearchResults from '../SearchResults/SearchResults';
 import Survey from '../Survey/Survey';
 import ViewRecommendation from '../ViewRecommended/ViewRecommended';
 
@@ -65,6 +65,15 @@ function App() {
 					<ProtectedRoute exact path='/admin'>
 						<AdminPage />
 					</ProtectedRoute>
+					
+					<ProtectedRoute exact path='/search'>
+						<ViewSearch />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path='/searchresults/:id'>
+						<SearchResults />
+          </ProtectedRoute>
+          
 					<ProtectedRoute exact path= '/settings'>
 						<ViewSettings /> 
 					</ProtectedRoute>
