@@ -285,6 +285,14 @@ function AdminPage() {
 							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
+						<Grid>
+							<Button
+								variant='outlined'
+								onClick={handleAdd}
+								className={buttonStyle.addButton}>
+								Add Term
+							</Button>
+						</Grid>
 					</Grid>
 				</Card>
 			</Box>
@@ -295,9 +303,17 @@ function AdminPage() {
 		return (
 			<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
 				<Box onClick={Autofill}>
-					<Typography> Adding New Term </Typography>
+					<Typography
+						variant='h5'
+						backgroundColor='primary.main'
+						borderRadius={2}
+						color='#ffffff'
+						align='center'
+						mb={2}
+						border='solid 1px #000000'>
+						ADD NEW TERM
+					</Typography>
 				</Box>
-
 				<Box>
 					<FormControl>
 						<TextField
@@ -347,42 +363,6 @@ function AdminPage() {
 		);
 	};
 
-	// const EditInputField = ({ definitionInput }) => (
-	// 	<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center' key={3}>
-	// 		<h1>test</h1>
-	// 		<TextField
-	// 			key={1}
-	// 			label='Description'
-	// 			value={definitionInput}
-	// 			multiline
-	// 			maxRows={4}
-	// 			onChange={handleDefinitionInput}
-	// 			sx={{ width: '100%', mb: 2 }}
-	// 			InputProps={{
-	// 				startAdornment: (
-	// 					<InputAdornment position='start'>
-	// 						<DescriptionIcon />
-	// 					</InputAdornment>
-	// 				),
-	// 			}}
-	// 		/>
-	// 		<TextField
-	// 			key={2}
-	// 			label='Image Url'
-	// 			value={imagePathInput}
-	// 			onChange={handleImagePathInput}
-	// 			sx={{ width: '100%' }}
-	// 			InputProps={{
-	// 				startAdornment: (
-	// 					<InputAdornment position='start'>
-	// 						<HttpIcon />
-	// 					</InputAdornment>
-	// 				),
-	// 			}}
-	// 		/>
-	// 	</Box>
-	// );
-
 	const TermLogic = () => {
 		return (
 			<>
@@ -421,9 +401,7 @@ function AdminPage() {
 		return (
 			<>
 				<SearchTermDefault />
-				<AddButton />
 				<AddingFields />
-				<AddButton />
 			</>
 		);
 	} else if (
@@ -435,7 +413,6 @@ function AdminPage() {
 		return (
 			<>
 				<SearchTermDefault />
-				<AddButton />
 				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
 					<Box>
 						<TermLogic />
@@ -453,7 +430,7 @@ function AdminPage() {
 		return (
 			<>
 				<SearchTermDefault />
-				<AddButton />
+
 				<Modal
 					open={open}
 					onClose={handleClose}
@@ -513,7 +490,6 @@ function AdminPage() {
 		return (
 			<Box>
 				<SearchTermDefault />
-				<AddButton /> //! move this into the SearchTermDefault.
 				<Box>
 					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
 						<Typography
@@ -532,7 +508,6 @@ function AdminPage() {
 							justifyItems='center'
 							textAlign='center'
 							key={3}>
-							<h1>test</h1>
 							<TextField
 								key={1}
 								label='Description'
@@ -564,7 +539,6 @@ function AdminPage() {
 								}}
 							/>
 						</Box>
-						{/* <EditInputField definitionInput={definitionInput} /> */}
 						<EditSubmitBtn />
 					</Card>
 				</Box>
@@ -576,7 +550,6 @@ function AdminPage() {
 		return (
 			<Box>
 				<SearchTermDefault />
-				<AddButton />
 			</Box>
 		);
 	}
