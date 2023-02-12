@@ -111,6 +111,8 @@ function AdminPage() {
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
 
+	const [autoTermFill, setAutoTermFill] = useState('');
+
 	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
 	const handleChange = event => {
 		console.log('Value is: ', event.target.value);
@@ -144,20 +146,21 @@ function AdminPage() {
 	const handleTermSubmit = () => {
 		console.log(
 			'Term / definition / image path',
-			termInput,
+			autoTermFill,
 			definitionInput,
 			imagePathInput
 		);
 		dispatch({
 			type: 'GLOSSARY/SET_NEW_TERM',
 			payload: {
-				term: termInput,
+				term: autoTermFill,
 				definition: definitionInput,
 				imagePath: imagePathInput,
 			},
 		});
+		dispatch({ type: 'GLOSSARY/FETCH' });
 		//* Clearing the state values after the Admin clicked on the submit button.
-		setTermInput('');
+		setAutoTermFill('');
 		setDefinitionInput('');
 		setImagePathInput('');
 	};
@@ -217,7 +220,7 @@ function AdminPage() {
 			dispatch({
 				type: 'GLOSSARY/EDIT_TERM',
 				payload: {
-					id: glossaryTerm[0].id,
+					id: glossaryTerm.id,
 					description: definitionInput,
 					img_path: imagePathInput,
 				},
@@ -291,11 +294,15 @@ function AdminPage() {
 	const AddingFields = () => {
 		return (
 			<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+				<Box onClick={Autofill}>
+					<Typography> Adding New Term </Typography>
+				</Box>
+
 				<Box>
 					<FormControl>
 						<TextField
 							label='name'
-							value={termInput}
+							value={autoTermFill}
 							onChange={handleTermInput}></TextField>
 						<TextField
 							label='Definition'
@@ -340,70 +347,41 @@ function AdminPage() {
 		);
 	};
 
-	const EditSection = () => {
-		if (termInput != '')
-			return (
-				<Box key={4}>
-					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
-						<Typography
-							variant='h5'
-							backgroundColor='primary.main'
-							borderRadius={2}
-							color='#ffffff'
-							align='center'
-							mb={2}
-							border='solid 1px #000000'>
-							EDITING
-						</Typography>
-						<Typography>Term: {glossaryTerm[0].term}</Typography>
-						<Typography>Description: {glossaryTerm[0].description}</Typography>
-						<CardMedia
-							component='img'
-							image={glossaryTerm[0].img_path}
-							sx={{ maxHeight: 400, maxWidth: 300 }}
-						/>
-						<EditInputField />
-						<EditSubmitBtn />
-					</Card>
-				</Box>
-			);
-	};
-
-	const EditInputField = ({ definitionInput }) => (
-		<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center' key={3}>
-			<h1>test</h1>
-			<TextField
-				key={1}
-				label='Description'
-				value={definitionInput}
-				multiline
-				maxRows={4}
-				onChange={handleDefinitionInput}
-				sx={{ width: '100%', mb: 2 }}
-				InputProps={{
-					startAdornment: (
-						<InputAdornment position='start'>
-							<DescriptionIcon />
-						</InputAdornment>
-					),
-				}}
-			/>
-			<TextField
-				key={2}
-				label='Image Url'
-				value={imagePathInput}
-				onChange={handleImagePathInput}
-				sx={{ width: '100%' }}
-				InputProps={{
-					startAdornment: (
-						<InputAdornment position='start'>
-							<HttpIcon />
-						</InputAdornment>
-					),
-				}}
-			/>
-		</Box>
-	);
+	// const EditInputField = ({ definitionInput }) => (
+	// 	<Box sx={{ mt: 2 }} justifyItems='center' textAlign='center' key={3}>
+	// 		<h1>test</h1>
+	// 		<TextField
+	// 			key={1}
+	// 			label='Description'
+	// 			value={definitionInput}
+	// 			multiline
+	// 			maxRows={4}
+	// 			onChange={handleDefinitionInput}
+	// 			sx={{ width: '100%', mb: 2 }}
+	// 			InputProps={{
+	// 				startAdornment: (
+	// 					<InputAdornment position='start'>
+	// 						<DescriptionIcon />
+	// 					</InputAdornment>
+	// 				),
+	// 			}}
+	// 		/>
+	// 		<TextField
+	// 			key={2}
+	// 			label='Image Url'
+	// 			value={imagePathInput}
+	// 			onChange={handleImagePathInput}
+	// 			sx={{ width: '100%' }}
+	// 			InputProps={{
+	// 				startAdornment: (
+	// 					<InputAdornment position='start'>
+	// 						<HttpIcon />
+	// 					</InputAdornment>
+	// 				),
+	// 			}}
+	// 		/>
+	// 	</Box>
+	// );
 
 	const TermLogic = () => {
 		return (
@@ -420,6 +398,16 @@ function AdminPage() {
 					<Typography>NO IMAGE AVAILABLE</Typography>
 				)}
 			</>
+		);
+	};
+
+	const Autofill = () => {
+		setAutoTermFill('Camping');
+		setDefinitionInput(
+			'When a character stays in one spot — “camps out” — to gain an unfair advantage and attack other characters without being seen. '
+		);
+		setImagePathInput(
+			'https://steamuserimages-a.akamaihd.net/ugc/595844364268868296/620B89799B9E47B034DE798060F1C5DE2C047750/?imw=1024&imh=578&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'
 		);
 	};
 
@@ -539,7 +527,44 @@ function AdminPage() {
 							EDITING
 						</Typography>
 						<TermLogic />
-						<EditInputField definitionInput={definitionInput} />
+						<Box
+							sx={{ mt: 2 }}
+							justifyItems='center'
+							textAlign='center'
+							key={3}>
+							<h1>test</h1>
+							<TextField
+								key={1}
+								label='Description'
+								value={definitionInput}
+								multiline
+								maxRows={4}
+								onChange={handleDefinitionInput}
+								sx={{ width: '100%', mb: 2 }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<DescriptionIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+							<TextField
+								key={2}
+								label='Image Url'
+								value={imagePathInput}
+								onChange={handleImagePathInput}
+								sx={{ width: '100%' }}
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position='start'>
+											<HttpIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Box>
+						{/* <EditInputField definitionInput={definitionInput} /> */}
 						<EditSubmitBtn />
 					</Card>
 				</Box>
