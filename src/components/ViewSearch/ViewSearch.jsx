@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, FormControl, TextField } from '@mui/material';
+import { Button, FormControl, TextField, Typography } from '@mui/material';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -44,10 +44,11 @@ export default function ViewSearch() {
 
   return (
     <>
-      <h1>Search Games</h1>
+    {/* Page Label */}
+    <Typography variant="h4" sx={{ textAlign: "center", marginBottom: "15px", fontWeight: "bold" }}>Search Games</Typography>
 
       {/* Search By Name */}
-      <h3>Search By Game Title</h3>
+      <Typography variant="h6" sx={{ textAlign: "center", fontWeight: "bold" }}>Search By Game Title</Typography>
       <FormControl fullWidth>
         <TextField
           required
@@ -57,15 +58,20 @@ export default function ViewSearch() {
           onChange={(event) => setGameTitle(event.target.value)}
         />
       </FormControl>
+
+      {/* Renders a disabled button if no text is in the search by game title input field
+          Renders a clickable button otherwise */}
       {gameTitle
         ?
-        <Button variant="outlined" onClick={() => searchByName()}>Search</Button>
+        <Button variant="outlined" onClick={() => searchByName()} sx={{ padding: '10px'}}>Search</Button>
         :
-        <Button variant="outlined" disabled>Search</Button>
+        <Button variant="outlined" disabled sx={{ padding: '10px'}}>Search</Button>
       }
+      <br />
+      <br />
 
       {/* Search By Genre */}
-      <h3>Search By Genre</h3>
+      <Typography variant="h6" sx={{ textAlign: "center", fontWeight: "bold" }}>Search By Genre</Typography>
       <FormControl fullWidth>
         <InputLabel id="genre">Genre</InputLabel>
         <Select
@@ -74,21 +80,21 @@ export default function ViewSearch() {
           label="Genre"
           value={gameGenre}
           onChange={(event) => setGameGenre(event.target.value)}
-          
         >
           {genreList?.map((genre, i) => {
             return(<MenuItem key={i} value={genre.slug}>{genre.name}</MenuItem>)
           })}
         </Select>
       </FormControl>
+
+      {/* Renders a disabled button if no text is in the search by game title input field
+          Renders a clickable button otherwise */}
       {gameGenre
         ?
-        <Button variant="outlined" onClick={() => searchByGenre()}>Search</Button>
+        <Button variant="outlined" onClick={() => searchByGenre()} sx={{ padding: '10px'}}>Search</Button>
         :
-        <Button variant="outlined" disabled>Search</Button>
+        <Button variant="outlined" disabled sx={{ padding: '10px'}}>Search</Button>
       }
-
-
     </>
   );
 }

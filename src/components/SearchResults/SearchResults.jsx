@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, Card, Typography } from '@mui/material';
-import { fontWeight, padding } from '@mui/system';
+import { Card, Typography } from '@mui/material';
+
 
 export default function SearchResults() {
 
@@ -17,7 +17,6 @@ export default function SearchResults() {
 
   // View a detailed page for the game that is clicked on
   const viewDetails = (result) => {
-    // Clear current search results
     dispatch({ type: 'GAME/CLEAR_CURRENT' });
     dispatch({ type: 'GAME/FETCH_CURRENT_GAME', payload: result.id });
     history.push(`/games/${result.id}`);
@@ -25,18 +24,25 @@ export default function SearchResults() {
 
   return (
     <div className='results-container'>
-      <Typography variant="h1" sx={{ textAlign: "center", marginBottom: "15px", fontWeight: "bold" }}>Search Results</Typography>
+      {/* Page Label */}
+      <Typography variant="h4" sx={{ textAlign: "center", marginBottom: "15px", fontWeight: "bold" }}>Search Results</Typography>
+
       {searchResults?.map(result => (
-        <Card onClick={() => viewDetails(result)} sx={{border:'solid 1px'}}>
+        // Results Card
+        <Card onClick={() => viewDetails(result)} sx={{ border: 'solid 1px', marginTop: '10px' }}>
           <div className="two-column-grid">
             <div className="grid-left">
+              {/* Game Name */}
               <Typography variant='h5'>{result.name}</Typography>
+              {/* Game Release Date */}
               <Typography variant='body2'>{result.released}</Typography>
             </div>
+            {/* Game Image */}
             <img className="grid-right" src={result.background_image} height='65px' />
           </div>
         </Card>
       ))}
+      <div className='foot-spacer'></div>
     </div>
   );
 }
