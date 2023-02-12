@@ -16,7 +16,7 @@ export default function RecommendedList() {
   const checkForRecs = (refresh = false) => {
     clearGameData();
     if (refresh || recommendations.length === 0) {
-      // dispatch({ type: "RAWG/FETCH_RECOMMENDATIONS" })
+      dispatch({ type: "RAWG/FETCH_RECOMMENDATIONS" })
     } else return;
   };
 

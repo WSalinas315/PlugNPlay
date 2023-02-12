@@ -53,12 +53,89 @@ export default function SurveyPage() {
     return Number(id) === 17 ? 'Submit' : 'Next'
   }
 
+  const surveyAutofill = () => {
+    history.push('/survey/17');
+    dispatch({
+      type: 'AUTOFILL_SURVEY',
+      payload: [{
+        "id": 1,
+        "score": -0.50
+      },
+      {
+        "id": 2,
+        "score": -0.75
+      },
+      {
+        "id": 3,
+        "score": -0.75
+      },
+      {
+        "id": 4,
+        "score": 0.25
+      },
+      {
+        "id": 5,
+        "score": -0.25
+      },
+      {
+        "id": 6,
+        "score": -0.5
+      },
+      {
+        "id": 7,
+        "score": -0.5
+      },
+      {
+        "id": 8,
+        "score": -0.75
+      },
+      {
+        "id": 9,
+        "score": 0
+      },
+      {
+        "id": 10,
+        "score": 0.50
+      },
+      {
+        "id": 11,
+        "score": 0
+      },
+      {
+        "id": 12,
+        "score": -0.25
+      },
+      {
+        "id": 13,
+        "score": 0.25
+      },
+      {
+        "id": 14,
+        "score": -0.50
+      },
+      {
+        "id": 15,
+        "score": 0.25
+      },
+      {
+        "id": 16,
+        "score": -1
+      },
+      {
+        "id": 17,
+        "score": -1
+      }]
+    })
+  }
+
   return (
     <section id="survey-body">
       <SurveyIntro />
 
       <section id="survey-body-question">
-        <h4>
+        <h4
+          onClick={surveyAutofill}
+        >
           Question {id}: {surveyQuestion[Number(id) - 1]?.question}
         </h4>
         {id < 16 &&

@@ -3,35 +3,35 @@ import { combineReducers } from "redux"
 let survey = [
     {
       "id": 1,
-      "score": -0.50
+      "score": 0
     },
     {
       "id": 2,
-      "score": -0.75
+      "score": 0
     },
     {
       "id": 3,
-      "score": -0.75
+      "score": 0
     },
     {
       "id": 4,
-      "score": 0.25
+      "score": 0
     },
     {
       "id": 5,
-      "score": -0.25
+      "score": 0
     },
     {
       "id": 6,
-      "score": -0.5
+      "score": 0
     },
     {
       "id": 7,
-      "score": -0.5
+      "score": 0
     },
     {
       "id": 8,
-      "score": -0.75
+      "score": 0
     },
     {
       "id": 9,
@@ -39,7 +39,7 @@ let survey = [
     },
     {
       "id": 10,
-      "score": 0.50
+      "score": 0
     },
     {
       "id": 11,
@@ -47,19 +47,19 @@ let survey = [
     },
     {
       "id": 12,
-      "score": -0.25
+      "score": 0
     },
     {
       "id": 13,
-      "score": 0.25
+      "score": 0
     },
     {
       "id": 14,
-      "score": -0.50
+      "score": 0
     },
     {
       "id": 15,
-      "score": 0.25
+      "score": 0
     },
     {
       "id": 16,
@@ -81,6 +81,7 @@ let survey = [
 const surveyResults = (state = survey, { type, payload }) => {
     return {
       'SET_SURVEY_ANSWERS': replaceAt(state, payload?.id - 1, payload),
+      'AUTOFILL_SURVEY': payload
     }[type] || state;
 }
 
