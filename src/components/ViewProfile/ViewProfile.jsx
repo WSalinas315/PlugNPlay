@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-import { Card, Typography, Button, ButtonGroup, Link } from "@mui/material";
+import { Card, Typography, Button, ButtonGroup } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-
 import "./ViewProfile.css";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import ProfileBartleType from "../ProfileBartleType/ProfileBartleType";
@@ -23,8 +21,8 @@ function ViewProfile() {
 
   // fetches user's wishlist from database and genre scores
   useEffect(() => {
+    dispatch({ type: 'USER/FETCH_SCORES' });
     dispatch({ type: "USER/FETCH_ALL_LISTS" });
-    dispatch({type: 'USER/FETCH_SCORES'});
   }, []);
 
   const handleAdminClick = () => {
@@ -36,7 +34,7 @@ function ViewProfile() {
     border: "solid 2px",
     borderRadius: "10px",
     height: "36px",
-    width: "36px",  
+    width: "36px",
   }
 
   const SettingsButton = () => {
@@ -74,9 +72,9 @@ function ViewProfile() {
 
       {/* Player Profile Card */}
       <Card sx={{ textAlign: "center", border: "1px solid #C02222" }}>
-      <div className="corner-buttons">
-        <OptionButtons />
-      </div>
+        <div className="corner-buttons">
+          <OptionButtons />
+        </div>
         {/* Username */}
         <Typography variant="h1">{user.username}</Typography>
         {/* Profile picture or default profile image */}
@@ -101,9 +99,7 @@ function ViewProfile() {
           <Typography className="grid-left" variant="h3">
             Player Type:
           </Typography>
-          <Typography className="grid-right" variant="h3">
-            Killer (Placeholder)
-          </Typography>
+          <ProfileBartleType />
         </div>
         <LogOutButton />
       </Card>
