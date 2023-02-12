@@ -8,13 +8,14 @@ import Typography from '@mui/material/Typography';
 import { Grid, MenuItem } from '@mui/material';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
-import CardMedia from '@mui/material/CardMedia';
 import Modal from '@mui/material/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import HttpIcon from '@mui/icons-material/Http';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Select from '@mui/material/Select';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const ButtonStyle = makeStyles({
 	viewButton: {
@@ -150,19 +151,33 @@ function AdminPage() {
 			definitionInput,
 			imagePathInput
 		);
-		dispatch({
-			type: 'GLOSSARY/SET_NEW_TERM',
-			payload: {
-				term: autoTermFill,
-				definition: definitionInput,
-				imagePath: imagePathInput,
-			},
-		});
-		dispatch({ type: 'GLOSSARY/FETCH' });
+		if (glossary?.some(obj => obj.term != autoTermFill)) {
+			dispatch({
+				type: 'GLOSSARY/SET_NEW_TERM',
+				payload: {
+					term: autoTermFill,
+					definition: definitionInput,
+					imagePath: imagePathInput,
+				},
+			});
+			<Alert severity='success'>
+				<AlertTitle> Success</AlertTitle>
+				Successfully added new term to glossary! -{' '}
+				<strong> Check it out</strong>
+			</Alert>;
+			dispatch({ type: 'GLOSSARY/FETCH' });
+			setAutoTermFill('');
+			setDefinitionInput('');
+			setImagePathInput('');
+		} else {
+			console.log('Error duplicate');
+			<Alert severity='Error'>
+				<AlertTitle> Error</AlertTitle>
+				Unable to Add a duplicate term to glossary - <strong> Try again</strong>
+			</Alert>;
+		}
+
 		//* Clearing the state values after the Admin clicked on the submit button.
-		setAutoTermFill('');
-		setDefinitionInput('');
-		setImagePathInput('');
 	};
 	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
@@ -205,8 +220,6 @@ function AdminPage() {
 			});
 			setOpen(false);
 			dispatch({ type: 'GLOSSARY/FETCH' });
-			//!This is a way to clear the AutoComplete component's TextField after a term has been successfully deleted from the Database.
-			window.location.reload();
 		}
 	};
 
@@ -301,7 +314,14 @@ function AdminPage() {
 
 	const AddingFields = () => {
 		return (
-			<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
+			<Card
+				sx={{
+					mt: 1,
+					m: 3,
+					border: 'solid 1pt',
+					width: 'calc(100vw-50px)',
+				}}
+				raised={true}>
 				<Box onClick={Autofill}>
 					<Typography
 						variant='h5'
@@ -315,20 +335,24 @@ function AdminPage() {
 					</Typography>
 				</Box>
 				<Box>
-					<FormControl>
+					<FormControl sx={{ minWidth: '100%', gap: 2 }}>
 						<TextField
 							label='name'
 							value={autoTermFill}
-							onChange={handleTermInput}></TextField>
+							onChange={handleTermInput}
+							sx={{ width: '100%' }}
+						/>
 						<TextField
 							label='Definition'
 							value={definitionInput}
 							onChange={handleDefinitionInput}
+							sx={{ width: '100%' }}
 						/>
 						<TextField
 							label='Image'
 							value={imagePathInput}
 							onChange={handleImagePathInput}
+							sx={{ width: '100%' }}
 						/>
 						<Button variant='outlined' onClick={handleTermSubmit}>
 							Submit
@@ -350,22 +374,10 @@ function AdminPage() {
 			</Box>
 		);
 	};
-	const AddButton = () => {
-		return (
-			<Grid>
-				<Button
-					variant='outlined'
-					onClick={handleAdd}
-					className={buttonStyle.addButton}>
-					Add Term
-				</Button>
-			</Grid>
-		);
-	};
 
 	const TermLogic = () => {
 		return (
-			<>
+			<Box>
 				<Typography>Term: {glossaryTerm.term}</Typography>
 				{glossaryTerm.description ? (
 					<Typography> Description: {glossaryTerm.description} </Typography>
@@ -377,7 +389,7 @@ function AdminPage() {
 				) : (
 					<Typography>NO IMAGE AVAILABLE</Typography>
 				)}
-			</>
+			</Box>
 		);
 	};
 
@@ -399,10 +411,10 @@ function AdminPage() {
 		toggleDelete == false
 	) {
 		return (
-			<>
+			<Box>
 				<SearchTermDefault />
 				<AddingFields />
-			</>
+			</Box>
 		);
 	} else if (
 		toggleAdd == false &&
@@ -413,10 +425,10 @@ function AdminPage() {
 		return (
 			<>
 				<SearchTermDefault />
-				<Card sx={{ mt: 4, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Box>
-						<TermLogic />
-					</Box>
+				<Card
+					sx={{ mt: 4, mb: 4, border: 'solid 1pt', width: 'calc(100vw-50px)' }}
+					raised={true}>
+					<TermLogic />
 				</Card>
 			</>
 		);
