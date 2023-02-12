@@ -198,7 +198,7 @@ function AdminPage() {
 			console.log('Clicked on the delete confirm button!');
 			dispatch({
 				type: 'GLOSSARY/DELETE_TERM',
-				payload: { id: glossaryTerm[0].id },
+				payload: { id: glossaryTerm.id },
 			});
 			setOpen(false);
 			dispatch({ type: 'GLOSSARY/FETCH' });
@@ -495,7 +495,7 @@ function AdminPage() {
 							</Typography>
 						</Box>
 						<Typography id='modal-description' sx={{ m: 2 }}>
-							Are you sure you want to delete "{glossaryTerm[0].term}" from the
+							Are you sure you want to delete "{glossaryTerm.term}" from the
 							glossary?
 						</Typography>
 						<Grid container gap={4} alignItems='center' justifyContent='center'>
