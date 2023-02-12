@@ -1,99 +1,83 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import TabContext from '@mui/lab/TabContext';
+import * as React from "react";
+import { Card, Tab, Box } from "@mui/material";
+import { TabList, TabContext, TabPanel } from "@mui/lab";
 
-import Wishlist from '../CollectionWishlist/CollectionWishlist';
-import Played from '../CollectionPlayed/CollectionPlayed';
-import Glossary from '../CollectionGlossary/CollectionGlossary';
+import Wishlist from "../CollectionWishlist/CollectionWishlist";
+import Played from "../CollectionPlayed/CollectionPlayed";
+import Glossary from "../CollectionGlossary/CollectionGlossary";
 
 export default function Collection() {
-	const [value, setValue] = React.useState('wishlist');
+  const [value, setValue] = React.useState("wishlist");
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-	return (
-		<Box sx={{ m: -6 }} position='static'>
-			<TabContext value={value}>
-				<Box>
-					<TabList
-						centered
-						sx={{
-							background: '#C02222',
-							indicatorColor: '#000000',
-							position: 'fixed',
-							top: 60,
-							left: 0,
-							right: 0,
-							zIndex: 1,
-							width: 'calc(100vw- 50px)',
-							justifyContent: 'space-around',
-						}}
-						onChange={handleChange}>
-						<Tab
-							sx={{ padding: '0px 20px 0px' }}
-							label='Wishlist'
-							value='wishlist'
-						/>
-						<Tab
-							sx={{ padding: '0px 20px 0px' }}
-							label='Played'
-							value='played'
-						/>
-						<Tab
-							sx={{ padding: '0px 20px 0px' }}
-							label='Glossary'
-							value='glossary'
-						/>
-					</TabList>
-				</Box>
-				<TabPanel
-					value='wishlist'
-					sx={{
-						height: 640,
-						position: 'fixed',
-						left: 20,
-						right: 20,
-						top: 100,
-						overflowY: 'scroll',
-					}}>
-					<Box>
-						<Wishlist />
-					</Box>
-				</TabPanel>
+  const tabPanelStyles = {
+    width: "85vw",
+    height: "calc(100vh - 200px)",
+    p: "0.6rem",
+    left: 0,
+    right: 0,
+    mx: "auto",
+    position: "absolute",
+    top: 110,
+    overflowY: "scroll",
+    overflowX: "hidden",
+  };
 
-				<TabPanel
-					value='played'
-					sx={{
-						height: 600,
-						position: 'fixed',
-						left: 20,
-						right: 20,
-						top: 100,
-						overflowY: 'scroll',
-					}}>
-					<Played />
-				</TabPanel>
+  return (
+    <Box>
+      <TabContext value={value}>
+        <Box sx={{ position: "relative" }}>
+          <TabList
+            centered
+            sx={{
+              background: "#C02222",
+              indicatorColor: "#000000",
+              position: "fixed",
+              top: 60,
+              left: 0,
+              right: 0,
+              zIndex: 1,
+              width: "calc(100vw- 20px)",
+              justifyContent: "space-evenly",
+            }}
+            onChange={handleChange}
+          >
+            <Tab
+              sx={{ padding: "0px 20px 0px" }}
+              label="Wishlist"
+              value="wishlist"
+            />
+            <Tab
+              sx={{ padding: "0px 20px 0px" }}
+              label="Played"
+              value="played"
+            />
+            <Tab
+              sx={{ padding: "0px 20px 0px" }}
+              label="Glossary"
+              value="glossary"
+            />
+          </TabList>
+        </Box>
+        <TabPanel value="wishlist" sx={tabPanelStyles}>
+          <Box sx={{ pb: "20px" }}>
+            <Wishlist />
+          </Box>
+        </TabPanel>
 
-				<TabPanel
-					value='glossary'
-					sx={{
-						height: 600,
-						position: 'fixed',
-						left: 20,
-						right: 20,
-						top: 100,
-						overflowY: 'scroll',
-					}}>
-					<Glossary />
-				</TabPanel>
-			</TabContext>
-		</Box>
-	);
+        <TabPanel value="played" sx={tabPanelStyles}>
+          <Box sx={{ pb: "20px" }}>
+            <Played />
+          </Box>
+        </TabPanel>
+
+        <TabPanel value="glossary" sx={tabPanelStyles}>
+          <Glossary />
+        </TabPanel>
+      </TabContext>
+    </Box>
+  );
 }
