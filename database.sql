@@ -320,7 +320,7 @@ INSERT INTO "survey_questions"
 --Initial glossary terminology (term , description, img_path)
 UPDATE "glossary" 
 SET "description" = '4X is a subgenre of strategy-based computer and board games, and include both turn-based and real-time strategy titles. The gameplay involves building an empire. Emphasis is placed upon economic and technological development, as well as a range of military and non-military routes to supremacy.', "img_path" = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Freeciv-net-screenshot-2011-06-23.png/700px-Freeciv-net-screenshot-2011-06-23.png'
-WHERE 'term' = '4X';
+WHERE "term" = '4X';
 
 UPDATE "glossary" 
 SET "description" = 'A platformer, or platform video game, is one that traditionally features two-dimensional graphics in which players control characters who jump or climb between different platforms on the screen. Its a subgenre of the Action category, which is one of the many different types of video games.', "img_path" = 'https://upload.wikimedia.org/wikipedia/commons/3/38/Supertux010.jpg'
@@ -382,5 +382,5 @@ WHERE "term" = '3D';
 
 
 UPDATE "glossary" 
-SET "description" = '2D games use flat graphics, called sprites, and don't have three-dimensional geometry. They're drawn to the screen as flat images, and the camera (orthographic camera) has no perspective.', "img_path" = 'https://i.ytimg.com/vi/9RMvuYre7KI/maxresdefault.jpg'
+SET "description" = '2D games use flat graphics, called sprites, and don''t have three-dimensional geometry. They''re drawn to the screen as flat images, and the camera (orthographic camera) has no perspective.', "img_path" = 'https://i.ytimg.com/vi/9RMvuYre7KI/maxresdefault.jpg'
 WHERE "term" = '2D';
