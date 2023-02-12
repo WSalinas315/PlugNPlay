@@ -68,13 +68,13 @@ export default function ProfileBartleType() {
     const highestType = Object.keys(highestScore)[0];
 
     // set Bartle type
-    setBartleType(bartleScores[highestType].type);
+    setBartleType(bartleScores[highestType]?.type);
   }
 
   return (
     <div>
       <Typography className="grid-right" variant="h3">
-        {bartleType}
+        {bartleType ?? 'None'}
       </Typography>
     </div>
   )
