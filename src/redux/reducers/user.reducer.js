@@ -31,8 +31,17 @@ const userPlayedList = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+const userScores = (state = [], { type, payload }) => {
+  return {
+    'USER/SET_SCORES': payload,
+    'USER/CLEAR_SCORES': [],
+    'UNSET_USER': []
+  }[type] || state;
+}
+
 export const userLists = combineReducers({
   userWishlist,
   userIgnorelist,
   userPlayedList,
+  userScores
 });

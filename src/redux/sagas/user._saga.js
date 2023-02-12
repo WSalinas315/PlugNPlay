@@ -33,45 +33,45 @@ function* fetchUser() {
 
 function* fetchWishlist() {
   try {
-    const { data: wishlist } = yield axios.get('/api/games/wishlist/')
+    const { data: wishlist } = yield axios.get('/api/games/wishlist/');
     yield put({
       type: 'USER/SET_WISHLIST',
       payload: wishlist
-    })
+    });
   } catch (err) {
-    handleErrors('Fetch wishlist failed', err)
+    handleErrors('Fetch wishlist failed', err);
   }
 }
 
 function* fetchIgnorelist() {
   try {
-    const { data: ignorelist } = yield axios.get('/api/games/ignorelist/')
+    const { data: ignorelist } = yield axios.get('/api/games/ignorelist/');
     yield put({
       type: 'USER/SET_IGNORELIST',
       payload: ignorelist
-    })
+    });
   } catch (err) {
-    handleErrors('Fetch ignorelist failed', err)
+    handleErrors('Fetch ignorelist failed', err);
   }
 }
 
 function* fetchPlayedList() {
   try {
-    const { data: playedList } = yield axios.get('/api/games/played/')
+    const { data: playedList } = yield axios.get('/api/games/played/');
     yield put({
       type: 'USER/SET_PLAYED_LIST',
       payload: playedList
-    })
+    });
   } catch (err) {
-    handleErrors('Fetch played list failed', err)
+    handleErrors('Fetch played list failed', err);
   }
 }
 
 function* fetchAllLists() {
   try {
-    yield put({ type: 'USER/FETCH_WISHLIST' })
-    yield put({ type: 'USER/FETCH_IGNORELIST' })
-    yield put({ type: 'USER/FETCH_PLAYED_LIST' })
+    yield put({ type: 'USER/FETCH_WISHLIST' });
+    yield put({ type: 'USER/FETCH_IGNORELIST' });
+    yield put({ type: 'USER/FETCH_PLAYED_LIST' });
   } catch (err) {
     console.log('error fetching all lists');
   }
@@ -79,12 +79,24 @@ function* fetchAllLists() {
 
 function* editProfilePicture({ payload }) {
   try {
-    yield axios.put('/api/user/profilePicture', payload)
-    yield put({ type: 'FETCH_USER' })
+    yield axios.put('/api/user/profilePicture', payload);
+    yield put({ type: 'FETCH_USER' });
   } catch (err) {
-    handleErrors('Changing profile picture failed', err)
+    handleErrors('Changing profile picture failed', err);
   }
+}
 
+// fetch user genre and tag ratings
+function* fetchScores() {
+  try {
+    const { data: scores } = yield axios.get('/api/user/scores');
+    yield put({
+      type: 'USER/SET_SCORES',
+      payload: scores.userGenreScores
+    });
+  } catch (err) {
+    handleErrors('Fetch played list failed', err);
+  }
 }
 
 function* userSaga() {
@@ -93,7 +105,7 @@ function* userSaga() {
   yield takeLatest('USER/FETCH_IGNORELIST', fetchIgnorelist);
   yield takeLatest('USER/FETCH_PLAYED_LIST', fetchPlayedList);
   yield takeLatest('USER/FETCH_ALL_LISTS', fetchAllLists);
-  
+  yield takeLatest('USER/FETCH_SCORES', fetchScores);
   yield takeLatest('USER/EDIT_PROFILE_PICTURE', editProfilePicture);
 }
 
