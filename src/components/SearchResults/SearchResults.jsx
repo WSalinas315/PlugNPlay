@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Card, Typography } from '@mui/material';
+import { fontWeight, padding } from '@mui/system';
 
 export default function SearchResults() {
 
@@ -24,7 +25,7 @@ export default function SearchResults() {
 
   return (
     <div className='results-container'>
-      <h1>Search Results</h1>
+      <Typography variant="h1" sx={{ textAlign: "center", marginBottom: "15px", fontWeight: "bold" }}>Search Results</Typography>
       {searchResults?.map(result => (
         <Card onClick={() => viewDetails(result)} sx={{border:'solid 1px'}}>
           <div className="two-column-grid">
@@ -32,7 +33,7 @@ export default function SearchResults() {
               <Typography variant='h5'>{result.name}</Typography>
               <Typography variant='body2'>{result.released}</Typography>
             </div>
-            <img className="grid-right" src={result.background_image} height='75px' />
+            <img className="grid-right" src={result.background_image} height='65px' />
           </div>
         </Card>
       ))}
