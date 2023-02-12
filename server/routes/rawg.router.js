@@ -13,7 +13,6 @@ const keyUrl = ("key=" + key);
 // GET BY NAME
 
 router.get('/byName/:name', async (req, res) => {
-
   const { name } = req.params;
 
   try {
@@ -53,10 +52,26 @@ router.get('/byGenre/:genre', async (req, res) => {
   console.log('searching for genre', genre, '...');
   try {
     const { data: games } = await axios.get(`https://api.rawg.io/api/games?genres=${genre}&${keyUrl}&page_size=40`)
+    console.log('RAWG GENRE SEARCH RESULTS', games);
     res.send(games)
   } catch (err) {
     console.log(err)
     res.sendStatus(500)
+  }
+})
+
+// ==========================================================================================
+// GET GENRE LIST
+
+router.get('/genreList', async (req, res) => {
+
+  try {
+    const { data: games } = await axios.get(`https://api.rawg.io/api/genres?${keyUrl}`);
+    console.log('genres results from RAWG', games);
+    res.send(games);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
   }
 })
 
