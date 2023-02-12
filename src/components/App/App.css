@@ -15,6 +15,20 @@ img {
   max-width: 100%;
 }
 
+.center-on-page {
+  height: 80vh;
+  display: grid;
+  place-items: center;
+}
+
+.plain-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  margin: 0.5rem;
+  gap: 0.6rem;
+}
+
 .two-column-grid {
   display: grid;
   grid-template-columns: 1fr 0.5fr;

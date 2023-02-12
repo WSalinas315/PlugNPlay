@@ -59,7 +59,7 @@ export const LikeDislikeButton = ({ gameID, liked, action }) => {
 
   return (
     <>
-      <IconButton {...buttonProps} variant="contained" onClick={handleClick}>
+      <IconButton variant="contained" onClick={handleClick}>
         <Icon />
       </IconButton>
     </>
@@ -114,7 +114,7 @@ export const GameListButton = ({ gameID, list, action }) => {
 
   return (
     <>
-      <Button {...buttonProps} onClick={handleClick} startIcon={icon}>
+      <Button onClick={handleClick} startIcon={icon}>
         {text}
       </Button>
     </>
