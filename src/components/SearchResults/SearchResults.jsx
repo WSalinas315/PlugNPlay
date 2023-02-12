@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, FormControl, TextField } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import { Button, Card, Typography } from '@mui/material';
 
 export default function SearchResults() {
 
   // initialize dispatch
   const dispatch = useDispatch();
 
-  // fetches subtypes from database
-  useEffect(() => {
-    dispatch({ type: 'RAWG/FETCH_GENRE_LIST' });
-  }, []);
-
-  // Initialize local states for search criteria
-  const [gameTitle, setGameTitle] = useState('');
+  // initialize history
+  const history = useHistory();
 
   // initialize variables from store
-  const genreList = useSelector(store => store.games.genreList.results);
+  const searchResults = useSelector(store => store.games.searchResults.results);
 
-  const searchByName = () => {
+  // View a detailed page for the game that is clicked on
+  const viewDetails = (result) => {
     // Clear current search results
-    dispatch({ type: 'GAME/CLEAR_SEARCH_RESULTS' });
-    // Query RAWG for titles using current input
-    dispatch({ type: 'RAWG/SEARCH_BY_NAME', payload: gameTitle });
+    dispatch({ type: 'GAME/CLEAR_CURRENT' });
+    dispatch({ type: 'GAME/FETCH_CURRENT_GAME', payload: result.id });
+    history.push(`/games/${result.id}`);
   }
 
-
-
   return (
-    <>
-
-    </>
+    <div className='results-container'>
+      <h1>Search Results</h1>
+      {searchResults?.map(result => (
+        <Card onClick={() => viewDetails(result)} sx={{border:'solid 1px'}}>
+          <div className="two-column-grid">
+            <div className="grid-left">
+              <Typography variant='h5'>{result.name}</Typography>
+              <Typography variant='body2'>{result.released}</Typography>
+            </div>
+            <img className="grid-right" src={result.background_image} height='75px' />
+          </div>
+        </Card>
+      ))}
+    </div>
   );
 }

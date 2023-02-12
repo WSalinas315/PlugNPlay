@@ -11,6 +11,9 @@ export default function ViewSearch() {
   // initialize dispatch
   const dispatch = useDispatch();
 
+  // initialize history
+  const history = useHistory();
+
   // fetches subtypes from database
   useEffect(() => {
     dispatch({ type: 'RAWG/FETCH_GENRE_LIST' });
@@ -28,6 +31,7 @@ export default function ViewSearch() {
     dispatch({ type: 'GAME/CLEAR_SEARCH_RESULTS' });
     // Query RAWG for titles using current input
     dispatch({ type: 'RAWG/SEARCH_BY_NAME', payload: gameTitle });
+    history.push(`/searchresults/${gameTitle}`);
   }
 
   const searchByGenre = () => {
@@ -35,6 +39,7 @@ export default function ViewSearch() {
     dispatch({ type: 'GAME/CLEAR_SEARCH_RESULTS' });
     // Query RAWG by Genre
     dispatch({ type: 'RAWG/SEARCH_BY_GENRE', payload: gameGenre });
+    history.push(`/searchresults/${gameGenre}`);
   }
 
   return (
