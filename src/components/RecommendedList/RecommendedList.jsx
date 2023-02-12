@@ -24,7 +24,7 @@ export default function RecommendedList() {
 
   return recommendations.length > 0 ? (
     <div className="center-on-page">
-      <Card sx={{ border: "1px solid", borderColor: "#dddddd", py: "1.5rem" }}>
+      <Card sx={{ border: "1px solid", borderColor: "#dddddd", py: "1.5rem", maxWidth: '100%' }}>
         <Heading1 sx={{ textAlign: "center" }}>Recommended for You</Heading1>
         <SwipeBox games={recommendations} />
       </Card>

@@ -174,12 +174,12 @@ export default function SwipeBox(props) {
       const boxStyle = {
         position: "relative",
         aspectRatio: "1/1",
-        height: "300px",
+        height: "280px",
         border: "1px solid black",
         background: "#ccc",
         padding: "20px",
         fontSize: "1em",
-        margin: "20px",
+        margin: "10px",
         backgroundImage: `url(${thisGame.gameData.background_image})`,
         objectFit: "cover",
         backgroundSize: "cover",
@@ -266,7 +266,7 @@ export default function SwipeBox(props) {
               draggable="true"
               style={boxStyle}
             >
-              <span class="game-splash-title">{thisGame.gameData.name}</span>
+              <span className="game-splash-title">{thisGame.gameData.name}</span>
             </div>
           </Swipe>
 
