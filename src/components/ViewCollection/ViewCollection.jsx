@@ -5,6 +5,7 @@ import { TabList, TabContext, TabPanel } from "@mui/lab";
 import Wishlist from "../CollectionWishlist/CollectionWishlist";
 import Played from "../CollectionPlayed/CollectionPlayed";
 import Glossary from "../CollectionGlossary/CollectionGlossary";
+import './ViewCollection.css';
 
 export default function Collection() {
   const [value, setValue] = React.useState("wishlist");
@@ -24,14 +25,18 @@ export default function Collection() {
     top: 110,
     overflowY: "scroll",
     overflowX: "hidden",
+
   };
 
   return (
     <Box>
       <TabContext value={value}>
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", width: "100vw" }}>
           <TabList
             centered
+            TabIndicatorProps={{
+            style: { background: "#fff", height: "5px", bottom: "1px"}
+            }}
             sx={{
               background: "#C02222",
               indicatorColor: "#000000",
@@ -40,23 +45,24 @@ export default function Collection() {
               left: 0,
               right: 0,
               zIndex: 1,
-              width: "calc(100vw- 20px)",
-              justifyContent: "space-evenly",
+              width: "100vw",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
             onChange={handleChange}
           >
             <Tab
-              sx={{ padding: "0px 20px 0px" }}
+            sx={{display: "flex",}}
               label="Wishlist"
               value="wishlist"
             />
             <Tab
-              sx={{ padding: "0px 20px 0px" }}
+            sx={{display: "flex",}}
               label="Played"
               value="played"
             />
             <Tab
-              sx={{ padding: "0px 20px 0px" }}
+            sx={{display: "flex",}}
               label="Glossary"
               value="glossary"
             />
