@@ -18,7 +18,6 @@ import {
 
 import SnackbarAlert from "../SnackbarAlert/SnackbarAlert";
 import ParagraphText from "../ParagraphText/ParagraphText";
-import Heading2 from "../Headings/Heading2";
 import { useGameByID } from "../../hooks/storeHooks";
 
 import "./SwipeBox.css";
@@ -215,39 +214,36 @@ export default function SwipeBox(props) {
               <>
                 <DialogTitle>{thisGame?.gameData.name}</DialogTitle>
                 <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    <div
-                      style={{
-                        fontWeight: "bold",
-                        color: `${
-                          thisGame?.gameScore >= 0.7
-                            ? "green"
-                            : thisGame?.gameScore >= 0.4
-                            ? "darkorange"
-                            : "red"
-                        }`,
-                      }}
+                  <div
+                    style={{
+                      fontWeight: "bold",
+                      color: `${
+                        thisGame?.gameScore >= 0.7
+                          ? "green"
+                          : thisGame?.gameScore >= 0.4
+                          ? "darkorange"
+                          : "red"
+                      }`,
+                    }}
+                  >
+                    {Number((thisGame?.gameScore * 100).toFixed(1)) + "% Match"}
+                  </div>
+                  <ParagraphText>
+                    {game.description_raw?.length > 200
+                      ? game.description_raw?.substring(0, 199) + "..."
+                      : game.description_raw}
+                  </ParagraphText>
+                  <div style={buttonBoxStyle}>
+                    <Button
+                      sx={buttonStyle}
+                      onClick={() =>
+                        history.push(`/games/${thisGame?.gameData.id}`)
+                      }
+                      variant="outlined"
                     >
-                      {Number((thisGame?.gameScore * 100).toFixed(1)) +
-                        "% Match"}
-                    </div>
-                    <ParagraphText>
-                      {game.description_raw?.length > 200
-                        ? game.description_raw?.substring(0, 199) + "..."
-                        : game.description_raw}
-                    </ParagraphText>
-                    <div style={buttonBoxStyle}>
-                      <Button
-                        sx={buttonStyle}
-                        onClick={() =>
-                          history.push(`/games/${thisGame?.gameData.id}`)
-                        }
-                        variant="outlined"
-                      >
-                        Details
-                      </Button>
-                    </div>
-                  </DialogContentText>
+                      Details
+                    </Button>
+                  </div>
                 </DialogContent>
               </>
             ) : (
@@ -266,7 +262,9 @@ export default function SwipeBox(props) {
               draggable="true"
               style={boxStyle}
             >
-              <span className="game-splash-title">{thisGame.gameData.name}</span>
+              <span className="game-splash-title">
+                {thisGame.gameData.name}
+              </span>
             </div>
           </Swipe>
 
