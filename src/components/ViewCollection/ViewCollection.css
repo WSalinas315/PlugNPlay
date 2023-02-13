@@ -6,4 +6,5 @@
 
 .MuiTab-root {
     font-size: 18px;
+    width:calc(100% / 3);
 }
