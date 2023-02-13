@@ -14,8 +14,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import HttpIcon from '@mui/icons-material/Http';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Select from '@mui/material/Select';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+
+import Heading3 from '../Headings/Heading3';
+import Heading1 from '../Headings/Heading1';
 
 const ButtonStyle = makeStyles({
 	viewButton: {
@@ -160,24 +161,14 @@ function AdminPage() {
 					imagePath: imagePathInput,
 				},
 			});
-			<Alert severity='success'>
-				<AlertTitle> Success</AlertTitle>
-				Successfully added new term to glossary! -{' '}
-				<strong> Check it out</strong>
-			</Alert>;
-			dispatch({ type: 'GLOSSARY/FETCH' });
 			setAutoTermFill('');
+			setSelectedTerm('');
 			setDefinitionInput('');
 			setImagePathInput('');
 		} else {
 			console.log('Error duplicate');
-			<Alert severity='Error'>
-				<AlertTitle> Error</AlertTitle>
-				Unable to Add a duplicate term to glossary - <strong> Try again</strong>
-			</Alert>;
+			//* Clearing the state values after the Admin clicked on the submit button.
 		}
-
-		//* Clearing the state values after the Admin clicked on the submit button.
 	};
 	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
@@ -250,10 +241,8 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Typography sx={{ marginLeft: 2, marginTop: 1, marginBottom: -1 }}>
-						Please select a term to Modify
-					</Typography>
-					<Box sx={{ margin: 2 }}>
+					<Heading1 sx={{ textAlign: 'center' }}>Manage Glossary</Heading1>
+					<Box sx={{ textAlign: 'center', margin: 2 }}>
 						<Select
 							onChange={handleChange}
 							value={selectedTerm}
@@ -274,18 +263,12 @@ function AdminPage() {
 							})}
 						</Select>
 					</Box>
-					<Grid
-						container
-						gap={3}
-						alignItems='center'
-						justify-content='space-around'
-						margin={2}>
-						<Button
-							variant='outlined'
-							onClick={handleEdit}
-							className={buttonStyle.editButton}>
-							Edit
-						</Button>
+					<Box
+						sx={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							justifyContent: 'center',
+						}}>
 						<Button
 							variant='outlined'
 							onClick={handleView}
@@ -294,19 +277,24 @@ function AdminPage() {
 						</Button>
 						<Button
 							variant='outlined'
+							onClick={handleEdit}
+							className={buttonStyle.editButton}>
+							Edit
+						</Button>
+
+						<Button
+							variant='outlined'
 							onClick={handleDelete}
 							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-						<Grid>
-							<Button
-								variant='outlined'
-								onClick={handleAdd}
-								className={buttonStyle.addButton}>
-								Add Term
-							</Button>
-						</Grid>
-					</Grid>
+						<Button
+							variant='outlined'
+							onClick={handleAdd}
+							className={buttonStyle.addButton}>
+							Add Term
+						</Button>
+					</Box>
 				</Card>
 			</Box>
 		);
@@ -378,11 +366,13 @@ function AdminPage() {
 	const TermLogic = () => {
 		return (
 			<Box>
-				<Typography>Term: {glossaryTerm.term}</Typography>
+				<Heading3 sx={{ textAlign: 'center' }} fontSx={{ fontWeight: 400 }}>
+					{glossaryTerm.term}
+				</Heading3>
 				{glossaryTerm.description ? (
-					<Typography> Description: {glossaryTerm.description} </Typography>
+					<Typography>{glossaryTerm.description}</Typography>
 				) : (
-					<Typography>Description: No Description is Available.</Typography>
+					<Typography>No Description</Typography>
 				)}
 				{glossaryTerm.img_path ? (
 					<img src={glossaryTerm.img_path} />
@@ -426,10 +416,14 @@ function AdminPage() {
 			<>
 				<SearchTermDefault />
 				<Card
-					sx={{ mt: 4, mb: 4, border: 'solid 1pt', width: 'calc(100vw-50px)' }}
+					sx={{
+						border: 'solid 1pt',
+						margin: '24px',
+					}}
 					raised={true}>
 					<TermLogic />
 				</Card>
+				<div className='foot-spacer' />
 			</>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
@@ -554,6 +548,7 @@ function AdminPage() {
 						<EditSubmitBtn />
 					</Card>
 				</Box>
+				<div className='foot-spacer' />
 			</Box>
 		);
 	}

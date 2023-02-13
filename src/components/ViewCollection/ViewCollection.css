@@ -1,0 +1,9 @@
+.MuiTab-root.Mui-selected {
+    color: #fff;
+    background-color: #da4141;
+}
+
+.MuiTab-root {
+    font-size: 18px !important;
+    width:calc(100% / 3);
+}
