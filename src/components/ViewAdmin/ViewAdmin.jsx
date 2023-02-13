@@ -15,8 +15,8 @@ import HttpIcon from '@mui/icons-material/Http';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Select from '@mui/material/Select';
 
-import Heading3 from '../Headings/Heading3'
-import Heading1 from '../Headings/Heading1'
+import Heading3 from '../Headings/Heading3';
+import Heading1 from '../Headings/Heading1';
 
 const ButtonStyle = makeStyles({
 	viewButton: {
@@ -241,7 +241,7 @@ function AdminPage() {
 					width: 'calc(100vw- 50px)',
 				}}>
 				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-          <Heading1 sx={{ textAlign: 'center' }}>Manage Glossary</Heading1>
+					<Heading1 sx={{ textAlign: 'center' }}>Manage Glossary</Heading1>
 					<Box sx={{ textAlign: 'center', margin: 2 }}>
 						<Select
 							onChange={handleChange}
@@ -264,9 +264,12 @@ function AdminPage() {
 						</Select>
 					</Box>
 					<Box
-            sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-          >
-            <Button
+						sx={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							justifyContent: 'center',
+						}}>
+						<Button
 							variant='outlined'
 							onClick={handleView}
 							className={buttonStyle.viewButton}>
@@ -285,12 +288,12 @@ function AdminPage() {
 							className={buttonStyle.deleteButton}>
 							Delete
 						</Button>
-							<Button
-								variant='outlined'
-								onClick={handleAdd}
-								className={buttonStyle.addButton}>
-								Add Term
-							</Button>
+						<Button
+							variant='outlined'
+							onClick={handleAdd}
+							className={buttonStyle.addButton}>
+							Add Term
+						</Button>
 					</Box>
 				</Card>
 			</Box>
@@ -363,7 +366,9 @@ function AdminPage() {
 	const TermLogic = () => {
 		return (
 			<Box>
-				<Heading3 sx={{ textAlign: 'center' }} fontSx={{ fontWeight: 400}} >{glossaryTerm.term}</Heading3>
+				<Heading3 sx={{ textAlign: 'center' }} fontSx={{ fontWeight: 400 }}>
+					{glossaryTerm.term}
+				</Heading3>
 				{glossaryTerm.description ? (
 					<Typography>{glossaryTerm.description}</Typography>
 				) : (
@@ -413,12 +418,12 @@ function AdminPage() {
 				<Card
 					sx={{
 						border: 'solid 1pt',
-            margin: '24px'
+						margin: '24px',
 					}}
 					raised={true}>
 					<TermLogic />
 				</Card>
-        <div className="foot-spacer" />
+				<div className='foot-spacer' />
 			</>
 		);
 		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
@@ -543,6 +548,7 @@ function AdminPage() {
 						<EditSubmitBtn />
 					</Card>
 				</Box>
+				<div className='foot-spacer' />
 			</Box>
 		);
 	}
