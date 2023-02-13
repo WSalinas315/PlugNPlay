@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
+
+import { Button, TextField } from '@mui/material';
 import './LoginForm.css';
+
+import Heading1 from '../Headings/Heading1';
+import Heading2 from '../Headings/Heading2';
+import Heading3 from '../Headings/Heading3';
+
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,11 +35,11 @@ function LoginForm() {
 
   return (
     <form className="formPanel" onSubmit={login}>
-      <h2>Login</h2>
+      <Heading1>Log In</Heading1>
       {errors.loginMessage && (
-        <h3 className="alert" role="alert">
+        <Heading3 className="alert" role="alert">
           {errors.loginMessage}
-        </h3>
+        </Heading3>
       )}
       <div className='formItem'>
           <TextField id="outlined-basic" label="Username" value={username} onChange={(event) => setUsername(event.target.value)} variant="outlined" />
@@ -42,10 +48,12 @@ function LoginForm() {
         <TextField type="password" id="outlined-basic" label="Password" value={password} onChange={(event) => setPassword(event.target.value)} variant="outlined" />
       </div>
       <div className='formItem'>
-        <input className="btn login-btn" type="submit" name="submit" value="Log In" />
+        <Button sx={{ width: '150px' }} variant="contained" type="submit" name="submit">
+          Log In
+        </Button>
       </div>
       <div className='formItem'>
-      <button
+      <Button
           type="button"
           className="btn register-btn"
           onClick={() => {
@@ -53,7 +61,7 @@ function LoginForm() {
           }}
         >
           Register
-        </button>
+        </Button>
         </div>
     </form>
   );

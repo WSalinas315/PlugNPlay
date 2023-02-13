@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import TextField from '@material-ui/core/TextField';
+import { Button, TextField } from '@mui/material';
 import './RegisterForm.css'
+
+import Heading1 from '../Headings/Heading1';
+import Heading3 from '../Headings/Heading3';
 
 function RegisterForm() {
   const [username, setUsername] = useState('')
@@ -25,11 +28,11 @@ function RegisterForm() {
 
   return (
     <form className="formPanel" onSubmit={registerUser}>
-      <h2>Register</h2>
+      <Heading1>Register</Heading1>
       {errors.registrationMessage && (
-        <h3 className="alert" role="alert">
+        <Heading3 fontSx={{ color: 'red' }}>
           {errors.registrationMessage}
-        </h3>
+        </Heading3>
       )}
       <div className="formItem">
         <TextField
@@ -51,15 +54,16 @@ function RegisterForm() {
         />
       </div>
       <div className="formItem">
-        <input
-          className="btn login-btn"
+        <Button
+          sx={{ width: '150px' }}
+          variant="contained"
           type="submit"
-          name="submit"
-          value="Register"
-        />
+          name="submit">
+            Register
+          </Button>
       </div>
       <div className="formItem">
-        <button
+        <Button
           type="button"
           className="btn register-btn"
           onClick={() => {
@@ -67,7 +71,7 @@ function RegisterForm() {
           }}
         >
           Back
-        </button>
+        </Button>
       </div>
     </form>
   )
