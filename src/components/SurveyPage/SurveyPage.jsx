@@ -13,7 +13,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Button } from "@mui/material";
+import { Box, Button, LinearProgress } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 
 import Heading3 from "../Headings/Heading3";
@@ -24,6 +24,7 @@ export default function SurveyPage() {
   const { id } = useParams();
   const history = useHistory();
   const surveyQuestion = useSelector((store) => store.survey.surveyQuestions);
+
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -37,6 +38,10 @@ export default function SurveyPage() {
   useEffect(() => {
     dispatch({ type: "SURVEY/FETCH" });
   }, []);
+
+  const progress = () => {
+    return Math.round(((id - 1) / surveyQuestion.length) * 100)
+  }
 
   const nextPage = () => {
     console.log("in nextpage");
@@ -89,7 +94,9 @@ export default function SurveyPage() {
       >
         More Info
       </Button>
-    ) : ( "" )
+    ) : (
+      ""
+    );
   };
 
   const surveyAutofill = () => {
@@ -181,7 +188,6 @@ export default function SurveyPage() {
             {surveyQuestion[Number(id) - 1]?.question}
           </Heading3>
         </div>
-
         <MoreInfoButton />
 
         <SurveyOptions page={id} />
@@ -206,6 +212,9 @@ export default function SurveyPage() {
         <SurveyPrevButton />
         <SurveyNextButton />
       </div>
+      <Box sx={{ width: "90%", mt: "1.2rem", mx: "auto" }}>
+        <LinearProgress variant="determinate" value={progress()} />
+      </Box>
     </section>
   );
 }
