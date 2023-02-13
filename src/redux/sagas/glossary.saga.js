@@ -34,6 +34,11 @@ function* PostGlossaryTerm({ payload }) {
 	try {
 		console.log('Payload in glossary saga', payload);
 		yield axios.post('/api/glossary/Add/Term', payload);
+		const { data: glossary } = yield axios.get('/api/glossary');
+		yield put({
+			type: 'GLOSSARY/SET',
+			payload: glossary,
+		});
 	} catch (error) {
 		handleErrors('Posting new glossary term failed', error);
 	}

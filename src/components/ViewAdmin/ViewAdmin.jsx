@@ -165,9 +165,8 @@ function AdminPage() {
 			setImagePathInput('');
 		} else {
 			console.log('Error duplicate');
-		window.location.reload();
-
-		//* Clearing the state values after the Admin clicked on the submit button.
+			//* Clearing the state values after the Admin clicked on the submit button.
+		}
 	};
 	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
@@ -416,7 +415,12 @@ function AdminPage() {
 			<>
 				<SearchTermDefault />
 				<Card
-					sx={{ mt: 4, mb: 4, border: 'solid 1pt', width: 'calc(100vw-50px)' }}
+					sx={{
+						mt: 4,
+						mb: 4,
+						border: 'solid 1pt',
+						width: 'calc(100vw-50px)',
+					}}
 					raised={true}>
 					<TermLogic />
 				</Card>
