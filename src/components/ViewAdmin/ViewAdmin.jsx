@@ -160,22 +160,12 @@ function AdminPage() {
 					imagePath: imagePathInput,
 				},
 			});
-			<Alert severity='success'>
-				<AlertTitle> Success</AlertTitle>
-				Successfully added new term to glossary! -{' '}
-				<strong> Check it out</strong>
-			</Alert>;
-			dispatch({ type: 'GLOSSARY/FETCH' });
 			setAutoTermFill('');
 			setDefinitionInput('');
 			setImagePathInput('');
 		} else {
 			console.log('Error duplicate');
-			<Alert severity='Error'>
-				<AlertTitle> Error</AlertTitle>
-				Unable to Add a duplicate term to glossary - <strong> Try again</strong>
-			</Alert>;
-		}
+		window.location.reload();
 
 		//* Clearing the state values after the Admin clicked on the submit button.
 	};
