@@ -160,24 +160,14 @@ function AdminPage() {
 					imagePath: imagePathInput,
 				},
 			});
-			<Alert severity='success'>
-				<AlertTitle> Success</AlertTitle>
-				Successfully added new term to glossary! -{' '}
-				<strong> Check it out</strong>
-			</Alert>;
-			dispatch({ type: 'GLOSSARY/FETCH' });
 			setAutoTermFill('');
+			setSelectedTerm('');
 			setDefinitionInput('');
 			setImagePathInput('');
 		} else {
 			console.log('Error duplicate');
-			<Alert severity='Error'>
-				<AlertTitle> Error</AlertTitle>
-				Unable to Add a duplicate term to glossary - <strong> Try again</strong>
-			</Alert>;
+			//* Clearing the state values after the Admin clicked on the submit button.
 		}
-
-		//* Clearing the state values after the Admin clicked on the submit button.
 	};
 	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
 	const handleEdit = () => {
@@ -426,7 +416,12 @@ function AdminPage() {
 			<>
 				<SearchTermDefault />
 				<Card
-					sx={{ mt: 4, mb: 4, border: 'solid 1pt', width: 'calc(100vw-50px)' }}
+					sx={{
+						mt: 4,
+						mb: 4,
+						border: 'solid 1pt',
+						width: 'calc(100vw-50px)',
+					}}
 					raised={true}>
 					<TermLogic />
 				</Card>
