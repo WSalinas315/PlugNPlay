@@ -101,8 +101,7 @@ const theme = createTheme({
 				root: {
 					color: '#ffffff',
 					'&.Mui-selected': {
-						color: '#000000',
-						transform: 'scale(1.5)',
+						color: '#fff',
 					},
 				},
 			},
