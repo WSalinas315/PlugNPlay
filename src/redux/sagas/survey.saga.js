@@ -21,6 +21,7 @@ function* postSurveyData({payload}) {
   try {
     yield axios.post('/api/survey/userScores', payload)
     console.log('axios: survey post successful');
+    yield put({ type: 'RAWG/FETCH_RECOMMENDATIONS' })
   } catch (err) {
     handleErrors('Failed to post survey data', err);
   }
