@@ -114,7 +114,7 @@ export const GameListButton = ({ gameID, list, action }) => {
 
   return (
     <>
-      <Button onClick={handleClick} startIcon={icon}>
+      <Button variant="outlined" onClick={handleClick} startIcon={icon}>
         {text}
       </Button>
     </>

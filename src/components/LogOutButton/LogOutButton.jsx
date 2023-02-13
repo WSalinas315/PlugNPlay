@@ -1,13 +1,16 @@
 import { useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
 
 function LogOutButton(props) {
   const dispatch = useDispatch();
   return (
-    <button
+    <Button
+      variant="contained"
+      sx={{ px: '2rem', my: '1.2rem' }}
       onClick={() => dispatch({ type: 'LOGOUT' })}
     >
       Log Out
-    </button>
+    </Button>
   );
 }
 

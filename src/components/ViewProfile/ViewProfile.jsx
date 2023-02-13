@@ -71,7 +71,7 @@ function ViewProfile() {
     <div>
 
       {/* Player Profile Card */}
-      <Card sx={{ textAlign: "center", border: "1px solid #C02222" }}>
+      <Card sx={{ textAlign: "center", border: "1px solid #dddddd" }}>
         <div className="corner-buttons">
           <OptionButtons />
         </div>
@@ -94,8 +94,6 @@ function ViewProfile() {
           <Typography className="grid-right" variant="h3">
             {userLists.userPlayedList.length}
           </Typography>
-          {/* Bartle Player Type */}
-          {/* <ProfileBartleType /> */}
           <Typography className="grid-left" variant="h3">
             Player Type:
           </Typography>
