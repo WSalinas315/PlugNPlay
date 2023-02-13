@@ -161,6 +161,7 @@ function AdminPage() {
 				},
 			});
 			setAutoTermFill('');
+			setSelectedTerm('');
 			setDefinitionInput('');
 			setImagePathInput('');
 		} else {
