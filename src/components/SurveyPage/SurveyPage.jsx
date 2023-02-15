@@ -25,6 +25,7 @@ export default function SurveyPage() {
   const history = useHistory();
   const surveyQuestion = useSelector((store) => store.survey.surveyQuestions);
 
+  // For the 'More info' dialog
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -35,14 +36,18 @@ export default function SurveyPage() {
     setOpen(false);
   };
 
+  // Fetch survey data
   useEffect(() => {
     dispatch({ type: "SURVEY/FETCH" });
   }, []);
 
+  // Survey progress
   const progress = () => {
     return Math.round(((id - 1) / surveyQuestion.length) * 100)
   }
 
+
+  // For changing pages
   const nextPage = () => {
     console.log("in nextpage");
     if (id < 17) {
@@ -60,6 +65,8 @@ export default function SurveyPage() {
   const buttonStyles = {
     px: "1.2rem",
   };
+
+  // Buttons for navigation
 
   const SurveyPrevButton = () => {
     return id > 1 ? (
@@ -98,6 +105,8 @@ export default function SurveyPage() {
       ""
     );
   };
+
+  // Autofill for presentation demonstration
 
   const surveyAutofill = () => {
     history.push("/survey/17");

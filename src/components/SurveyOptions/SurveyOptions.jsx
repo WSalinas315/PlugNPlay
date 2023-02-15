@@ -13,7 +13,6 @@ import { useParams } from 'react-router-dom'
 import { FormControl } from '@material-ui/core'
 
 export default function SurveyOptions(props) {
-  const [sliderValue, setSliderValue] = useState(0);
   const survey = useSelector((store) => store.survey.surveyResults);
   const currentQuestion = props.page;
   const currentScore = survey[currentQuestion - 1].score;
@@ -21,14 +20,7 @@ export default function SurveyOptions(props) {
   const { id } = useParams();
   const surveyQuestion = useSelector((store) => store.survey.surveyQuestions)
 
-
-  console.log(survey)
-  /*
-  useEffect(() => {
-    dispatch({ type: 'SURVEY/FETCH' });
-}, []);
-*/
-
+  // Styling for slider
   const blue = {
     100: '#DAECFF',
     200: '#99CCF3',
@@ -169,82 +161,8 @@ export default function SurveyOptions(props) {
     }
   `,
   )
-    /*
-  const leftLabel = (page) => {
-    switch (page) {
-      case 1:
-        return 'A Single Character'
-      case 2:
-        return 'For Myself'
-      case 3:
-        return 'Work Together'
-      case 4:
-        return 'Easy'
-      case 5:
-        return 'Short'
-      case 6:
-        return 'I like stylized games'
-      case 7:
-        return 'Fantasy'
-      case 8:
-        return 'Immersive'
-      case 9:
-        return 'Fast-paced'
-      case 10:
-        return 'Repeat Activities'
-      case 11:
-        return 'I feel powerful'
-      case 12:
-        return 'Practical skills'
-      case 13:
-        return 'Free to Roam'
-      case 14:
-        return 'Story-driven'
-      case 15:
-        return 'Yes, I like dark themes'
-      default:
-        return ''
-    }
-  }
 
-  const rightLabel = (page) => {
-    switch (page) {
-      case 1:
-        return 'A Simulation'
-      case 2:
-        return 'With Friends'
-      case 3:
-        return 'Compete against each other'
-      case 4:
-        return 'Challenging'
-      case 5:
-        return 'Long'
-      case 6:
-        return 'Not a fan of cartoonish style'
-      case 7:
-        return 'Reality'
-      case 8:
-        return 'Observe from afar'
-      case 9:
-        return 'Slower'
-      case 10:
-        return 'A definitive ending'
-      case 11:
-        return 'I must beat the odds'
-      case 12:
-        return 'Heroic skills'
-      case 13:
-        return 'Having Direction'
-      case 14:
-        return 'Story isn\'t important'
-      case 15:
-        return 'No dark themes'
-      default:
-        return ''
-    }
-  }
-  */
-
+  // Label for slider
   const marks = [
     {
       value: -1,
@@ -291,20 +209,14 @@ export default function SurveyOptions(props) {
     );
   }
 
+  // When value of slider/radio is changed
   const handleChange = (value) => {
-    let questionNum = props.page;
-    setSliderValue(value);
-    dispatch({type: 'SET_SURVEY_ANSWERS', payload: {id: Number(props.page), score: Number(value)}});
-  }
-
-  const handleChangeRadio = (value) => {
-    let questionNum = props.page;
     dispatch({type: 'SET_SURVEY_ANSWERS', payload: {id: Number(props.page), score: Number(value)}});
   }
 
   return (
     // pages 1-17 are slider questions
-    // if page 18-20, show checkbox instead
+    // if page 18-20, show radio instead
     <>
       {/*<h3>Value: {currentScore}</h3>*/}
       <section id="survey-select">
@@ -317,7 +229,6 @@ export default function SurveyOptions(props) {
               marks={marks}
               min={-1}
               max={1}
-              /*onChange={(_, value) => setSliderValue(value)}*/
               onChangeCommitted={(_, value) => handleChange(value)}
               slots={{ valueLabel: SliderValueLabel }}
             />
@@ -328,7 +239,7 @@ export default function SurveyOptions(props) {
             aria-labelledby="radio-buttons-group-label"
             name="radio-buttons-group"
             value={currentScore}
-            onChange={(_, value) => handleChangeRadio(value)}
+            onChange={(_, value) => handleChange(value)}
           >
             <FormControlLabel value={1} control={<Radio sx={{
         '& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)':
