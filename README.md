@@ -10,9 +10,12 @@ Discovering new video games and navigating online storefronts full of jargon can
 1. Clone this repo
 2. Navigate to the repo directory in the terminal
 3. `npm install`
-4. Create a .env file in the root of the project and enter this: `SERVER_SESSION_SECRET=superDuperSecret`
-5. Replace superDuperSecret with your own random string
-6. Create the database according to the database.sql file.
+4. Obtain a RAWG.io API key from https://rawg.io/apidocs
+5. Create a .env file in the root of the project and enter the following: 
+    `SERVER_SESSION_SECRET=superDuperSecret`
+    `RAWG_API_KEY=YourAPIKey`
+6. Replace superDuperSecret with your own random string and YourAPIKey with the key obtained in step 4
+7. Create the database according to the database.sql file.
 
 ## Usage
 1. Start postgres if it isn’t started already
