@@ -31,7 +31,7 @@ export default function ProfileBartleType() {
 
   // pull genre names and scores out of user genre data from table and rename genres with dashes
   const filterScores = (userGenres) => {
-    console.log('USER GENRES', userGenres);
+    //console.log('USER GENRES', userGenres);
     for (let item of userGenres) {
       if (item.genre_name == "massively-multiplayer") {
         genres['mmo'] = item.score;
