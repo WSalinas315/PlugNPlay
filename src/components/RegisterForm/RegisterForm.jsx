@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import './RegisterForm.css'
-
+import './RegisterForm.css';
 import Heading1 from '../Headings/Heading1';
 import Heading3 from '../Headings/Heading3';
 
 function RegisterForm() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const errors = useSelector((store) => store.errors)
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const errors = useSelector((store) => store.errors);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  // Actions upon submitting the registration form
   const registerUser = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     dispatch({
       type: 'REGISTER',
@@ -24,7 +24,8 @@ function RegisterForm() {
         password: password,
       },
     })
-  } // end registerUser
+    history.push(`/survey/1`);
+  }
 
   return (
     <form className="formPanel" onSubmit={registerUser}>
