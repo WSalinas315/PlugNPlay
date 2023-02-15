@@ -1,3 +1,7 @@
+// ==========================================================================================
+// PROCESS SURVEY RESULTS
+// ==========================================================================================
+
 // limits value to three decimal points, between 1 and -1
 const limitValue = (value) => {
   return Math.min(
@@ -16,14 +20,12 @@ function processSurveyResults(surveyQuestions, surveyResults) {
   let userGenreScores = [];
   let userTagScores = [];
 
-  // Modify this to adjust weighting of user scores globally
+  // (OPTIONAL) Modify this to adjust weighting of user scores globally
   const scoreCoefficient = 1;
 
   // MAIN LOGIC LOOP
   for (let result of surveyResults) {
     // "result" is an object: { id, score }.  
-
-    console.log(surveyQuestions);
     
     const question = surveyQuestions.find(q => q.id === result.id)
     // "question" is an object with many properties related to the survey questions.
@@ -51,11 +53,11 @@ function processSurveyResults(surveyQuestions, surveyResults) {
     // Loop over genres and make score adjustments
     for (const genre of question.genres_left) {
       userGenreScores[genre] = 
-      limitValue((userGenreScores[genre] ?? 0) + leftAdjustment)
+        limitValue((userGenreScores[genre] ?? 0) + leftAdjustment)
     }
     for (const genre of question.genres_right) {
       userGenreScores[genre] = 
-      limitValue((userGenreScores[genre] ?? 0) + rightAdjustment)
+        limitValue((userGenreScores[genre] ?? 0) + rightAdjustment)
     }
     
     // Same thing for the tags
