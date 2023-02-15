@@ -1,76 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Grid, MenuItem } from '@mui/material';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import FormControl from '@mui/material/FormControl';
-import Modal from '@mui/material/Modal';
-import InputAdornment from '@mui/material/InputAdornment';
-import HttpIcon from '@mui/icons-material/Http';
-import DescriptionIcon from '@mui/icons-material/Description';
-import Select from '@mui/material/Select';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Grid, MenuItem } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import FormControl from "@mui/material/FormControl";
+import Modal from "@mui/material/Modal";
+import InputAdornment from "@mui/material/InputAdornment";
+import HttpIcon from "@mui/icons-material/Http";
+import DescriptionIcon from "@mui/icons-material/Description";
+import Select from "@mui/material/Select";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
-import Heading3 from '../Headings/Heading3';
-import Heading1 from '../Headings/Heading1';
+import Heading3 from "../Headings/Heading3";
+import Heading1 from "../Headings/Heading1";
 
 const ButtonStyle = makeStyles({
 	viewButton: {
 		borderRadius: 5,
-		border: '#999999',
+		border: "#999999",
 		height: 35,
-		color: '#ffffff',
-		padding: '0 15px',
-		backgroundColor: '#999999',
-		'&:hover': {
+		color: "#ffffff",
+		padding: "0 15px",
+		backgroundColor: "#999999",
+		"&:hover": {
 			//you want this to be the same as the backgroundColor above
-			background: '#999999',
-			border: '#999999',
+			background: "#999999",
+			border: "#999999",
 		},
 	},
 	deleteButton: {
 		borderRadius: 5,
 		height: 35,
-		padding: '0 15px',
-		backgroundColor: '#c02222',
-		'&:hover': {
-			background: '#C02222',
+		padding: "0 15px",
+		backgroundColor: "#c02222",
+		"&:hover": {
+			background: "#C02222",
 		},
-		color: '#ffffff',
+		color: "#ffffff",
 	},
 	editButton: {
 		borderRadius: 5,
 		height: 35,
-		padding: '0 15px',
-		backgroundColor: '#c02222',
-		'&:hover': {
-			background: '#C02222',
+		padding: "0 15px",
+		backgroundColor: "#c02222",
+		"&:hover": {
+			background: "#C02222",
 		},
-		color: '#ffffff',
+		color: "#ffffff",
 	},
 	addButton: {
 		borderRadius: 5,
 		height: 35,
-		padding: '0 15px',
-		backgroundColor: '#c02222',
-		'&:hover': {
-			background: '#C02222',
+		padding: "0 15px",
+		backgroundColor: "#c02222",
+		"&:hover": {
+			background: "#C02222",
 		},
-		color: '#ffffff',
+		color: "#ffffff",
 	},
 	submitButton: {
 		borderRadius: 5,
 		height: 35,
-		padding: '0 15px',
-		backgroundColor: '#c02222',
-		'&:hover': {
-			background: '#C02222',
+		padding: "0 15px",
+		backgroundColor: "#c02222",
+		"&:hover": {
+			background: "#C02222",
 		},
-		color: '#ffffff',
+		color: "#ffffff",
 		marginTop: 20,
 	},
 });
@@ -87,7 +87,7 @@ function AdminPage() {
 
 	// Brings in the glossary terms to be displayed before DOM renders.
 	useEffect(() => {
-		dispatch({ type: 'GLOSSARY/FETCH' });
+		dispatch({ type: "GLOSSARY/FETCH" });
 	}, []);
 
 	// Contains all the glossary terms from the database.
@@ -103,15 +103,15 @@ function AdminPage() {
 	const [toggleDelete, setDeleteBoolean] = useState(false);
 
 	// Used to store the selected term as a STRING type from the drop down menu.
-	const [selectedTerm, setSelectedTerm] = useState('');
+	const [selectedTerm, setSelectedTerm] = useState("");
 
 	// These are used for setting the values in editing or adding terms.
-	const [termInput, setTermInput] = useState('');
-	const [definitionInput, setDefinitionInput] = useState('');
-	const [imagePathInput, setImagePathInput] = useState('');
+	const [termInput, setTermInput] = useState("");
+	const [definitionInput, setDefinitionInput] = useState("");
+	const [imagePathInput, setImagePathInput] = useState("");
 
 	// This is used for presentation purpose.
-	const [autoTermFill, setAutoTermFill] = useState('');
+	const [autoTermFill, setAutoTermFill] = useState("");
 
 	/**
 	 *
@@ -119,10 +119,10 @@ function AdminPage() {
 That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleChange = event => {
-		console.log('Value is: ', event.target.value);
+		console.log("Value is: ", event.target.value);
 		setTermInput(event.target.value);
 		dispatch({
-			type: 'GLOSSARY/FETCH_TERM',
+			type: "GLOSSARY/FETCH_TERM",
 			// This is the term that is was clicked on from the drop down menu.
 			payload: event.target.value,
 		});
@@ -133,11 +133,14 @@ That term will be used to fetch the appropriate details from the server.
 	 * This will allow the DOM to render a new state based on the 'ADD Term' being set to TRUE.
 	 */
 	const handleAdd = () => {
-		console.log('Clicked on the Add Term Button');
+		console.log("Clicked on the Add Term Button");
 		setAddBoolean(true);
 		setEditBoolean(false);
 		setViewBoolean(false);
 		setDeleteBoolean(false);
+		setTermInput("");
+		setDefinitionInput("");
+		setImagePathInput("");
 	};
 	/**
 	 * @param {*} event setting the value of the term input when Adding a new term field.
@@ -163,14 +166,14 @@ That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleTermSubmit = () => {
 		console.log(
-			'Term / definition / image path',
+			"Term / definition / image path",
 			autoTermFill,
 			definitionInput,
 			imagePathInput
 		);
 		if (glossary?.some(obj => obj.term != autoTermFill)) {
 			dispatch({
-				type: 'GLOSSARY/SET_NEW_TERM',
+				type: "GLOSSARY/SET_NEW_TERM",
 				payload: {
 					term: autoTermFill,
 					definition: definitionInput,
@@ -178,12 +181,12 @@ That term will be used to fetch the appropriate details from the server.
 				},
 			});
 			// Clearing the field after this function is executed.
-			setAutoTermFill('');
-			setSelectedTerm('');
-			setDefinitionInput('');
-			setImagePathInput('');
+			setAutoTermFill("");
+			setSelectedTerm("");
+			setDefinitionInput("");
+			setImagePathInput("");
 		} else {
-			console.log('Error duplicate');
+			console.log("Error duplicate");
 		}
 	};
 	/**
@@ -191,7 +194,7 @@ That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleEdit = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
-			console.log('Clicked on the Edit Button');
+			console.log("Clicked on the Edit Button");
 			setAddBoolean(false);
 			setEditBoolean(true);
 			setViewBoolean(false);
@@ -203,7 +206,7 @@ That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleView = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
-			console.log('Clicked on the View Button');
+			console.log("Clicked on the View Button");
 			setAddBoolean(false);
 			setEditBoolean(false);
 			setViewBoolean(true);
@@ -215,7 +218,7 @@ That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleDelete = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
-			console.log('Clicked on the Delete Button');
+			console.log("Clicked on the Delete Button");
 			setAddBoolean(false);
 			setEditBoolean(false);
 			setViewBoolean(false);
@@ -228,20 +231,20 @@ That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleDeleteConfirm = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
-			console.log('Clicked on the delete confirm button!');
+			console.log("Clicked on the delete confirm button!");
 			dispatch({
-				type: 'GLOSSARY/DELETE_TERM',
+				type: "GLOSSARY/DELETE_TERM",
 				payload: { id: glossaryTerm.id },
 			});
 			setOpen(false);
-			dispatch({ type: 'GLOSSARY/FETCH' });
+			dispatch({ type: "GLOSSARY/FETCH" });
 		}
 	};
 	/**
 	 * Within the Modal, the user can cancel the confirmation and close the pop up window.
 	 */
 	const handleCancel = () => {
-		console.log('Clicked on the cancel button');
+		console.log("Clicked on the cancel button");
 		setOpen(false);
 	};
 	/**
@@ -249,17 +252,17 @@ That term will be used to fetch the appropriate details from the server.
 	 */
 	const handleEditSubmit = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
-			console.log('Clicked on the submit button in the Edit View');
+			console.log("Clicked on the submit button in the Edit View");
 			dispatch({
-				type: 'GLOSSARY/EDIT_TERM',
+				type: "GLOSSARY/EDIT_TERM",
 				payload: {
 					id: glossaryTerm.id,
 					description: definitionInput,
 					img_path: imagePathInput,
 				},
 			});
-			setDefinitionInput('');
-			setImagePathInput('');
+			setDefinitionInput("");
+			setImagePathInput("");
 		}
 	};
 	/**
@@ -271,11 +274,11 @@ That term will be used to fetch the appropriate details from the server.
 			<Box
 				sx={{
 					m: 3,
-					width: 'calc(100vw- 50px)',
+					width: "calc(100vw- 50px)",
 				}}>
-				<Card sx={{ mt: 10, mb: 4, border: 'solid 1pt' }} raised={true}>
-					<Heading1 sx={{ textAlign: 'center' }}>Manage Glossary</Heading1>
-					<Box sx={{ textAlign: 'center', margin: 2 }}>
+				<Card sx={{ mt: 10, mb: 4, border: "solid 1pt" }} raised={true}>
+					<Heading1 sx={{ textAlign: "center" }}>Manage Glossary</Heading1>
+					<Box sx={{ textAlign: "center", margin: 2 }}>
 						<Select
 							onChange={handleChange}
 							value={selectedTerm}
@@ -298,9 +301,9 @@ That term will be used to fetch the appropriate details from the server.
 					</Box>
 					<Box
 						sx={{
-							display: 'flex',
-							flexWrap: 'wrap',
-							justifyContent: 'center',
+							display: "flex",
+							flexWrap: "wrap",
+							justifyContent: "center",
 						}}>
 						<Button
 							variant='outlined'
@@ -343,8 +346,8 @@ That term will be used to fetch the appropriate details from the server.
 				sx={{
 					mt: 1,
 					m: 3,
-					border: 'solid 1pt',
-					width: 'calc(100vw-50px)',
+					border: "solid 1pt",
+					width: "calc(100vw-50px)",
 				}}
 				raised={true}>
 				<Box onClick={Autofill}>
@@ -360,24 +363,24 @@ That term will be used to fetch the appropriate details from the server.
 					</Typography>
 				</Box>
 				<Box>
-					<FormControl sx={{ minWidth: '100%', gap: 2 }}>
+					<FormControl sx={{ minWidth: "100%", gap: 2 }}>
 						<TextField
 							label='name'
 							value={autoTermFill}
 							onChange={handleTermInput}
-							sx={{ width: '100%' }}
+							sx={{ width: "100%" }}
 						/>
 						<TextField
 							label='Definition'
 							value={definitionInput}
 							onChange={handleDefinitionInput}
-							sx={{ width: '100%' }}
+							sx={{ width: "100%" }}
 						/>
 						<TextField
 							label='Image'
 							value={imagePathInput}
 							onChange={handleImagePathInput}
-							sx={{ width: '100%' }}
+							sx={{ width: "100%" }}
 						/>
 						<Button variant='outlined' onClick={handleTermSubmit}>
 							Submit
@@ -393,7 +396,7 @@ That term will be used to fetch the appropriate details from the server.
 				<Button
 					onClick={handleEditSubmit}
 					variant='contained'
-					sx={{ padding: 1, height: '40px', mt: 5, mb: 2 }}>
+					sx={{ padding: 1, height: "40px", mt: 5, mb: 2 }}>
 					Submit
 				</Button>
 			</Box>
@@ -407,7 +410,7 @@ That term will be used to fetch the appropriate details from the server.
 	const TermLogic = () => {
 		return (
 			<Box>
-				<Heading3 sx={{ textAlign: 'center' }} fontSx={{ fontWeight: 400 }}>
+				<Heading3 sx={{ textAlign: "center" }} fontSx={{ fontWeight: 400 }}>
 					{glossaryTerm.term}
 				</Heading3>
 				{glossaryTerm.description ? (
@@ -428,12 +431,12 @@ That term will be used to fetch the appropriate details from the server.
 	 * This is created to render an autofill feature for presentation purpose only.
 	 */
 	const Autofill = () => {
-		setAutoTermFill('Camping');
+		setAutoTermFill("Camping");
 		setDefinitionInput(
-			'When a character stays in one spot — “camps out” — to gain an unfair advantage and attack other characters without being seen. '
+			"When a character stays in one spot — “camps out” — to gain an unfair advantage and attack other characters without being seen. "
 		);
 		setImagePathInput(
-			'https://steamuserimages-a.akamaihd.net/ugc/595844364268868296/620B89799B9E47B034DE798060F1C5DE2C047750/?imw=1024&imh=578&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'
+			"https://steamuserimages-a.akamaihd.net/ugc/595844364268868296/620B89799B9E47B034DE798060F1C5DE2C047750/?imw=1024&imh=578&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
 		);
 	};
 
@@ -464,8 +467,8 @@ That term will be used to fetch the appropriate details from the server.
 				<SearchTermDefault />
 				<Card
 					sx={{
-						border: 'solid 1pt',
-						margin: '24px',
+						border: "solid 1pt",
+						margin: "24px",
 					}}
 					raised={true}>
 					<TermLogic />
@@ -491,24 +494,24 @@ That term will be used to fetch the appropriate details from the server.
 					aria-labelledby='modal-title'
 					aria-activedescendant='modal-description'
 					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						flexDirection: 'column',
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+						flexDirection: "column",
 					}}>
 					<Box
 						sx={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							flexDirection: 'column',
-							position: 'fixed',
-							top: '40%',
-							border: '2px solid #000000',
-							bgcolor: '#ffffff',
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							flexDirection: "column",
+							position: "fixed",
+							top: "40%",
+							border: "2px solid #000000",
+							bgcolor: "#ffffff",
 							padding: 2,
 						}}>
-						<Box sx={{ borderBottom: 'solid 1px #C02222' }}>
+						<Box sx={{ borderBottom: "solid 1px #C02222" }}>
 							<Typography id='modal-title' variant='h5' component='h3'>
 								Confirm Delete
 							</Typography>
@@ -547,7 +550,7 @@ That term will be used to fetch the appropriate details from the server.
 			<Box>
 				<SearchTermDefault />
 				<Box>
-					<Card sx={{ mt: 4, border: 'solid 1pt', padding: 3 }} raised={true}>
+					<Card sx={{ mt: 4, border: "solid 1pt", padding: 3 }} raised={true}>
 						<Typography
 							variant='h5'
 							backgroundColor='primary.main'
@@ -571,7 +574,7 @@ That term will be used to fetch the appropriate details from the server.
 								multiline
 								maxRows={4}
 								onChange={handleDefinitionInput}
-								sx={{ width: '100%', mb: 2 }}
+								sx={{ width: "100%", mb: 2 }}
 								InputProps={{
 									startAdornment: (
 										<InputAdornment position='start'>
@@ -585,7 +588,7 @@ That term will be used to fetch the appropriate details from the server.
 								label='Image Url'
 								value={imagePathInput}
 								onChange={handleImagePathInput}
-								sx={{ width: '100%' }}
+								sx={{ width: "100%" }}
 								InputProps={{
 									startAdornment: (
 										<InputAdornment position='start'>
