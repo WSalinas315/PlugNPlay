@@ -3,7 +3,6 @@ import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import Nav from '../Nav/Nav';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import AboutPage from '../AboutPage/AboutPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
@@ -34,9 +33,7 @@ function App() {
 				<Nav />
 				<Switch>
 					<Redirect exact from='/' to='/home' />
-					<Route exact path='/about'>
-						<AboutPage />
-					</Route>
+
 					<ProtectedRoute exact path='/user'>
 						<RecommendedList />
 					</ProtectedRoute>
