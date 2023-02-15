@@ -5,7 +5,6 @@ import Loading from "../Loading/Loading";
 import SwipeBox from "../SwipeBox/SwipeBox";
 import { Card } from "@mui/material";
 import Heading1 from "../Headings/Heading1";
-import ParagraphText from "../ParagraphText/ParagraphText";
 
 export default function RecommendedList() {
   const dispatch = useDispatch();
@@ -13,6 +12,7 @@ export default function RecommendedList() {
 
   const clearGameData = () => dispatch({ type: "GAME/CLEAR_CURRENT" });
 
+  // Fetch new recommendations if the recommendation queue is empty
   const checkForRecs = (refresh = false) => {
     clearGameData();
     if (refresh || recommendations.length === 0) {
