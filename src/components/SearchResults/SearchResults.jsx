@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Box, Card, Typography } from "@mui/material";
-
 import { formatDate } from '../../helpers/dates'
 import Loading from "../Loading/Loading";
 import Heading1 from "../Headings/Heading1";
@@ -34,6 +33,7 @@ export default function SearchResults() {
         <Heading1 sx={{ textAlign: "center" }}>Search Results</Heading1>
       </Box>
 
+      {/* Render search results */}
       {searchResults ? (
         searchResults.map((result) => (
           // Results Card

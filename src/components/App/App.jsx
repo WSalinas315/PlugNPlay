@@ -1,20 +1,9 @@
 import { useEffect } from 'react';
-import {
-	HashRouter as Router,
-	Redirect,
-	Route,
-	Switch,
-} from 'react-router-dom';
-
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Header from '../Header/Header';
@@ -24,11 +13,10 @@ import CollectionPage from '../ViewCollection/ViewCollection';
 import ViewProfile from '../ViewProfile/ViewProfile';
 import SearchResults from '../SearchResults/SearchResults';
 import Survey from '../Survey/Survey';
-import ViewRecommendation from '../ViewRecommended/ViewRecommended';
-
-import './App.css';
+import RecommendedList from '../RecommendedList/RecommendedList';
 import GameItem from '../GameItem/GameItem';
 import ViewSettings from '../ViewSettings/ViewSettings';
+import './App.css';
 
 function App() {
 	const dispatch = useDispatch();
@@ -50,8 +38,7 @@ function App() {
 						<AboutPage />
 					</Route>
 					<ProtectedRoute exact path='/user'>
-						{/* <UserPage /> */}
-						<ViewRecommendation />
+						<RecommendedList />
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path='/collection'>
@@ -65,22 +52,22 @@ function App() {
 					<ProtectedRoute exact path='/admin'>
 						<AdminPage />
 					</ProtectedRoute>
-					
+
 					<ProtectedRoute exact path='/search'>
 						<ViewSearch />
 					</ProtectedRoute>
 
 					<ProtectedRoute exact path='/searchresults/:id'>
 						<SearchResults />
-          </ProtectedRoute>
-          
-					<ProtectedRoute exact path= '/settings'>
-						<ViewSettings /> 
 					</ProtectedRoute>
 
-          <ProtectedRoute exact path='/games/:id'>
-            <GameItem />
-          </ProtectedRoute>
+					<ProtectedRoute exact path='/settings'>
+						<ViewSettings />
+					</ProtectedRoute>
+
+					<ProtectedRoute exact path='/games/:id'>
+						<GameItem />
+					</ProtectedRoute>
 
 					<Route exact path='/login'>
 						{user.id ? <Redirect to='/user' /> : <LoginPage />}
