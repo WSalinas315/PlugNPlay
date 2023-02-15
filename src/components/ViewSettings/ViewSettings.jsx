@@ -1,13 +1,17 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// HOOK IMPORTS
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+// MUI IMPORTS
 import { Card, Button, IconButton, TextField } from "@mui/material";
 import { Close } from "@mui/icons-material";
 
+// COMPONENT IMPORTS
 import Heading1 from "../Headings/Heading1";
 import Heading3 from "../Headings/Heading3";
 import ParagraphText from "../ParagraphText/ParagraphText";
+
 
 export default function ViewSettings() {
   const dispatch = useDispatch();
@@ -15,6 +19,7 @@ export default function ViewSettings() {
 
   const [ imgUrlIn, setImgUrl ] = useState("");
 
+  // Submit new profile image
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch({ type: 'USER/EDIT_PROFILE_PICTURE', payload: { imgPath: imgUrlIn } })
@@ -24,6 +29,8 @@ export default function ViewSettings() {
   return (
     <div>
       <Card sx={{ border: '1px solid #dddddd' }}>
+        
+        {/* CLOSE BUTTON */}
         <div className="corner-buttons">
           <IconButton
             onClick={() => history.goBack()}
@@ -31,6 +38,7 @@ export default function ViewSettings() {
             <Close sx={{ mt: '5px', ml: '5px'}} />
           </IconButton>
         </div>
+
         <Heading1 sx={{ textAlign: 'center', my: '1rem' }}>Settings</Heading1>
         <form onSubmit={handleSubmit}>
           <Heading3 sx={{ mt: "1rem", mb: "0.5rem", ml: '20px' }}>
