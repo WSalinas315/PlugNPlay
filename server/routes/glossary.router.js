@@ -6,6 +6,7 @@ const {
 	rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
+// ==========================================================================================
 // GET ALL TERMS FROM THE GLOSSARY TABLE BY TERM IN ASCENDING ORDER.
 router.get('/', rejectUnauthenticated, async (req, res) => {
 	try {
@@ -19,10 +20,11 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 	}
 });
 
+// ==========================================================================================
+// GET INDIVIDUAL TERM FROM GLOSSARY BY ID
 router.get('/term/:stringTerm', rejectUnauthenticated, async (req, res) => {
 	try {
-		const stringTerm = req.params.stringTerm;
-		console.log('StringTerm is: ', stringTerm);
+		const { stringTerm } = req.params;
 		const sqlText = `SELECT * FROM "glossary" WHERE "term" = $1;`;
 		const glossaryTerm = await pool.query(sqlText, [stringTerm]);
 		res.send(glossaryTerm.rows);
@@ -32,12 +34,11 @@ router.get('/term/:stringTerm', rejectUnauthenticated, async (req, res) => {
 	}
 });
 
+// ==========================================================================================
 // POST AN UPDATE TO THE TERMS DESCRIPTION
 router.post('/edit/:termId', rejectUnauthenticated, async (req, res) => {
-	const termId = req.params.termId; //the term being changed
-	const description = req.body.description;
-	const img_path = req.body.img_path;
-	console.log('Term being edited: ', req.params.id);
+	const { termId } = req.params; //the term being changed
+  const { description, img_path } = req.body;
 
 	const sqlText = `UPDATE "glossary" 
 									SET "description" = $1, "img_path" = $2
@@ -52,10 +53,10 @@ router.post('/edit/:termId', rejectUnauthenticated, async (req, res) => {
 	}
 });
 
+// ==========================================================================================
 //DELETE A SELECTED TERM FROM THE GLOSSARY TABLE BY TERM ID.
 router.delete('/delete/:termId', rejectUnauthenticated, (req, res) => {
 	const glossaryTerm = req.params.termId;
-	console.log('Term being removed: ', glossaryTerm);
 
 	const sqlText = `DELETE FROM "glossary" WHERE "id" = $1;`;
 
@@ -70,6 +71,8 @@ router.delete('/delete/:termId', rejectUnauthenticated, (req, res) => {
 	}
 });
 
+// ==========================================================================================
+// ADD A NEW TERM TO THE GLOSSARY
 router.post('/Add/Term', rejectUnauthenticated, (req, res) => {
 	const term = req.body.term;
 	const definition = req.body.definition;

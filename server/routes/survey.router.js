@@ -9,6 +9,7 @@ const { processSurveyResults } = require('../modules/processSurvey')
   SURVEY ROUTES
 */
 
+// ==========================================================================================
 // GET ALL SURVEY QUESTIONS
 router.get('/', rejectUnauthenticated, async (req, res) => {
 
@@ -21,6 +22,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
   }
 })
 
+// ==========================================================================================
 // CONVERT SURVEY RESULTS TO USER SCORES
 router.post('/userScores', rejectUnauthenticated, async (req, res) => {
 

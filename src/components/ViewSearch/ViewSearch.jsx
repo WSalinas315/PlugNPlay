@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  Button,
-  Card,
-  FormControl,
-  TextField,
-} from "@mui/material";
+import { Button, Card, FormControl, TextField } from "@mui/material";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -71,6 +66,7 @@ export default function ViewSearch() {
             </FormControl>
           </div>
 
+          {/* Search button for search by name */}
           <div className="grid-right">
             <Button
               variant="outlined"
@@ -106,6 +102,8 @@ export default function ViewSearch() {
               </Select>
             </FormControl>
           </div>
+
+          {/* Search button for search by genre */}
           <div className="grid-right">
             <Button
               variant="outlined"

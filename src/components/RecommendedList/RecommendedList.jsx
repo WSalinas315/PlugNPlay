@@ -18,6 +18,7 @@ export default function RecommendedList() {
 
   const clearGameData = () => dispatch({ type: "GAME/CLEAR_CURRENT" });
 
+  // Fetch new recommendations if the recommendation queue is empty
   const checkForRecs = (refresh = false) => {
     clearGameData();
 

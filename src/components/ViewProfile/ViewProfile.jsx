@@ -102,6 +102,7 @@ function ViewProfile() {
           <Typography className="grid-right" variant="h3">
             {userLists.userPlayedList.length}
           </Typography>
+          {/* Bartle player type */}
           <Typography className="grid-left" variant="h3">
             Player Type:
           </Typography>
