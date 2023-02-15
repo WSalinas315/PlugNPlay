@@ -164,9 +164,9 @@ router.get('/byGenre', async (req, res) => {
         .map(tagFilter);
 
     // Game Scoring
-    console.log('--------------------------------------------');
-    console.log('Entering scoring!');
-    console.log('--------------------------------------------');
+    // console.log('--------------------------------------------');
+    // console.log('Entering scoring!');
+    // console.log('--------------------------------------------');
     let scoredGames = [];
     for (let game of taggedGames) {
       // Ignore games in the ignoreList
@@ -239,9 +239,9 @@ router.get('/byGenre', async (req, res) => {
 
     // Sort scored games by user's personalized game score
     const sortedGames = scoredGames.sort((g1, g2) => (g1.gameScore < g2.gameScore) ? 1 : (g1.gameScore > g2.gameScore) ? -1 : 0);
-    console.log('--------------------------------------------');
-    console.log('Sorted & Scored Games!!!!', sortedGames);
-    console.log('--------------------------------------------');
+    // console.log('--------------------------------------------');
+    // console.log('Sorted & Scored Games!!!!', sortedGames);
+    // console.log('--------------------------------------------');
 
     // send sortedGames back to client side
     res.send(sortedGames);
