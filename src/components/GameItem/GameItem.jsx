@@ -1,27 +1,33 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// REACT IMPORTS
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
+// HELPER FUNCTION IMPORTS
 import { formatDate } from "../../helpers/dates";
 import { useGameByID } from "../../hooks/storeHooks";
 import { capitalizeFirst } from "../../helpers/words";
+
+// MODULE IMPORTS
 import Loading from "../Loading/Loading";
 import UserButtons from "./ButtonFilter";
 import MetacriticBadge from "../MetacriticBadge/MetacriticBadge";
 import ParagraphText from "../ParagraphText/ParagraphText";
+import Heading2 from "../Headings/Heading2";
+import "./GameItem.css";
 
+// MUI IMPORTS
 import { Card, IconButton, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 
-import "./GameItem.css";
-import Heading2 from "../Headings/Heading2";
-
+// COMPONENT
 export default function () {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams(); // id of this game
   const game = useGameByID();
   const [titleHidden, hideTitle] = useState(false);
 
+  // Scroll to top and fetch current game on load
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch({ type: "RAWG/FETCH_CURRENT_GAME", payload: id });
@@ -109,8 +115,7 @@ export default function () {
       <>
         <div
           style={backgroundStyling}
-          onClick={() => hideTitle(!titleHidden)}
-          className={`game-splash-container ${titleClass}`}
+          className={`game-splash-container`}
         >
           <Heading2 className="title">{game.name}</Heading2>
           <div className="close-button">
