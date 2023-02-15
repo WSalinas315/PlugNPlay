@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { Grid, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Grid, MenuItem } from '@mui/material';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import Modal from '@mui/material/Modal';
-import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import HttpIcon from '@mui/icons-material/Http';
 import DescriptionIcon from '@mui/icons-material/Description';
 import Select from '@mui/material/Select';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 import Heading3 from '../Headings/Heading3';
 import Heading1 from '../Headings/Heading1';
@@ -77,56 +77,61 @@ const ButtonStyle = makeStyles({
 
 function AdminPage() {
 	const dispatch = useDispatch();
-
+	// imports the styling to the corresponding buttons.
 	const buttonStyle = ButtonStyle();
 
-	//*This helps the Modal decide the current state of Modal open/close.
+	// This toggles the Modal when prompted.
 	const [open, setOpen] = useState(false);
-	//*This is used for the Modal to appear
 	const handleOpen = () => setOpen(true);
-	//*This is used for the Modal to disappear
 	const handleClose = () => setOpen(false);
 
-	//* Fetches the list of glossary to populate to the AutoComplete component upon load.
+	// Brings in the glossary terms to be displayed before DOM renders.
 	useEffect(() => {
 		dispatch({ type: 'GLOSSARY/FETCH' });
 	}, []);
 
-	const user = useSelector(store => store.user);
-
-	//* Holds an Array of objects from the Glossary Table in the Database.
+	// Contains all the glossary terms from the database.
 	const glossary = useSelector(store => store.glossary.glossary);
 
-	//* Holds an Array of 1 object that is replaced by the onChange of the AutoComplete component.
+	// contains a single terms content on which is being modified
 	const glossaryTerm = useSelector(store => store.glossary.glossaryItem[0]);
 
-	//* These are used to properly set the state of each toggle from the Admins button options. Only 1 will be set to TRUE while the rest are kept at FALSE.
+	// Will toggle between Admin tools to render the appropriate component to the DOM.
 	const [toggleAdd, setAddBoolean] = useState(false);
 	const [toggleEdit, setEditBoolean] = useState(false);
 	const [toggleView, setViewBoolean] = useState(false);
 	const [toggleDelete, setDeleteBoolean] = useState(false);
 
+	// Used to store the selected term as a STRING type from the drop down menu.
 	const [selectedTerm, setSelectedTerm] = useState('');
 
-	//* These are set for the ADD TERM section when the user wants to input the new terms information to send to the database.
+	// These are used for setting the values in editing or adding terms.
 	const [termInput, setTermInput] = useState('');
 	const [definitionInput, setDefinitionInput] = useState('');
 	const [imagePathInput, setImagePathInput] = useState('');
 
+	// This is used for presentation purpose.
 	const [autoTermFill, setAutoTermFill] = useState('');
 
-	//* This is used in hand with the AutoComplete component to set the store.glossaryItem and hold the entire term's properties to use for other features in the Admin section.
+	/**
+	 *
+	 * @param {*} event is found when a user clicks a term from the drop down menu.
+That term will be used to fetch the appropriate details from the server.
+	 */
 	const handleChange = event => {
 		console.log('Value is: ', event.target.value);
 		setTermInput(event.target.value);
 		dispatch({
 			type: 'GLOSSARY/FETCH_TERM',
-			payload: event.target.value, //?This is the term that is was clicked on from the drop down menu.
+			// This is the term that is was clicked on from the drop down menu.
+			payload: event.target.value,
 		});
 		setSelectedTerm(event.target.value);
 	};
 
-	//*This section corresponds to the Adding of a new term to DB.
+	/**
+	 * This will allow the DOM to render a new state based on the 'ADD Term' being set to TRUE.
+	 */
 	const handleAdd = () => {
 		console.log('Clicked on the Add Term Button');
 		setAddBoolean(true);
@@ -134,17 +139,28 @@ function AdminPage() {
 		setViewBoolean(false);
 		setDeleteBoolean(false);
 	};
-	//* Saving the name input to State.
+	/**
+	 * @param {*} event setting the value of the term input when Adding a new term field.
+	 */
 	const handleTermInput = event => {
 		setTermInput(event.target.value);
 	};
-	//* Saving the definition input to State.
+	/**
+	 * @param {*} event this is the value from the textfield that is being saved to a set variable.
+	 */
 	const handleDefinitionInput = event => setDefinitionInput(event.target.value);
-	//* Saving the Image path input to State.
+
+	/**
+	 *
+	 * @param {*} event this is the value from the textfield that is being saved to a set variable.
+	 */
 	const handleImagePathInput = event => {
 		setImagePathInput(event.target.value);
 	};
-	//* This section corresponds to sending the saved state to dispatch to the database.
+
+	/**
+	 * This will then use all the variables that were set from the users input. Then this will be sent to the appropriate saga that will then send to the database when adding a term to the database.
+	 */
 	const handleTermSubmit = () => {
 		console.log(
 			'Term / definition / image path',
@@ -161,16 +177,18 @@ function AdminPage() {
 					imagePath: imagePathInput,
 				},
 			});
+			// Clearing the field after this function is executed.
 			setAutoTermFill('');
 			setSelectedTerm('');
 			setDefinitionInput('');
 			setImagePathInput('');
 		} else {
 			console.log('Error duplicate');
-			//* Clearing the state values after the Admin clicked on the submit button.
 		}
 	};
-	//* Handles the rendering of the Edit section upon clicking on the Edit Button.
+	/**
+	 * Changes the state of the DOM when EDIT button from the user tools is clicked on.
+	 */
 	const handleEdit = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
 			console.log('Clicked on the Edit Button');
@@ -180,7 +198,9 @@ function AdminPage() {
 			setDeleteBoolean(false);
 		}
 	};
-	//* Handles the rendering of the View section upon clicking on the View Button.
+	/**
+	 * Changes the state of the DOM when the VIEW button from the user tools is clicked on.
+	 */
 	const handleView = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
 			console.log('Clicked on the View Button');
@@ -190,7 +210,9 @@ function AdminPage() {
 			setDeleteBoolean(false);
 		}
 	};
-	//* Handles the rendering of the Delete section upon clicking on the Delete Button.
+	/**
+	 * Changes the state of the DOM when the DELETE button from the user tools is clicked on.
+	 */
 	const handleDelete = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
 			console.log('Clicked on the Delete Button');
@@ -201,7 +223,9 @@ function AdminPage() {
 			setOpen(true);
 		}
 	};
-	//* This corresponds to the Modal, where the user confirms the deletion of the term from the database.
+	/**
+	 * Confirms the deletion of the term from the MODAL pop up.
+	 */
 	const handleDeleteConfirm = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
 			console.log('Clicked on the delete confirm button!');
@@ -213,11 +237,16 @@ function AdminPage() {
 			dispatch({ type: 'GLOSSARY/FETCH' });
 		}
 	};
-
+	/**
+	 * Within the Modal, the user can cancel the confirmation and close the pop up window.
+	 */
 	const handleCancel = () => {
 		console.log('Clicked on the cancel button');
 		setOpen(false);
 	};
+	/**
+	 * When the user has the drop down menu term selected, then the edit input field is saved and sent to the saga and send to the database.
+	 */
 	const handleEditSubmit = () => {
 		if (glossary.some(obj => obj.term == termInput)) {
 			console.log('Clicked on the submit button in the Edit View');
@@ -233,6 +262,10 @@ function AdminPage() {
 			setImagePathInput('');
 		}
 	};
+	/**
+	 *
+	 * @returns the default search term box found in all the states being rendered.
+	 */
 	const SearchTermDefault = () => {
 		return (
 			<Box
@@ -300,6 +333,10 @@ function AdminPage() {
 		);
 	};
 
+	/**
+	 *
+	 * @returns The 'Adding New Term' field to populate to the DOM when the state is set to true after button click.
+	 */
 	const AddingFields = () => {
 		return (
 			<Card
@@ -363,6 +400,10 @@ function AdminPage() {
 		);
 	};
 
+	/**
+	 *
+	 * @returns This will be used throughout this view when content of the term is applicable to render to the DOM.
+	 */
 	const TermLogic = () => {
 		return (
 			<Box>
@@ -383,6 +424,9 @@ function AdminPage() {
 		);
 	};
 
+	/**
+	 * This is created to render an autofill feature for presentation purpose only.
+	 */
 	const Autofill = () => {
 		setAutoTermFill('Camping');
 		setDefinitionInput(
@@ -393,7 +437,8 @@ function AdminPage() {
 		);
 	};
 
-	//! ADD TERM SECTION
+	/** Section: ADD button is clicked on.
+	 */
 	if (
 		toggleAdd == true &&
 		toggleEdit == false &&
@@ -406,6 +451,8 @@ function AdminPage() {
 				<AddingFields />
 			</Box>
 		);
+		/** Section: View button is clicked on.
+		 */
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -426,7 +473,8 @@ function AdminPage() {
 				<div className='foot-spacer' />
 			</>
 		);
-		//* DISPLAY THE TERM, DESCRIPTION, AND IMAGE.
+		/** Section: DELETE button is clicked on.
+		 */
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == false &&
@@ -487,6 +535,8 @@ function AdminPage() {
 				</Modal>
 			</>
 		);
+		/** Section: EDIT button is clicked on.
+		 */
 	} else if (
 		toggleAdd == false &&
 		toggleEdit == true &&
@@ -551,9 +601,9 @@ function AdminPage() {
 				<div className='foot-spacer' />
 			</Box>
 		);
-	}
-	//! DEFAULT SET UP ON INITIAL LOAD.
-	else {
+	} else {
+		/** Section: INITIAL UPON LOADING.
+		 */
 		return (
 			<Box>
 				<SearchTermDefault />
@@ -561,5 +611,4 @@ function AdminPage() {
 		);
 	}
 }
-
 export default AdminPage;
