@@ -100,7 +100,7 @@ function ViewProfile() {
             Games on Wishlist:
           </Typography>
           <Typography className="grid-right" variant="h3">
-            {userLists.userPlayedList.length}
+            {userLists.userWishlist.length}
           </Typography>
           {/* Bartle player type */}
           <Typography className="grid-left" variant="h3">
