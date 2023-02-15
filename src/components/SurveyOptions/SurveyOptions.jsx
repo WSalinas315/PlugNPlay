@@ -1,13 +1,10 @@
 import * as React from 'react'
-import { useEffect } from 'react'
 import { styled, alpha, Box } from '@mui/system'
 import SliderUnstyled, { sliderUnstyledClasses } from '@mui/base/SliderUnstyled'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel';
-import PropTypes from 'prop-types';
 import './SurveyOptions.css';
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { FormControl } from '@material-ui/core'
