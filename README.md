@@ -91,7 +91,7 @@ Thank you to:
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 
 [Abdi-LinkedIn]: https://www.linkedin.com/in/abdirahman-farah-a98842255/
-[August-LinkedIn]: https://www.linkedin.com/in/august-mcallister/https://www.linkedin.com/in/august-mcallister/
+[August-LinkedIn]: https://www.linkedin.com/in/august-mcallister/
 [Tracey-LinkedIn]: https://www.linkedin.com/in/traceystreat/
 [Billy-LinkedIn]: https://www.linkedin.com/in/billy-salinas-64068b244/
 [Victor-LinkedIn]: https://www.linkedin.com/in/victorllapa/
