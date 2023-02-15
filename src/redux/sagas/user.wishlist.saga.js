@@ -2,6 +2,7 @@ import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 import { handleErrors } from "./user._saga";
 
+// POSTs game to user's wishlist and fetches the new wishlist
 function* addToWishlist({ payload }) {
   try {
     console.log('in saga:', payload);
@@ -12,6 +13,7 @@ function* addToWishlist({ payload }) {
   }
 }
 
+// Deletes a game from the user's wishlist and fetches the new wishlist
 function* deleteFromWishlist({ payload }) {
   try {
     yield axios.delete('/api/games/wishlist/' + payload);

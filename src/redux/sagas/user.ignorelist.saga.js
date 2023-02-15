@@ -2,6 +2,7 @@ import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 import { handleErrors } from "./user._saga";
 
+// adds a game to the logged in user's ignored games list and fetches an updated ignored games list
 function* addToIgnorelist({ payload }) {
   try {
     yield axios.post('/api/games/ignorelist', { gameID: payload })
@@ -11,6 +12,7 @@ function* addToIgnorelist({ payload }) {
   }
 }
 
+// deletes a game to the logged in user's ignored games list and fetches an updated ignored games list
 function* deleteFromIgnorelist({ payload }) {
   try {
     yield axios.delete('/api/games/ignorelist/' + payload)

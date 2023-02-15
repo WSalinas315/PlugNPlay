@@ -1,5 +1,6 @@
 import { combineReducers } from "redux"
 
+// stores data for the game being viewed
 const currentlyViewedGame = (state = {}, { type, payload }) => {
   return {
     'GAME/SET_CURRENT': payload,
@@ -8,6 +9,7 @@ const currentlyViewedGame = (state = {}, { type, payload }) => {
   }[type] || state
 }
 
+// stores data for search results
 const searchResults = (state = [], { type, payload }) => {
   return {
     'GAME/SET_SEARCH_RESULTS': payload,
@@ -16,6 +18,7 @@ const searchResults = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+// stores a list of game genres
 const genreList = (state = [], { type, payload }) => {
   return {
     'GAME/SET_GENRE_LIST': payload,
@@ -23,6 +26,7 @@ const genreList = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+// stores data for the user's current recommendations
 const recommendations = (state = [], { type, payload }) => {
   return {
     'GAME/SET_RECOMMENDATIONS': payload,
