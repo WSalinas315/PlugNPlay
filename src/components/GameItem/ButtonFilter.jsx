@@ -1,13 +1,17 @@
+// HOOK IMPORTS
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useUserLists } from "../../hooks/storeHooks";
-import { LikeDislikeButton, GameListButton } from "./Buttons";
 
+// MODULE IMPORTS
+import { LikeDislikeButton, GameListButton } from "./Buttons";
 import ParagraphText from "../ParagraphText/ParagraphText";
 
 export default function UserFunctions({ game }) {
   const dispatch = useDispatch();
   const { userIgnorelist, userPlayedList, userWishlist } = useUserLists();
+
+  // Arrays of game IDs based on the list they're on
   const ignoredIDs = userIgnorelist?.map((item) => item.id);
   const wishlistIDs = userWishlist?.map((item) => item.id);
   const playedIDs = userPlayedList?.map((item) => item.id);
@@ -19,9 +23,10 @@ export default function UserFunctions({ game }) {
 
   useEffect(getLists, []);
 
+  // Renders different buttons depending on what list the game is on
   const ButtonDisplay = () => {
     if (ignoredIDs?.includes(game.id)) {
-      // user has ignored this game - show options to remove from ignore list, and add to played
+      // user has ignored this game - show option to remove from ignore list
       return (
         <>
           <GameListButton gameID={game.id} list={"ignorelist"} action={"delete"} />
@@ -29,6 +34,8 @@ export default function UserFunctions({ game }) {
       );
     } else if (playedIDs?.includes(game.id)) {
       // user has played this game - show options to like & dislike, and to remove from played
+
+      // Shows text based on liked status
       const likeText = { '1': 'Liked this one!', '-1': "Didn't like this one." }[liked] || '';
       return (
         <>

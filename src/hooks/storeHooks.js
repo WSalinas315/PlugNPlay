@@ -4,6 +4,12 @@ export const useReduxStore = () => {
   return useSelector((store) => store);
 };
 
+// USER LIST HOOKS
+
+export const useUserLists = () => {
+  return useSelector(store => store.userLists)
+}
+
 export const useSurveyData = () => {
   return useSelector(store => store.survey.surveyResults)
 }
@@ -14,10 +20,4 @@ export const useRecommendations = () => {
 
 export const useGameByID = () => {
   return useSelector(store => store.games.currentlyViewedGame)
-}
-
-// USER LIST HOOKS
-
-export const useUserLists = () => {
-  return useSelector(store => store.userLists)
 }

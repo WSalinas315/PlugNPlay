@@ -1,7 +1,11 @@
-import React from "react";
+// HOOK IMPORTS
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+// MUI IMPORTS
 import { Box, Card, Typography } from "@mui/material";
+
+// COMPONENT IMPORTS
 import { formatDate } from '../../helpers/dates'
 import Loading from "../Loading/Loading";
 import Heading1 from "../Headings/Heading1";
