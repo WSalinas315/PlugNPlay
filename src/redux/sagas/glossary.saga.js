@@ -2,6 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import { handleErrors } from './user._saga';
 
+// fetches the glossary from the database and updates the glossary reducer
 function* fetchGlossary() {
 	try {
 		const { data: glossary } = yield axios.get('/api/glossary');
@@ -14,6 +15,7 @@ function* fetchGlossary() {
 	}
 }
 
+// fetches a specific glossary term and updates the glossary reducer
 function* fetchGlossaryTerm(action) {
 	try {
 		console.log('payload: ', action.payload);
@@ -30,6 +32,7 @@ function* fetchGlossaryTerm(action) {
 	}
 }
 
+// adds a new term to the glossary, fetches the updated glossary and sets the glossary reducer
 function* PostGlossaryTerm({ payload }) {
 	try {
 		console.log('Payload in glossary saga', payload);
@@ -44,6 +47,7 @@ function* PostGlossaryTerm({ payload }) {
 	}
 }
 
+// deletes a term to the glossary, fetches the updated glossary and sets the glossary reducer
 function* DeleteGlossaryTerm({ payload }) {
 	try {
 		console.log('Payload in DeleteGlossaryTerm: ', payload);
@@ -59,6 +63,7 @@ function* DeleteGlossaryTerm({ payload }) {
 	}
 }
 
+// updates a glossary term
 function* EditGlossaryTerm({ payload }) {
 	try {
 		console.log('Payload in EditGlossary Saga: ', payload);

@@ -31,6 +31,7 @@ function* fetchUser() {
   }
 }
 
+// fetches the logged in user's wishlist
 function* fetchWishlist() {
   try {
     const { data: wishlist } = yield axios.get('/api/games/wishlist/');
@@ -43,6 +44,7 @@ function* fetchWishlist() {
   }
 }
 
+// fetches the logged in user's ignored games list
 function* fetchIgnorelist() {
   try {
     const { data: ignorelist } = yield axios.get('/api/games/ignorelist/');
@@ -55,6 +57,7 @@ function* fetchIgnorelist() {
   }
 }
 
+// fetches the logged in user's played games list
 function* fetchPlayedList() {
   try {
     const { data: playedList } = yield axios.get('/api/games/played/');
@@ -67,6 +70,7 @@ function* fetchPlayedList() {
   }
 }
 
+// fetches the logged in user's wishlist, ignorelist and played games list
 function* fetchAllLists() {
   try {
     yield put({ type: 'USER/FETCH_WISHLIST' });
@@ -77,6 +81,7 @@ function* fetchAllLists() {
   }
 }
 
+// updates profile picture and fetches user data
 function* editProfilePicture({ payload }) {
   try {
     yield axios.put('/api/user/profilePicture', payload);

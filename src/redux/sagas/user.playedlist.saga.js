@@ -2,6 +2,8 @@ import axios from "axios"
 import { put, takeLatest } from "redux-saga/effects"
 import { handleErrors } from "./user._saga";
 
+// POSTs a new game to the logged in user's played games list, 
+// removes it from their wishlist and fetches the new played games list
 function* addToPlayedList({ payload }) {
   try {
     
@@ -13,6 +15,7 @@ function* addToPlayedList({ payload }) {
   }
 }
 
+// Deletes a game from the logged in user's played games list and fetches their played games list
 function* deleteFromPlayedList({ payload }) {
   try {
     yield axios.delete('/api/games/played/' + payload)
@@ -22,6 +25,8 @@ function* deleteFromPlayedList({ payload }) {
   }
 }
 
+// Updates a game's liked rating on their played games list for the logged in user 
+// and fetches their played games list
 function* likeOnPlayedList({ payload }) {
   try {
     yield axios.put('/api/games/played/' + payload.gameID, { liked: payload.liked })

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+// stores the logged in user's data
 export const user = (state = {}, { type, payload }) => {
   return {
     'SET_USER': payload,
@@ -7,6 +8,7 @@ export const user = (state = {}, { type, payload }) => {
   }[type] || state
 };
 
+// stores the logged in user's wishlist
 const userWishlist = (state = [], { type, payload }) => {
   return {
     'USER/SET_WISHLIST': payload,
@@ -15,6 +17,7 @@ const userWishlist = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+// stores the logged in user's ignored games list
 const userIgnorelist = (state = [], { type, payload }) => {
   return {
     'USER/SET_IGNORELIST': payload,
@@ -23,6 +26,7 @@ const userIgnorelist = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+// stores the logged in user's played games list
 const userPlayedList = (state = [], { type, payload }) => {
   return {
     'USER/SET_PLAYED_LIST': payload,
@@ -31,6 +35,7 @@ const userPlayedList = (state = [], { type, payload }) => {
   }[type] || state;
 }
 
+// stores the logged in user's genre scores
 const userScores = (state = [], { type, payload }) => {
   return {
     'USER/SET_SCORES': payload,

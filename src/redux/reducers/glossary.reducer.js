@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+// stores data for the full glossary 
 const glossary = (state = [], { type, payload }) => {
 	return (
 		{
@@ -9,6 +10,7 @@ const glossary = (state = [], { type, payload }) => {
 	);
 };
 
+// stores data for a specific glossary term
 const glossaryItem = (state = [], { type, payload }) => {
 	return (
 		{
