@@ -37,17 +37,18 @@ Plug N Play is powered by [Rawg.io](http://www.rawg.io/)'s API service, which al
 1. Start your PostgreSQL server
 2. In your terminal, `npm run server`
 3. In a separate terminal tab/window, `npm run client`. This should open the app in your browser.
-4. Create a new account, or login with an existing account.
-5. If you're a new user, answer all your survey questions and then tap ’Submit’ at the end.
-6. You will be taken to the recommendations view.
+4. For the best user experience, right click and select Inspect, then click the Toggle Device Toolbar button and select iPhone 12 Pro for the dimensions. 
+5. Create a new account, or login with an existing account.
+6. If you're a new user, answer all your survey questions and then tap ’Submit’ at the end.
+7. You will be taken to the recommendations view.
    1. Swipe up on a game to view details.
    2. Swipe right on games you might like.
    3. Swipe left on games you are not interested in.
-7. To view game details, swipe up and tap the Details button.
+8. To view game details, swipe up and tap the Details button.
    1. On this page, you can add a game to your wishlist, played list, and/or ignore list.
    2. Liking or disliking a game on your played list will influence the algorithm and adjust your recommendations.
-8. Use the Collections tab to view the Glossary, your Wishlisted games, and your Played games.
-9. Use the Search tab to search for games by name or by genre.
+9. Use the Collections tab to view the Glossary, your Wishlisted games, and your Played games.
+10. Use the Search tab to search for games by name or by genre.
 
 ### Admin account
 If you have an administrator account, you can use your account to update and maintain the glossary.
@@ -69,6 +70,7 @@ Please see the [Issues](https://github.com/WSalinas315/PlugNPlay/issues) page fo
 [![Redux]][Redux-url]
 [![Redux-Saga]][Redux-saga-url]
 [![Luxon.js]][Luxon-url]
+[![React-Easy-Swipe]][React-Easy-Swipe-url]
 
 ## Acknowledgments
 
@@ -108,3 +110,5 @@ Thank you to:
 [MUI-url]: https://mui.com/core/
 [Luxon.js]: https://img.shields.io/badge/Luxon.js-20232A?style=for-the-badge
 [Luxon-url]: https://moment.github.io/luxon/#/
+[React-Easy-Swipe-url]: https://www.npmjs.com/package/react-easy-swipe
+[React-Easy-Swipe]: https://img.shields.io/badge/-React%20Easy%20Swipe-20232A?style=for-the-badge
