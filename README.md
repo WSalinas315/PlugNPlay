@@ -21,16 +21,17 @@ Discovering new video games and navigating online storefronts full of jargon can
 1. Start postgres if it isn’t started already
 2. In your terminal, `npm run server`
 3. In a separate terminal tab/window, `npm run client`. This should open the app in your browser.
-4. Create a new account, or login with an existing account.
-5. Answer all survey questions and then click ’Submit’ at the end.
-6. You will be taken to the recommendations view. 
+4. Right click, select Inspect, click the toggle device toolbar button and set the dimensions to iPhone 12 Pro for the best experience.
+5. Create a new account, or login with an existing account.
+6. Answer all survey questions and then click ’Submit’ at the end.
+7. You will be taken to the recommendations view. 
     1. Swipe up on a game to view details. 
     2. Swipe right on games you might like. 
     3. Swipe left on games you are not interested in. 
     4. Your left and right swipes will influence the algorithm next time you load the page.
-7. To view game details, swipe up and click the Details button.
+8. To view game details, swipe up and click the Details button.
     1. On this page, you can add a game to your wishlist, played list, and/or ignore list.
-8. View your wishlist, played games, and glossary in the Collections tab.
+9. View your wishlist, played games, and glossary in the Collections tab.
 	
 ## Technologies Used
  - HTML/CSS/JS
