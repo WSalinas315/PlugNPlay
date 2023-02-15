@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
+// HOOK IMPORTS
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Card, Typography, Button, ButtonGroup } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+
+// COMPONENT IMPORTS
 import "./ViewProfile.css";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import ProfileBartleType from "../ProfileBartleType/ProfileBartleType";
+
+// MUI IMPORTS
+import { Card, Typography, Button, ButtonGroup } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+
 
 function ViewProfile() {
   // Pull user information from store
@@ -50,6 +56,8 @@ function ViewProfile() {
   };
 
   const OptionButtons = () => {
+    // Renders different buttons based on user status
+    // access level 1 allows access to admin settings
     return user.access_level == 1 ? (
       <ButtonGroup>
         <SettingsButton />
