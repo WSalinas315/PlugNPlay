@@ -49,6 +49,8 @@ Plug N Play is powered by [Rawg.io](http://www.rawg.io/)'s API service, which al
    2. Liking or disliking a game on your played list will influence the algorithm and adjust your recommendations.
 9. Use the Collections tab to view the Glossary, your Wishlisted games, and your Played games.
 10. Use the Search tab to search for games by name or by genre.
+11. To view your Player Type and other account info, click the Profile tab.
+   1. You can edit your profile image by clicking the gear icon.
 
 ### Admin account
 If you have an administrator account, you can use your account to update and maintain the glossary.
