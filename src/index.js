@@ -7,8 +7,10 @@ import App from './components/App/App';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+// Font declaration
 const bodyFonts = [ '"Open Sans"', '-apple-system', 'Roboto', '"Helvetica Neue"', 'sans-serif' ].join(',')
 
+// MUI theme
 const theme = createTheme({
 	palette: {
 		type: 'light',
