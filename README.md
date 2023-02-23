@@ -5,7 +5,7 @@
   <img src="documentation/images/plugnplay-logo.png" width="800px" style="border-radius: 10px;" />
 </div>
 
-# Plug N' Play
+# Plug N Play
 
 ### [Abdirahman Farah][Abdi-LinkedIn], [August McAllister][August-LinkedIn], [Billy Salinas][Billy-LinkedIn], [Tracey Treat][Tracey-LinkedIn], [Victor Llapa][Victor-LinkedIn]
 
@@ -13,7 +13,7 @@ February 2023 | Shawl Cohort | Prime Digital Academy
 
 ## Application Overview
 
-Discovering new video games and navigating online storefronts full of jargon can be an overwhelming and frustrating experience for people who have little to no experience with gaming. Plug n' Play is a web application designed to help users who are new to the video game atmosphere view game recommendations that are tailored to their personal interests. Plug n Play will provide the ability to personalize recommendations appropriately based on a questionnaire taken upon registering.
+Discovering new video games and navigating online storefronts full of jargon can be an overwhelming and frustrating experience for people who have little to no experience with gaming. Plug N Play is a web application designed to help users who are new to the video game atmosphere view game recommendations that are tailored to their personal interests. Plug N Play will provide the ability to personalize recommendations appropriately based on a questionnaire taken upon registering.
 
 Plug N Play is powered by [Rawg.io](http://www.rawg.io/)'s API service, which allows us to search their database of over 800,000 games. Of their available 9,800 search tags, we have hand-picked a little over 200 tags to use as search terms and user scores to power our search algorithm. Upon registering for a new account, a new user will fill out a survey. For each question, the user is asked to rate their preferences on a 9-point spectrum. Upon completing the survey, these answers will be processed and turned into user scores, which will inform future recommendations. This survey should only be completed once, but the algorithm will continue to be adjusted when users rate games in their "played" list.
 
@@ -58,6 +58,13 @@ If you have an administrator account, you can use your account to update and mai
 1. Log in to your administrator account, and navigate to the Profile page.
 2. In the top left, tap the shield icon to open the Manage Glossary page.
 3. From here you can add new glossary entries, as well as view, edit, and delete any existing entries.
+
+## Heroku
+This application has been deployed to Heroku to allow non-developers to experience it without any application setup. Simply visit the link below. 
+
+[Plug N Play](https://infinite-basin-05102.herokuapp.com)
+
+Note: If you are visiting from a laptop or desktop computer, be sure to right click upon page load, select Inspect, click the Toggle Device Toolbar button and select iPhone 12 Pro for the dimensions. This will put the application into a mobile friendly format which is how it is intended to be used.
 
 ## Known Issues
 
